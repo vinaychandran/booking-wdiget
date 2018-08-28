@@ -29,12 +29,29 @@ var MystaysBookingWidget = {
         return window.innerWidth < 767;
     },
 
+    CheckHover: function checkHover(element, dateList, rangeObject) {
+
+        //Remove class from existing elements
+        for (var f = 0; f < dateList.length; f++) {
+            dateList[f].classList.remove('mystays-hover-intermediate');
+        }
+
+
+        //Adding class from existing elements
+        for (var i = 0; i < dateList.length; i++) {
+            if (rangeObject.endVal === "" && new Date(dateList[i].getAttribute('data-full')) >= new Date(rangeObject.startVal.split('|')[4]) && new Date(dateList[i].getAttribute('data-full')) <= new Date(element.getAttribute('data-full'))) {
+                dateList[i].classList.add('mystays-hover-intermediate');
+
+            }
+        }
+    },
+
     InitiateRange: function InitiateRange() {
         var rangeObject = mobiscroll.range('#range-container', {
             theme: 'mobiscroll',
             lang: 'en',
             context: '#calender-render-container',
-            dateFormat:'M|dd|D|mm/dd/yy',
+            dateFormat: 'M|dd|D|mm/dd/yy|yy-m-d',
             controls: ['calendar'],
             startInput: "#bookingwidget-checkin",
             endInput: '#bookingwidget-checkout',
@@ -59,6 +76,10 @@ var MystaysBookingWidget = {
                 var now = new Date(),
                     range = [now, new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0)];
                 inst.setVal(range);
+                var startval = inst.startVal;
+                var endval = inst.endVal;
+
+                MystaysBookingWidget.SetDateValues(startval, endval);
             },
             onDayChange: function (event, inst) {
                 //Automatically hide widget on selection of end date for non mobile devices
@@ -72,12 +93,30 @@ var MystaysBookingWidget = {
 
                 MystaysBookingWidget.SetDateValues(startval, endval);
 
-               
+
             },
             onShow: function (event, inst) {
+                var dateList = document.querySelectorAll('.mbsc-cal-slide-a .mbsc-cal-day:not(.mystays-hover-added):not(.mbsc-disabled):not([aria-hidden="true"])')
 
+                for (var i = 0; i < dateList.length; i++) {
+
+                    dateList[i].classList.add('mystays-hover-added');
+
+                    dateList[i].addEventListener('mouseover', function (e, args) {
+                        MystaysBookingWidget.CheckHover(this, dateList, inst );
+                    })
+                }
+            }, onPageChange: function (event, inst) {
+                var dateList = document.querySelectorAll('.mbsc-cal-slide-a .mbsc-cal-day:not(.mystays-hover-added):not(.mbsc-disabled):not([aria-hidden="true"])')
+                for (var i = 0; i < dateList.length; i++) {
+
+                    dateList[i].classList.add('mystays-hover-added');
+
+                    dateList[i].addEventListener('mouseover', function (e, args) {
+                        MystaysBookingWidget.CheckHover(this, dateList, inst);
+                    })
+                }
             }
-
         });
         return rangeObject;
     }
@@ -85,6 +124,6 @@ var MystaysBookingWidget = {
 
 
 
-document.addEventListener("DOMContentLoaded", function () {   
-   myrange = MystaysBookingWidget.InitiateRange();
+document.addEventListener("DOMContentLoaded", function () {
+    myrange = MystaysBookingWidget.InitiateRange();
 });

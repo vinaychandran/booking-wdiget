@@ -1,2 +1,9 @@
-.testing {
-  width: 71.42857%; }
+.container {
+  max-width: 940px;
+  margin: 0 auto; }
+
+#booking-widget-module .booking-box {
+  display: inline-block;
+  margin-right: 20px; }
+  #booking-widget-module .booking-box:last-child {
+    margin-right: 0; }

@@ -1,10 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
 
 
-    mobiscroll.range('#demo', {
+    mobiscroll.range('#range-container', {
         theme: 'mobiscroll',
         lang: 'en',
-        context: '#calender-container',
+        context: '#calender-render-container',
         controls: ['calendar'],
         startInput: "#calendar-checkindate",
         endInput: '#calendar-checkoutdate',

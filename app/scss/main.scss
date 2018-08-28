@@ -1,5 +1,86 @@
 $lato: 'Lato', sans-serif;
 
+// Breakpoint
+$lg-width: 1200px;
+$md-width: 1024px;
+$sm-width: 768px;
+$xs-width: 481px;
+$xxs-width: 360px;
+
+@mixin lg {
+    @media screen and (min-width: #{$lg-width}) {
+        @content;
+    }
+}
+
+@mixin md {
+    @media (min-width: #{$md-width}) {
+        @content;
+    }
+}
+
+@mixin sm {
+    @media (min-width: #{$sm-width}) {
+        @content;
+    }
+}
+
+@mixin xs {
+    @media screen and (min-width: #{$xs-width}) {
+        @content;
+    }
+}
+
+@mixin xxs {
+    @media screen and (max-width: #{$xxs-width}) { 
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media screen and (min-width: #{$md-width + 1px}) {
+        @content;
+    }
+}
+
+@mixin device {
+    @media screen and (max-width: #{$md-width - 1px}) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media (min-width: #{$sm-width}) and (max-width: #{$md-width}) {
+        @content;
+    }
+}
+
+@mixin mobile {
+    @media screen and (max-width: #{$sm-width - 1px}) {
+        @content;
+    }
+} 
+ 
+@mixin print {
+    @media print {
+        @content;
+    }
+}
+
+@mixin landscape {
+    @media screen and (orientation: landscape) {
+        @content;
+    } 
+}
+
+@mixin portrait {
+    @media screen and (orientation: portrait) {
+        @content;
+    }
+}
+
+
+
 body{
 	font-family: $lato;
 }
@@ -15,14 +96,18 @@ body{
 }
 
 .mystays-booking-widget{
-	padding: 35px 40px 40px;
-	box-shadow: 0 50px 46px -46px rgba(37,58,106,.3);
-	border: 1px solid #ccc;
-	display: flex;
-	justify-content:space-between;
-	.booking-box{				
-		&:last-child {
-			margin-right: 0;
+	padding: 15px 15px 20px;	
+	@include md {
+		padding: 35px 40px 40px;	
+		box-shadow: 0 50px 46px -46px rgba(37,58,106,.3);
+		border: 1px solid #ccc;
+		display: flex;
+		justify-content:space-between;
+	}
+	.booking-box{
+		margin-bottom: 14px;
+		@include md {
+			margin-bottom: 0;
 		}
 		> p{
 			text-align: center;
@@ -36,10 +121,12 @@ body{
 		}
 	}
 	.autocomplete{
-		width: 280px;		
 		input[type='text']{
 			position: relative;
 			padding: 20px 22px;
+		}
+		@include md {
+			width: 280px;
 		}
 	}
 
@@ -52,10 +139,12 @@ body{
 				width: 50%;
 			}
 		}
-		.booking-checkin-checkout{
-			width: 200px;
+		.booking-checkin-checkout{			
 			position: relative;
-			overflow: hidden;			
+			overflow: hidden;	
+			@include md {
+				width: 200px;
+			}		
 			.checkin, .checkout{
 				float: left;
 				width: 50%;
@@ -85,8 +174,15 @@ body{
 	}
 
 	.guests{
-		width: 75px;
+		width: 48%;
+		margin-right: 4%;
 		position: relative;
+		float: left;
+		@include md {
+			width: 75px;
+			margin-right: 0;
+			float: none;
+		}
 		.booking-box-wrap{
 			&:after{
 				content: "";
@@ -104,9 +200,14 @@ body{
 	}
 
 	.promocode{
-		width: 110px;
+		width: 48%;
 		position: relative;
 		text-align: center;
+		float: right;
+		@include md {
+			width: 110px;
+			float: none;
+		}
 		input[type='text']{
 			text-align: center;
 		}
@@ -136,7 +237,10 @@ body{
 	}
 
 	.search-button{
-		width: 110px;
+		clear: both;
+		@include md {			
+			width: 110px;
+		}
 		>p {
 			color: #232e48;
 			font-weight: 300;
@@ -201,16 +305,22 @@ body{
 	.booking-box-wrap{
 		background-color: #ffffff;
   		border: solid 2px #e4e4e7;
-  		height: 60px;
+  		height: 50px;
   		position: relative;
+  		@include md {
+			height: 60px;
+  		}
   		input[type='text']{
   			border: 0;
   			width: 100%;
-  			height: 56px;
+  			height: 46px;
   			font-size: 12px;
   			font-family: $lato;
   			color: #7b7b85;
   			opacity: 0.75;
+  			@include md {
+  				height: 56px;
+  			}
   		}
 	}
 }

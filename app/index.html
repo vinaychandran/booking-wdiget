@@ -6,6 +6,7 @@
     <meta name=viewport content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
     <meta http-equiv=X-UA-Compatible content="IE=11">    
     <link rel="stylesheet" type="text/css" href="css/mobiscroll.javascript.css" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/main.css" />
 
     <style>
@@ -29,19 +30,18 @@
                     <input type="text" placeholder="Hotel & Area">                    
                 </div>
             </div>
-            <div class="booking-box date-picker" id="range-container">
+            <div class="booking-box date-picker" >
                 <p><span>checkin</span><span>checkout</span></p>
-                <div class="booking-box-wrap">
+                <div class="booking-box-wrap" id="range-container">
                 	<div class="booking-checkin-checkout">
 	                    <div class="checkin" id="bookingwidget-checkin">
 	                    	<input type="text" id="calendar-checkindate" value="">
 	                        <div class="input-top-wrap">
 	                        	<div class="title">20</div>
 		                        <div class="desc">Aug 2018</div>
-		                    </div>
-		                    
+		                    </div>		                    
 	                    </div>
-	                    <i class="icon">-></i>
+	                    <i class="icono-arrow1-left"></i>
 	                    <div class="checkout" id="bookingwidget-checkout">	   
 	                    	<input type="text" id="calendar-checkoutdate" value=""> 
 							<div class="input-top-wrap">
@@ -53,23 +53,27 @@
                 </div>                
             </div>            
             <div class="booking-box guests">
-                <p>Nr. of guests</p>
+                <p>Guest No.</p>
                 <div class="booking-box-wrap">
-                    <div class="title">title</div>
-                    <div class="desc">desc</div>
+                	<div class="input-top-wrap">
+	                    <div class="title">0</div>
+	                    <div class="desc">
+                    		<span class="guest">guest</span>
+                    		<!-- <span class="guests hidden">guests</span> -->
+	                    </div>
+                    </div>
                     <input type="hidden" id="booking-totalguests">
                 </div>
             </div>
             <div class="booking-box promocode">
                 <p>Promocode</p>
                 <div class="booking-box-wrap">
-                    <input type="text">
-                    <i class="icon">i</i>
+                    <input type="text" placeholder="----">
                 </div>
             </div>
             <div class="booking-box search-button">
                 <p>Best Price Guarantee!</p>
-                <button>search</button>
+                <button class="btn">Search</button>
             </div>
         </div>
         <div id="calender-render-container"></div>

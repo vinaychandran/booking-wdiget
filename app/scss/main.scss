@@ -1,14 +1,98 @@
+$lato: Lato,Tahoma,Verdana,Arial,sans-serif;
+
+*{
+	outline: 0;
+    box-sizing: border-box;
+}
+
 .container{
 	max-width: 940px;
 	margin: 0 auto;
 }
 
-#booking-widget-module{
-	.booking-box{
-		display: inline-block;
-		margin-right: 20px;
+.mystays-booking-widget{
+	padding: 35px 40px 40px;
+	box-shadow: 0 50px 46px -46px rgba(37,58,106,.3);
+	border: 1px solid #ccc;
+	display: flex;
+	justify-content:space-between;
+	.booking-box{				
 		&:last-child {
 			margin-right: 0;
 		}
+		> p{
+			text-align: center;
+			font-family: $lato;
+			font-size: 13px;
+			font-weight: 500;
+			color: #232e48;
+			line-height: 1;
+			margin: 0 0 10px;
+		}
+	}
+	.autocomplete{
+		width: 280px;		
+		input[type='text']{
+			position: relative;
+			padding: 20px 22px;
+		}
+	}
+
+	.booking-checkin-checkout{
+		width: 200px;
+		position: relative;
+		overflow: hidden;
+		.checkin, .checkout{
+			float: left;
+			width: 50%;
+			padding:0 12px;
+			position: relative;
+		}
+		> i{
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+		}
+	}
+
+	.input-top-wrap{
+		position: absolute;
+		width: 100%;
+		left: 0;
+		top: 50%;
+		text-align: center;
+		transform: translateY(-50%);
+		font-family: $lato;
+		.title{
+			line-height: 1.38;
+			color: #232e48;			
+		    font-size: 16px;
+		    font-weight: 900;
+		}
+		.desc{
+			font-size: 12px;
+			opacity: 0.75;
+			color: #7b7b85;
+		}
 	}
 }
+
+#booking-widget-module{
+	.booking-box-wrap{
+		background-color: #ffffff;
+  		border: solid 2px #e4e4e7;
+  		height: 60px;
+  		input[type='text']{
+  			border: 0;
+  			width: 100%;
+  			height: 56px;
+  			font-size: 12px;
+  			font-family: $lato;
+  			color: #7b7b85;
+  			opacity: 0.75;
+  		}
+	}
+}
+
+

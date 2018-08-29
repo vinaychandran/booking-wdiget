@@ -162,13 +162,13 @@ var MystaysBookingWidget = {
                 if (event.active === 'start') {
 
                     
-                    MystaysBookingWidget.DisablePreviousDates(event.target.getAttribute('data-full'));
+                    //MystaysBookingWidget.DisablePreviousDates(event.target.getAttribute('data-full'));
 
-                    if (event.date > new Date(inst.startVal.split('|')[4])) {
-                        var nextDay = new Date(event.date.getFullYear(), event.date.getMonth(), event.date.getDate() + 1, 0, 0);
-                        inst.setVal([event.date, nextDay]);
-                        inst.setActiveDate('end');
-                    }
+                    //if (event.date > new Date(inst.startVal.split('|')[4])) {
+                    //    var nextDay = new Date(event.date.getFullYear(), event.date.getMonth(), event.date.getDate() + 1, 0, 0);
+                    //    inst.setVal([event.date, nextDay]);
+                    //    inst.setActiveDate('end');
+                    //}
                 }
             },
             onSet: function (event, inst) {

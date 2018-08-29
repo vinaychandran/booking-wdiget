@@ -1,6 +1,10 @@
 var MystaysBookingWidget = {
 
     SetDateValues: function SetDateValues(startval, endval) {
+
+        document.getElementById('calendar-checkindate').value = startval;
+        document.getElementById('calendar-checkoutdate').value = endval;
+
         if (startval !== "" && startval) {
             var startMonth = startval.split('|')[0];
             var startDate = startval.split('|')[1];
@@ -31,9 +35,11 @@ var MystaysBookingWidget = {
 
     CheckHover: function checkHover(element, dateList, rangeObject) {
 
+        var dateListWithInterMediate = document.querySelectorAll('.mystays-hover-intermediate');
+
         //Remove class from existing elements
-        for (var f = 0; f < dateList.length; f++) {
-            dateList[f].classList.remove('mystays-hover-intermediate');
+        for (var f = 0; f < dateListWithInterMediate.length; f++) {
+            dateListWithInterMediate[f].classList.remove('mystays-hover-intermediate');
         }
 
 
@@ -51,7 +57,7 @@ var MystaysBookingWidget = {
             theme: 'mobiscroll',
             lang: 'en',
             context: '#calender-render-container',
-            dateFormat: 'M|dd|D|mm/dd/yy|yy-m-d',
+            dateFormat: 'dd|M|yy|mm/dd/yy|yy-m-d',
             controls: ['calendar'],
             startInput: "#bookingwidget-checkin",
             endInput: '#bookingwidget-checkout',
@@ -79,6 +85,8 @@ var MystaysBookingWidget = {
                 var startval = inst.startVal;
                 var endval = inst.endVal;
 
+
+
                 MystaysBookingWidget.SetDateValues(startval, endval);
             },
             onDayChange: function (event, inst) {
@@ -91,29 +99,27 @@ var MystaysBookingWidget = {
                 var startval = inst.startVal;
                 var endval = inst.endVal;
 
+            
+
                 MystaysBookingWidget.SetDateValues(startval, endval);
 
 
             },
             onShow: function (event, inst) {
-                var dateList = document.querySelectorAll('.mbsc-cal-slide-a .mbsc-cal-day:not(.mystays-hover-added):not(.mbsc-disabled):not([aria-hidden="true"])')
+                var dateList = document.querySelectorAll('.mbsc-cal-slide .mbsc-cal-day:not(.mystays-hover-added):not(.mbsc-disabled):not([aria-hidden="true"])')
 
                 for (var i = 0; i < dateList.length; i++) {
-
                     dateList[i].classList.add('mystays-hover-added');
-
                     dateList[i].addEventListener('mouseover', function (e, args) {
-                        MystaysBookingWidget.CheckHover(this, dateList, inst );
+                        MystaysBookingWidget.CheckHover(this, document.querySelectorAll('.mystays-hover-added'), inst );
                     })
                 }
             }, onPageChange: function (event, inst) {
-                var dateList = document.querySelectorAll('.mbsc-cal-slide-a .mbsc-cal-day:not(.mystays-hover-added):not(.mbsc-disabled):not([aria-hidden="true"])')
+                var dateList = document.querySelectorAll('.mbsc-cal-slide .mbsc-cal-day:not(.mystays-hover-added):not(.mbsc-disabled):not([aria-hidden="true"])')
                 for (var i = 0; i < dateList.length; i++) {
-
                     dateList[i].classList.add('mystays-hover-added');
-
                     dateList[i].addEventListener('mouseover', function (e, args) {
-                        MystaysBookingWidget.CheckHover(this, dateList, inst);
+                        MystaysBookingWidget.CheckHover(this, document.querySelectorAll('.mystays-hover-added'), inst);
                     })
                 }
             }

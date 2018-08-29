@@ -225,14 +225,26 @@ body{
 		.title{
 			line-height: 1.38;
 			color: #232e48;			
-		    font-size: 16px;
+		    font-size: 20px;
 		    font-weight: 900;
 		    cursor: pointer;
+		    display: inline-block;
+		    margin-right: 10px;
+		    @include md {
+				display: block;
+				font-size: 16px;
+				margin-right: 0;
+		    }
 		}
 		.desc{
-			font-size: 12px;
+			font-size: 15px;
 			opacity: 0.75;
 			color: #7b7b85;
+			display: inline-block;
+			@include md {
+				display: block;
+				font-size: 12px;
+			}
 		}
 	}
 

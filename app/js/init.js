@@ -2,8 +2,8 @@ var MystaysBookingWidget = {
 
     SetDateValues: function SetDateValues(startval, endval) {
 
-        document.getElementById('calendar-checkindate').value = startval;
-        document.getElementById('calendar-checkoutdate').value = endval;
+        document.getElementById('calendar-checkindate').setAttribute('data-value',startval);
+        document.getElementById('calendar-checkoutdate').setAttribute('data-value', endval);
 
         if (startval !== "" && startval) {
             var startMonth = startval.split('|')[0];

@@ -99,7 +99,7 @@ var MystaysBookingWidget = {
         }
 
 
-        //Adding class from existing elements
+        //Adding class from existing elements(rangeObject.endVal === "")
         for (var i = 0; i < dateList.length; i++) {
             if (rangeObject.endVal === "" && new Date(dateList[i].getAttribute('data-full')) >= new Date(rangeObject.startVal.split('|')[4]) && new Date(dateList[i].getAttribute('data-full')) <= new Date(element.getAttribute('data-full'))) {
                 dateList[i].classList.add('mystays-hover-intermediate');
@@ -107,7 +107,7 @@ var MystaysBookingWidget = {
             }
         }
 
-        //Changing footer only when enddate is not set
+        //Changing footer only when enddate is not set(rangeObject.endVal === "")
         if (rangeObject.endVal === "") {
             MystaysBookingWidget.SetFooterText(rangeObject.startVal.split('|')[4], element.getAttribute('data-full'));
         }
@@ -151,9 +151,19 @@ var MystaysBookingWidget = {
                 var endval = inst.endVal;
             },
             onDayChange: function (event, inst) {
+
+                //Logic to check only if that end date that is lesser than start date cannot be selected
+                if (event.active === 'end') {
+                    if (event.date < new Date(inst.startVal.split('|')[4])) {
+                        
+                        inst.setVal([event.date, inst.endVal], true);
+                        return true;
+                    }
+                }
+
                 //Automatically hide widget on selection of end date for non mobile devices
                 if (!MystaysBookingWidget.IsMobile() && event.active === 'end') {
-                    
+
                     inst.hide();
                 }
 
@@ -218,10 +228,9 @@ var MystaysBookingWidget = {
             onSetDate: function (event, inst) {
                 var startval = inst.startVal;
                 var endval = inst.endVal;
-
-               
-
                 MystaysBookingWidget.SetDateValues(inst);
+
+                
             }
         });
         return rangeObject;

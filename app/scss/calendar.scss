@@ -24,11 +24,20 @@
 	}   	
 }
 
-.mbsc-mobiscroll.mbsc-range .mbsc-ltr .mbsc-cal-sel-start.mbsc-cal-sel-end{    	
-	&:after{
-		border-top-right-radius:0;
-	    border-bottom-right-radius:0;
-		right: 0;
-		margin-right: 0;
+.mbsc-mobiscroll.mbsc-range .mbsc-ltr {
+	.mbsc-cal-sel-start.mbsc-cal-sel-end{    	
+		&:after{
+			border-top-right-radius:0;
+		    border-bottom-right-radius:0;
+			right: 0;
+			margin-right: 0;
+		}
+	}
+
+	.mystays-bookingengine-disabled{
+		cursor: not-allowed;
+		.mbsc-cal-cell-txt {
+		    opacity: .2;
+		}
 	}
 }

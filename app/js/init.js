@@ -91,8 +91,6 @@ var MystaysBookingWidget = {
         });
     },
     CheckHover: function checkHover(element, dateList, rangeObject) {
-
-
         var dateListWithInterMediate = document.querySelectorAll('.mystays-hover-intermediate');
 
         //Remove class from existing elements
@@ -162,7 +160,7 @@ var MystaysBookingWidget = {
                 if (event.active === 'start') {
 
                     
-                    //MystaysBookingWidget.DisablePreviousDates(event.target.getAttribute('data-full'));
+                    MystaysBookingWidget.DisablePreviousDates(event.target.getAttribute('data-full'));
 
                     //if (event.date > new Date(inst.startVal.split('|')[4])) {
                     //    var nextDay = new Date(event.date.getFullYear(), event.date.getMonth(), event.date.getDate() + 1, 0, 0);
@@ -187,9 +185,6 @@ var MystaysBookingWidget = {
 
             },
             onShow: function (event, inst) {
-
-                
-
                 MystaysBookingWidget.SetFooterText(inst.startVal.split('|')[4], inst.endVal.split('|')[4]);
 
                 var dateList = document.querySelectorAll('.mbsc-cal-slide .mbsc-cal-day:not(.mystays-hover-added):not(.mbsc-disabled):not([aria-hidden="true"])');
@@ -200,9 +195,6 @@ var MystaysBookingWidget = {
                         MystaysBookingWidget.CheckHover(this, document.querySelectorAll('.mystays-hover-added'), inst);
                     });
                 }
-
-                
-
             }, onPageChange: function (event, inst) {
                 var dateList = document.querySelectorAll('.mbsc-cal-slide .mbsc-cal-day:not(.mystays-hover-added):not(.mbsc-disabled):not([aria-hidden="true"])');
                 for (var i = 0; i < dateList.length; i++) {

@@ -1,8 +1,26 @@
 
 
+//function delegate(el, evt, sel, handler) {
+//    el.addEventListener(evt, function (event) {
+//        var t = event.target;
+//        while (t && t !== this) {
+//            if (t.matches(sel)) {
+//                handler.call(t, event);
+//            }
+//            t = t.parentNode;
+//        }
+//    });
+//}
+
+
+//delegate(document, "mouseover", ".mbsc-cal-cell", function (event) {
+    
+//});
+
 var MystaysBookingWidget = {
     Constants: {
-        CurrentStatus: ''
+        CurrentStatus: '',
+        CheckNextDaySet:false
     },
     HelperMethods: {
         GetNightsOfStayString: function () {
@@ -100,14 +118,14 @@ var MystaysBookingWidget = {
 
         //Adding class from existing elements(rangeObject.endVal === "")
         for (var i = 0; i < dateList.length; i++) {
-            if ((myrange.endVal === '' || MystaysBookingWidget.Constants.CurrentStatus==='end') && new Date(dateList[i].getAttribute('data-full')) >= new Date(rangeObject.startVal.split('|')[4]) && new Date(dateList[i].getAttribute('data-full')) <= new Date(element.getAttribute('data-full'))) {
+            if ((MystaysBookingWidget.Constants.CheckNextDaySet || MystaysBookingWidget.Constants.CurrentStatus==='end') && new Date(dateList[i].getAttribute('data-full')) >= new Date(rangeObject.startVal.split('|')[4]) && new Date(dateList[i].getAttribute('data-full')) <= new Date(element.getAttribute('data-full'))) {
                 dateList[i].classList.add('mystays-hover-intermediate');
                 
             }
         }
 
         //Changing footer only when element date is greater than the start date
-        if ((myrange.endVal === '' || MystaysBookingWidget.Constants.CurrentStatus === 'end') && new Date(rangeObject.startVal.split('|')[4]) < new Date(element.getAttribute('data-full'))) {
+        if ((MystaysBookingWidget.Constants.CheckNextDaySet || MystaysBookingWidget.Constants.CurrentStatus === 'end') && new Date(rangeObject.startVal.split('|')[4]) < new Date(element.getAttribute('data-full'))) {
             MystaysBookingWidget.SetFooterText(rangeObject.startVal.split('|')[4], element.getAttribute('data-full'));
         }
         //Else setting it to start and end date
@@ -154,14 +172,6 @@ var MystaysBookingWidget = {
             },
             onDayChange: function (event, inst) {
 
-                ///Once the start or end date is selected flip the status of the variable 'MystaysBookingWidget.Constants.CurrentStatus'
-                //so that we can identify that the next date that is being selected is the other date
-                //if (event.active==='start') {
-                //    MystaysBookingWidget.Constants.CurrentStatus = 'end';
-                //} else if (event.active === 'end') {
-                //    MystaysBookingWidget.Constants.CurrentStatus = 'start';
-                //}
-
                 console.log('onDayChange - status - ' + MystaysBookingWidget.Constants.CurrentStatus);
 
                 //Logic to check only if that end date that is lesser than start date cannot be selected
@@ -185,9 +195,11 @@ var MystaysBookingWidget = {
             onSet: function (event, inst) {
                 var startvalue = inst.startVal;
                 var endvalue = inst.endVal;
+                MystaysBookingWidget.Constants.CheckNextDaySet = false;
 
                 //If start date is equal to end date then set end date as next day
-                if (new Date(endvalue.split('|')[4]) <= new Date(startvalue.split('|')[4])) {
+                if ((new Date(endvalue.split('|')[4]) <= new Date(startvalue.split('|')[4])) || inst.endVal == '') {
+                    MystaysBookingWidget.Constants.CheckNextDaySet = true;
                     var startDate = new Date(inst.startVal.split('|')[4]);
                     var nextDay = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 1, 0, 0);
                     inst.setVal([startDate, nextDay], true, true, false);
@@ -195,8 +207,6 @@ var MystaysBookingWidget = {
                 }
             },
             onShow: function (event, inst) {
-
-               
                 console.log('onShow - status - ' + MystaysBookingWidget.Constants.CurrentStatus);
                 MystaysBookingWidget.SetFooterText(inst.startVal.split('|')[4], inst.endVal.split('|')[4]);
                 var dateList = document.querySelectorAll('.mbsc-cal-slide .mbsc-cal-day:not(.mystays-hover-added):not(.mbsc-disabled):not([aria-hidden="true"])');

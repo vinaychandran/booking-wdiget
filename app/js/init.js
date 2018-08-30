@@ -76,6 +76,11 @@ var MystaysBookingWidget = {
             customcalendarfooter.parentNode.removeChild(customcalendarfooter);
         }
         if (!MystaysBookingWidget.IsMobile()) {
+
+            //Increasing height of calendar to accomodate dynamic footer
+            var perspective = document.querySelector('.mbsc-fr-persp');
+            perspective.style.height = (perspective.offsetHeight+50)+"px";
+
             var calendarbody = document.querySelector('.mbsc-cal-body');
             var htmlString = '<p class="mystays-calendar-footer" >{startdate} - {enddateformat} - {NightsOfStay} {days}</p>';
 

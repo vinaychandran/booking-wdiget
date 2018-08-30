@@ -19,8 +19,10 @@
 
 var MystaysBookingWidget = {
     Constants: {
+        //Variable used to store the current active button
         CurrentStatus: '',
-        CheckNextDaySet:false
+        //Variable used to identify if the checkout date is manually set to the next day
+        CheckNextDaySetManually:false
     },
     HelperMethods: {
         GetNightsOfStayString: function () {
@@ -32,6 +34,7 @@ var MystaysBookingWidget = {
             }
         }
     },
+    //Method to disable previous dates after start date is selected
     DisablePreviousDates: function DisablePreviousDates(dateToCheck) {
         MystaysBookingWidget.EnableAllDates();
         var dateItemList = document.querySelectorAll('.mystays-hover-added');
@@ -42,6 +45,7 @@ var MystaysBookingWidget = {
 
         });
     },
+    //Method to reenable all the dates again
     EnableAllDates: function EnableAllDates() {
         var dateItemList = document.querySelectorAll('.mystays-bookingengine-disabled');
 
@@ -118,14 +122,14 @@ var MystaysBookingWidget = {
 
         //Adding class from existing elements(rangeObject.endVal === "")
         for (var i = 0; i < dateList.length; i++) {
-            if ((MystaysBookingWidget.Constants.CheckNextDaySet || MystaysBookingWidget.Constants.CurrentStatus==='end') && new Date(dateList[i].getAttribute('data-full')) >= new Date(rangeObject.startVal.split('|')[4]) && new Date(dateList[i].getAttribute('data-full')) <= new Date(element.getAttribute('data-full'))) {
+            if ((MystaysBookingWidget.Constants.CheckNextDaySetManually || MystaysBookingWidget.Constants.CurrentStatus==='end') && new Date(dateList[i].getAttribute('data-full')) >= new Date(rangeObject.startVal.split('|')[4]) && new Date(dateList[i].getAttribute('data-full')) <= new Date(element.getAttribute('data-full'))) {
                 dateList[i].classList.add('mystays-hover-intermediate');
                 
             }
         }
 
         //Changing footer only when element date is greater than the start date
-        if ((MystaysBookingWidget.Constants.CheckNextDaySet || MystaysBookingWidget.Constants.CurrentStatus === 'end') && new Date(rangeObject.startVal.split('|')[4]) < new Date(element.getAttribute('data-full'))) {
+        if ((MystaysBookingWidget.Constants.CheckNextDaySetManually || MystaysBookingWidget.Constants.CurrentStatus === 'end') && new Date(rangeObject.startVal.split('|')[4]) < new Date(element.getAttribute('data-full'))) {
             MystaysBookingWidget.SetFooterText(rangeObject.startVal.split('|')[4], element.getAttribute('data-full'));
         }
         //Else setting it to start and end date
@@ -195,11 +199,11 @@ var MystaysBookingWidget = {
             onSet: function (event, inst) {
                 var startvalue = inst.startVal;
                 var endvalue = inst.endVal;
-                MystaysBookingWidget.Constants.CheckNextDaySet = false;
+                MystaysBookingWidget.Constants.CheckNextDaySetManually = false;
 
                 //If start date is equal to end date then set end date as next day
                 if ((new Date(endvalue.split('|')[4]) <= new Date(startvalue.split('|')[4])) || inst.endVal == '') {
-                    MystaysBookingWidget.Constants.CheckNextDaySet = true;
+                    MystaysBookingWidget.Constants.CheckNextDaySetManually = true;
                     var startDate = new Date(inst.startVal.split('|')[4]);
                     var nextDay = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 1, 0, 0);
                     inst.setVal([startDate, nextDay], true, true, false);
@@ -207,6 +211,7 @@ var MystaysBookingWidget = {
                 }
             },
             onShow: function (event, inst) {
+                MystaysBookingWidget.Constants.CheckNextDaySetManually = false;
                 console.log('onShow - status - ' + MystaysBookingWidget.Constants.CurrentStatus);
                 MystaysBookingWidget.SetFooterText(inst.startVal.split('|')[4], inst.endVal.split('|')[4]);
                 var dateList = document.querySelectorAll('.mbsc-cal-slide .mbsc-cal-day:not(.mystays-hover-added):not(.mbsc-disabled):not([aria-hidden="true"])');

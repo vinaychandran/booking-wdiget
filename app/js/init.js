@@ -93,25 +93,32 @@ var MystaysBookingWidget = {
             checkoutDesc.innerHTML = endDate + " " + endDay;
         }
     },
-    SetFooterText: function SetFooterText(startval, endval, increaseHeight) {
+    //Method to render the text on the footer
+    SetFooterText: function SetFooterText(startval, endval, increaseHeight, RenderedElement) {
+
+        if (RenderedElement) {
+            var documentElement = RenderedElement;
+        } else {
+            var documentElement = document;
+        }
 
         //Removing the footer if it is already present
-        var customcalendarfooter = document.querySelector('.mystays-calendar-footer');
+        var customcalendarfooter = documentElement.querySelector('.mystays-calendar-footer');
         if (customcalendarfooter) {
             customcalendarfooter.parentNode.removeChild(customcalendarfooter);
         }
         if (!MystaysBookingWidget.IsMobile()) {
 
 
-            if (increaseHeight) {
-                //Increasing height of calendar to accomodate dynamic footer
-                var perspective = document.querySelector('.mbsc-fr-persp');
-                perspective.style.height = (perspective.offsetHeight + 50) + "px";
+            //if (increaseHeight) {
+            //    //Increasing height of calendar to accomodate dynamic footer
+            //    var perspective = documentElement.querySelector('.mbsc-fr-persp');
+            //    perspective.style.height = (perspective.offsetHeight + 50) + "px";
 
 
-            }
+            //}
 
-            var calendarbody = document.querySelector('.mbsc-cal-body');
+            var calendarbody = documentElement.querySelector('.mbsc-cal-body');
             var htmlString = '<p class="mystays-calendar-footer" >{startdate} - {enddateformat} - {NightsOfStay} {days}</p>';
 
             var dateDifference = Math.floor((Date.parse(endval) - Date.parse(startval)) / 86400000);
@@ -164,16 +171,40 @@ var MystaysBookingWidget = {
             MystaysBookingWidget.RemoveIntermediateHoverClass();
         });
     },
+    //Method to create custom selectors for start and end date
+    SetCustomSelector: function (calendarElement, startval, endval) {
+
+        //Start date
+        var startdate = startval.split('|')[0];
+        var startday = startval.split('|')[5];
+        var startmonth = startval.split('|')[1];
+
+
+        var checkinDateElement = document.createElement('div');
+        checkinDateElement.innerHTML = '<div><div class="mystays-range-btn-heading">Checkin</div><div class="mystays-range-btn-date"><span>{date}</span><span>{day}</span><span>{month}</span></div></div>'.replace('{date}', startdate).replace('{day}', startday).replace('{month}', startmonth);
+        calendarElement.querySelector('.mbsc-range-btn-start .mbsc-range-btn').appendChild(checkinDateElement);
+
+        
+        //End date
+
+        var enddate = endval.split('|')[0];
+        var endday = endval.split('|')[5];
+        var endmonth = endval.split('|')[1];
+        var checkoutDateElement = document.createElement('div');
+        checkoutDateElement.innerHTML = '<div><div class="mystays-range-btn-heading">Check out</div><div class="mystays-range-btn-date"><span>{date}</span><span>{day}</span><span>{month}</span></div></div>'.replace('{date}', enddate).replace('{day}', endday).replace('{month}', endmonth);;
+        calendarElement.querySelector('.mbsc-range-btn-end .mbsc-range-btn').appendChild(checkoutDateElement);
+
+    },
     InitiateRange: function InitiateRange() {
 
-        MystaysBookingWidget.ClickOutside();
+        
 
         var rangeObject = mobiscroll.range('#range-container', {
             theme: 'mobiscroll',
             lang: SelectedLanguage,
             cssClass: 'mystays-bookingwidget',
             context: '#calender-render-container',
-            dateFormat: 'dd|M|yy|mm/dd/yy|yy-m-d',
+            dateFormat: 'dd|M|yy|mm/dd/yy|yy-m-d|D',
             controls: ['calendar'],
             startInput: "#bookingwidget-checkin",
             endInput: '#bookingwidget-checkout',
@@ -184,7 +215,7 @@ var MystaysBookingWidget = {
             calendarScroll: 'vertical',
             min: new Date(),
             layout: 'liquid',
-            showSelector: false,
+            showSelector: true,
             closeOnOverlayTap: true,
             responsive: {
                 medium: {
@@ -226,6 +257,12 @@ var MystaysBookingWidget = {
                     MystaysBookingWidget.DisablePreviousDates(event.target.getAttribute('data-full'));
                 }
             },
+            onMarkupReady: function (event, inst) {
+
+                MystaysBookingWidget.SetCustomSelector(event.target, inst.startVal, inst.endVal);
+                MystaysBookingWidget.ClickOutside();
+                MystaysBookingWidget.SetFooterText(inst.startVal.split('|')[4], inst.endVal.split('|')[4], true, event.target);
+            },
             onSet: function (event, inst) {
                 var startvalue = inst.startVal;
                 var endvalue = inst.endVal;
@@ -243,7 +280,7 @@ var MystaysBookingWidget = {
             onShow: function (event, inst) {
                 MystaysBookingWidget.Constants.CheckNextDaySetManually = false;
                 console.log('onShow - status - ' + MystaysBookingWidget.Constants.CurrentStatus);
-                MystaysBookingWidget.SetFooterText(inst.startVal.split('|')[4], inst.endVal.split('|')[4], true);
+                
                 var dateList = document.querySelectorAll('.mbsc-cal-slide .mbsc-cal-day:not(.mystays-hover-added):not(.mbsc-disabled):not([aria-hidden="true"])');
 
                 for (var i = 0; i < dateList.length; i++) {

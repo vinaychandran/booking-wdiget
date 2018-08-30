@@ -76,7 +76,7 @@ var MystaysBookingWidget = {
             customcalendarfooter.parentNode.removeChild(customcalendarfooter);
         }
         if (!MystaysBookingWidget.IsMobile()) {
-            var calendarbody = document.querySelector('.mbsc-mobiscroll');
+            var calendarbody = document.querySelector('.mbsc-cal-body');
             var htmlString = '<p class="mystays-calendar-footer" >{startdate} - {enddateformat} - {NightsOfStay} {days}</p>';
 
             var dateDifference = Math.floor((Date.parse(endval) - Date.parse(startval)) / 86400000);

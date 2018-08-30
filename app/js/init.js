@@ -1,22 +1,4 @@
 
-
-//function delegate(el, evt, sel, handler) {
-//    el.addEventListener(evt, function (event) {
-//        var t = event.target;
-//        while (t && t !== this) {
-//            if (t.matches(sel)) {
-//                handler.call(t, event);
-//            }
-//            t = t.parentNode;
-//        }
-//    });
-//}
-
-
-//delegate(document, "mouseover", ".mbsc-cal-cell", function (event) {
-    
-//});
-
 var MystaysBookingWidget = {
     Constants: {
         //Variable used to store the current active button
@@ -153,7 +135,7 @@ var MystaysBookingWidget = {
             minRange: 86400000,
             calendarScroll: 'vertical',
             min: new Date(),
-            //showSelector: false,
+            showSelector: false,
             closeOnOverlayTap: true,
             responsive: {
                 medium: {
@@ -244,12 +226,17 @@ var MystaysBookingWidget = {
             },
             onSetDate: function (event, inst) {
                 //A variable to check which date is currently active(start or end)
-                if (event.active==='start') {
-                    MystaysBookingWidget.Constants.CurrentStatus = 'start';
-                } else if (event.active === 'end') {
-                    MystaysBookingWidget.Constants.CurrentStatus = 'end';
-                }
+                
+                MystaysBookingWidget.Constants.CurrentStatus = event.active;
 
+                if (event.active === 'start') {
+                    //Removing all 
+                    var dateListWithInterMediate = document.querySelectorAll('.mystays-hover-intermediate');
+                    //Remove class from existing elements
+                    for (var f = 0; f < dateListWithInterMediate.length; f++) {
+                        dateListWithInterMediate[f].classList.remove('mystays-hover-intermediate');
+                    }
+                }
                 
                 console.log('onSetDate - status - ' + MystaysBookingWidget.Constants.CurrentStatus);
                 var startval = inst.startVal;

@@ -159,7 +159,7 @@ var MystaysBookingWidget = {
         }
 
     },
-    CalendarFocusOut: function CalendarFocusOut() {
+    CalendarCustomFunctions: function CalendarCustomFunctions() {
         document.querySelector('.mbsc-cal-body').addEventListener('mouseout', function () {
             MystaysBookingWidget.RemoveIntermediateHoverClass();
         });
@@ -180,6 +180,7 @@ var MystaysBookingWidget = {
             buttons: ['set'],
             months: 1,
             minRange: 86400000,
+            outerMonthChange: false,
             calendarScroll: 'vertical',
             min: new Date(),
             layout: 'liquid',
@@ -252,7 +253,7 @@ var MystaysBookingWidget = {
                     });
                 }
 
-                MystaysBookingWidget.CalendarFocusOut();
+                MystaysBookingWidget.CalendarCustomFunctions();
             }, onPageChange: function (event, inst) {
                 var dateList = document.querySelectorAll('.mbsc-cal-slide .mbsc-cal-day:not(.mystays-hover-added):not(.mbsc-disabled):not([aria-hidden="true"])');
                 for (var i = 0; i < dateList.length; i++) {

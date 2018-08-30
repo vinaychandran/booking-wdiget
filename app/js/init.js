@@ -76,7 +76,7 @@ var MystaysBookingWidget = {
             customcalendarfooter.parentNode.removeChild(customcalendarfooter);
         }
         if (!MystaysBookingWidget.IsMobile()) {
-            var calendarbody = document.querySelector('.mbsc-cal-body');
+            var calendarbody = document.querySelector('.mbsc-fr-w');
             var htmlString = '<p class="mystays-calendar-footer" >{startdate} - {enddateformat} - {NightsOfStay} {days}</p>';
 
             var dateDifference = Math.floor((Date.parse(endval) - Date.parse(startval)) / 86400000);
@@ -134,11 +134,11 @@ var MystaysBookingWidget = {
             minRange: 86400000,
             calendarScroll: 'vertical',
             min: new Date(),
+            layout: 'liquid',
             showSelector: false,
             closeOnOverlayTap: true,
             responsive: {
                 medium: {
-                    layout: 'fixed',
                     months: 2,
                     calendarScroll: 'horizontal',
                     focusOnClose: '.booking-box.guests',

@@ -69,26 +69,25 @@ var MystaysBookingWidget = {
         }
     },
     SetFooterText: function SetFooterText(startval, endval) {
-        var calendarbody = document.querySelector('.mbsc-cal-body');
 
         //Removing the footer if it is already present
         var customcalendarfooter = document.querySelector('.mystays-calendar-footer');
         if (customcalendarfooter) {
             customcalendarfooter.parentNode.removeChild(customcalendarfooter);
         }
+        if (!MystaysBookingWidget.IsMobile()) {
+            var calendarbody = document.querySelector('.mbsc-cal-body');
+            var htmlString = '<p class="mystays-calendar-footer" >{startdate} - {enddateformat} - {NightsOfStay} {days}</p>';
 
+            var dateDifference = Math.floor((Date.parse(endval) - Date.parse(startval)) / 86400000);
 
-        var htmlString = '<p class="mystays-calendar-footer" >{startdate} - {enddateformat} - {NightsOfStay} {days}</p>';
+            htmlString = htmlString.replace('{startdate}', startval);
+            htmlString = htmlString.replace('{enddateformat}', endval);
+            htmlString = htmlString.replace('{days}', dateDifference);
+            htmlString = htmlString.replace('{NightsOfStay}', MystaysBookingWidget.HelperMethods.GetNightsOfStayString());
 
-        var dateDifference = Math.floor((Date.parse(endval) - Date.parse(startval)) / 86400000);
-
-        htmlString = htmlString.replace('{startdate}', startval);
-        htmlString = htmlString.replace('{enddateformat}', endval);
-        htmlString = htmlString.replace('{days}', dateDifference);
-        htmlString = htmlString.replace('{NightsOfStay}', MystaysBookingWidget.HelperMethods.GetNightsOfStayString());
-
-        calendarbody.insertAdjacentHTML('afterend', htmlString);
-
+            calendarbody.insertAdjacentHTML('afterend', htmlString);
+        }
     },
     IsMobile: function IsMobile() {
         return window.innerWidth < 767;
@@ -230,7 +229,7 @@ var MystaysBookingWidget = {
                 MystaysBookingWidget.Constants.CurrentStatus = event.active;
 
                 if (event.active === 'start') {
-                    //Removing all 
+                    //Removing all the intermediate hover when user is selecting start date
                     var dateListWithInterMediate = document.querySelectorAll('.mystays-hover-intermediate');
                     //Remove class from existing elements
                     for (var f = 0; f < dateListWithInterMediate.length; f++) {

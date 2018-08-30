@@ -2,7 +2,7 @@
 
 var MystaysBookingWidget = {
     Constants: {
-
+        CurrentStatus: ''
     },
     HelperMethods: {
         GetNightsOfStayString: function () {
@@ -13,6 +13,24 @@ var MystaysBookingWidget = {
                 return 'ëÿç›ÇÃñÈ';
             }
         }
+    },
+    DisablePreviousDates: function DisablePreviousDates(dateToCheck) {
+        MystaysBookingWidget.EnableAllDates();
+        var dateItemList = document.querySelectorAll('.mystays-hover-added');
+        dateItemList.forEach(function (element, index) {
+            if (new Date(element.getAttribute('data-full')) < new Date(dateToCheck)) {
+                element.classList.add('mystays-bookingengine-disabled');
+            }
+
+        });
+    },
+    EnableAllDates: function EnableAllDates() {
+        var dateItemList = document.querySelectorAll('.mystays-bookingengine-disabled');
+
+
+        dateItemList.forEach(function (element, index) {
+            element.classList.remove('mystays-bookingengine-disabled');
+        });
     },
     SetDateValues: function SetDateValues(mobiScrollInstance) {
 
@@ -71,25 +89,6 @@ var MystaysBookingWidget = {
     IsMobile: function IsMobile() {
         return window.innerWidth < 767;
     },
-    //Disable all previous dates that are present before the start date
-    DisablePreviousDates: function DisablePreviousDates(dateToCheck) {
-        MystaysBookingWidget.EnableAllDates();
-        var dateItemList = document.querySelectorAll('.mystays-hover-added');
-        dateItemList.forEach(function ( element, index ) {
-            if (new Date(element.getAttribute('data-full')) < new Date(dateToCheck)) {
-                element.classList.add('mystays-bookingengine-disabled');
-            }
-
-        });
-    },
-    EnableAllDates: function EnableAllDates() {
-        var dateItemList = document.querySelectorAll('.mystays-bookingengine-disabled');
-
-        
-        dateItemList.forEach(function (element, index) {
-            element.classList.remove('mystays-bookingengine-disabled');
-        });
-    },
     CheckHover: function checkHover(element, dateList, rangeObject) {
         var dateListWithInterMediate = document.querySelectorAll('.mystays-hover-intermediate');
 
@@ -101,15 +100,19 @@ var MystaysBookingWidget = {
 
         //Adding class from existing elements(rangeObject.endVal === "")
         for (var i = 0; i < dateList.length; i++) {
-            if (rangeObject.endVal === "" && new Date(dateList[i].getAttribute('data-full')) >= new Date(rangeObject.startVal.split('|')[4]) && new Date(dateList[i].getAttribute('data-full')) <= new Date(element.getAttribute('data-full'))) {
+            if ((myrange.endVal === '' || MystaysBookingWidget.Constants.CurrentStatus==='end') && new Date(dateList[i].getAttribute('data-full')) >= new Date(rangeObject.startVal.split('|')[4]) && new Date(dateList[i].getAttribute('data-full')) <= new Date(element.getAttribute('data-full'))) {
                 dateList[i].classList.add('mystays-hover-intermediate');
-
+                
             }
         }
 
-        //Changing footer only when enddate is not set(rangeObject.endVal === "")
-        if (rangeObject.endVal === "") {
+        //Changing footer only when element date is greater than the start date
+        if ((myrange.endVal === '' || MystaysBookingWidget.Constants.CurrentStatus === 'end') && new Date(rangeObject.startVal.split('|')[4]) < new Date(element.getAttribute('data-full'))) {
             MystaysBookingWidget.SetFooterText(rangeObject.startVal.split('|')[4], element.getAttribute('data-full'));
+        }
+        //Else setting it to start and end date
+        else {
+            MystaysBookingWidget.SetFooterText(rangeObject.startVal.split('|')[4], rangeObject.endVal.split('|')[4]);
         }
     },
     InitiateRange: function InitiateRange() {
@@ -128,12 +131,11 @@ var MystaysBookingWidget = {
             minRange: 86400000,
             calendarScroll: 'vertical',
             min: new Date(),
-            showSelector: false,
+            //showSelector: false,
             closeOnOverlayTap: true,
             responsive: {
                 medium: {
                     layout: 'fixed',
-                    
                     months: 2,
                     calendarScroll: 'horizontal',
                     focusOnClose: '.booking-box.guests',
@@ -152,10 +154,19 @@ var MystaysBookingWidget = {
             },
             onDayChange: function (event, inst) {
 
+                ///Once the start or end date is selected flip the status of the variable 'MystaysBookingWidget.Constants.CurrentStatus'
+                //so that we can identify that the next date that is being selected is the other date
+                //if (event.active==='start') {
+                //    MystaysBookingWidget.Constants.CurrentStatus = 'end';
+                //} else if (event.active === 'end') {
+                //    MystaysBookingWidget.Constants.CurrentStatus = 'start';
+                //}
+
+                console.log('onDayChange - status - ' + MystaysBookingWidget.Constants.CurrentStatus);
+
                 //Logic to check only if that end date that is lesser than start date cannot be selected
                 if (event.active === 'end') {
                     if (event.date < new Date(inst.startVal.split('|')[4])) {
-                        
                         inst.setVal([event.date, inst.endVal], true);
                         return true;
                     }
@@ -168,35 +179,26 @@ var MystaysBookingWidget = {
                 }
 
                 if (event.active === 'start') {
-
-                    
                     MystaysBookingWidget.DisablePreviousDates(event.target.getAttribute('data-full'));
-
-                    //if (event.date > new Date(inst.startVal.split('|')[4])) {
-                    //    var nextDay = new Date(event.date.getFullYear(), event.date.getMonth(), event.date.getDate() + 1, 0, 0);
-                    //    inst.setVal([event.date, nextDay]);
-                    //    inst.setActiveDate('end');
-                    //}
                 }
             },
             onSet: function (event, inst) {
-                var startval = inst.startVal;
-                var endval = inst.endVal;
+                var startvalue = inst.startVal;
+                var endvalue = inst.endVal;
 
-                //Temp fix if start and end date are the same
-                if (startval === endval) {
+                //If start date is equal to end date then set end date as next day
+                if (new Date(endvalue.split('|')[4]) <= new Date(startvalue.split('|')[4])) {
                     var startDate = new Date(inst.startVal.split('|')[4]);
                     var nextDay = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 1, 0, 0);
                     inst.setVal([startDate, nextDay], true, true, false);
 
                 }
-                
-
-
             },
             onShow: function (event, inst) {
-                MystaysBookingWidget.SetFooterText(inst.startVal.split('|')[4], inst.endVal.split('|')[4]);
 
+               
+                console.log('onShow - status - ' + MystaysBookingWidget.Constants.CurrentStatus);
+                MystaysBookingWidget.SetFooterText(inst.startVal.split('|')[4], inst.endVal.split('|')[4]);
                 var dateList = document.querySelectorAll('.mbsc-cal-slide .mbsc-cal-day:not(.mystays-hover-added):not(.mbsc-disabled):not([aria-hidden="true"])');
 
                 for (var i = 0; i < dateList.length; i++) {
@@ -226,11 +228,18 @@ var MystaysBookingWidget = {
 
             },
             onSetDate: function (event, inst) {
+                //A variable to check which date is currently active(start or end)
+                if (event.active==='start') {
+                    MystaysBookingWidget.Constants.CurrentStatus = 'start';
+                } else if (event.active === 'end') {
+                    MystaysBookingWidget.Constants.CurrentStatus = 'end';
+                }
+
+                
+                console.log('onSetDate - status - ' + MystaysBookingWidget.Constants.CurrentStatus);
                 var startval = inst.startVal;
                 var endval = inst.endVal;
                 MystaysBookingWidget.SetDateValues(inst);
-
-                
             }
         });
         return rangeObject;

@@ -9,7 +9,7 @@ var MystaysBookingWidget = {
         //Variable used to identify if the checkout date is manually set to the next day
         CheckNextDaySetManually: false,
         EnglishMonthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-        CalendarHeader:['Japanese Calendar','English Calendar','Chinese Calendar','Taiwanese calendar','Korean calendar']
+        CalendarHeader:['Japanese Calendar','Calendar','Chinese Calendar','Taiwanese calendar','Korean calendar']
 
     },
     HelperMethods: {
@@ -213,7 +213,7 @@ var MystaysBookingWidget = {
 
             var checkinDateElement = document.createElement('div');
             checkinDateElement.className = 'mystays-range-selector-header';
-            checkinDateElement.innerHTML = '<div class="mystays-range-btn-heading">Checkin</div><div class="mystays-range-btn-date"><span>{date}</span><span>{day}</span><span>{month}</span></div>'.replace('{date}', startdate).replace('{day}', startday).replace('{month}', startmonth);
+            checkinDateElement.innerHTML = '<div class="mystays-range-btn-heading">Checkin</div><div class="mystays-range-btn-date"><div class="mystays-bookingwidget-selector-date"><span>{date}</span></div><p><span>{day}</span><span>{month}</span></p></div>'.replace('{date}', startdate).replace('{day}', startday).replace('{month}', startmonth);
             updateContainer.querySelector('.mbsc-range-btn-start .mbsc-range-btn').appendChild(checkinDateElement);
 
 
@@ -230,7 +230,7 @@ var MystaysBookingWidget = {
 
             var checkoutDateElement = document.createElement('div');
             checkoutDateElement.className = 'mystays-range-selector-header';
-            checkoutDateElement.innerHTML = '<div class="mystays-range-btn-heading">Check out</div><div class="mystays-range-btn-date"><span>{date}</span><span>{day}</span><span>{month}</span></div>'.replace('{date}', enddate).replace('{day}', endday).replace('{month}', endmonth);;
+            checkoutDateElement.innerHTML = '<div class="mystays-range-btn-heading">Check out</div><div class="mystays-range-btn-date"><div class="mystays-bookingwidget-selector-date"><span>{date}</span></div><p><span>{day}</span><span>{month}</span></p></div>'.replace('{date}', enddate).replace('{day}', endday).replace('{month}', endmonth);;
             updateContainer.querySelector('.mbsc-range-btn-end .mbsc-range-btn').appendChild(checkoutDateElement);
         }
     },
@@ -245,7 +245,7 @@ var MystaysBookingWidget = {
 
         var calendarheadersection = updateContainer.querySelector('.mbsc-fr-focus');
 
-        //Write logic only when selector is present
+        //Write logic only when calendar selector is present
         if (calendarheadersection && MystaysBookingWidget.IsMobile()) {
 
             updateContainer.querySelector('.mbsc-fr-persp').style.height = window.outerHeight + 'px';
@@ -275,12 +275,9 @@ var MystaysBookingWidget = {
             calendarHeader.appendChild(calendarHeaderElement);
         
             calendarheadersection.insertAdjacentHTML('beforebegin', calendarHeader.outerHTML);
-
-            
-
         }
     },
-    CheckStartEndDay: function (event, inst) {
+    ValidateStartEndDate: function (event, inst) {
         
         var startvalue = inst.startVal;
         var endvalue = inst.endVal;
@@ -294,7 +291,6 @@ var MystaysBookingWidget = {
             inst.setVal([startDate, nextDay], true, true, false);
 
         }
-        
     },
     //Method to set custom header for each month
     SetCustomMonthHeader: function (calendarElement) {
@@ -423,7 +419,7 @@ var MystaysBookingWidget = {
                 MystaysBookingWidget.SetCustomMonthHeader(event.target);
             },
             onSet: function (event, inst) {
-                MystaysBookingWidget.CheckStartEndDay(event, inst);
+                MystaysBookingWidget.ValidateStartEndDate(event, inst);
             },
             onShow: function (event, inst) {
 

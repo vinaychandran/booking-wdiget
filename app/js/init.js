@@ -418,7 +418,11 @@ var MystaysBookingWidget = {
                 MystaysBookingWidget.CheckStartEndDay(event, inst);
             },
             onShow: function (event, inst) {
-                MystaysBookingWidget.AdjustSectionHeights();
+
+                if (MystaysBookingWidget.IsMobile()) {
+                    MystaysBookingWidget.AdjustSectionHeights();
+                }
+                
                 MystaysBookingWidget.Constants.CheckNextDaySetManually = false;
                 console.log('onShow - status - ' + MystaysBookingWidget.Constants.CurrentStatus);
 

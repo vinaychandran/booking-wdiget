@@ -405,9 +405,6 @@ var MystaysBookingWidget = {
                 var endval = inst.endVal;
             },
             onDayChange: function (event, inst) {
-
-
-
                 //Logic to check only if that end date that is lesser than start date cannot be selected
                 if (event.active === 'end') {
                     if (event.date < new Date(inst.startVal.split('|')[4])) {
@@ -415,21 +412,14 @@ var MystaysBookingWidget = {
                         return true;
                     }
                 }
-
                 //Automatically hide widget on selection of end date for non mobile devices
                 if (!MystaysBookingWidget.IsMobile() && event.active === 'end') {
 
                     inst.hide();
                 }
-
                 if (event.active === 'start') {
                     MystaysBookingWidget.DisablePreviousDates(event.target.getAttribute('data-full'));
                 }
-
-
-
-
-
             },
             onMarkupReady: function (event, inst) {
                 MystaysBookingWidget.SetCustomerCalendarHeader(event.target);
@@ -449,16 +439,7 @@ var MystaysBookingWidget = {
             }, onPageChange: function (event, inst) {
                 MystaysBookingWidget.CustomHTMLEvents.AddIntermediateHover(inst);
             }, onClose: function (event, inst) {
-                //var startval = inst.startVal;
-                //var endval = inst.endVal;
-
-                //if (startval != "" && (endval == "" || (new Date(startval.split('|')[4]) > new Date(endval.split('|')[4])))) {
-                //    var startDate = new Date(startval.split('|')[4]);
-                //    var nextDay = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 1, 0, 0);
-                //    inst.setVal([startDate, nextDay]);
-                //}
                 MystaysBookingWidget.ValidateStartEndDate(event, inst);
-
             },
             onPageLoaded: function (event, inst) {
                 MystaysBookingWidget.SetCustomMonthHeader();
@@ -469,12 +450,7 @@ var MystaysBookingWidget = {
                 MystaysBookingWidget.Constants.CurrentStatus = event.active;
 
                 if (event.active === 'start') {
-                    //Removing all the intermediate hover when user is selecting start date
-                    var dateListWithInterMediate = document.querySelectorAll('.mystays-hover-intermediate');
-                    //Remove class from existing elements
-                    for (var f = 0; f < dateListWithInterMediate.length; f++) {
-                        dateListWithInterMediate[f].classList.remove('mystays-hover-intermediate');
-                    }
+                    MystaysBookingWidget.RemoveIntermediateHoverClass();
                 }
 
 

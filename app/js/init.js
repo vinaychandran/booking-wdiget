@@ -201,7 +201,7 @@ var MystaysBookingWidget = {
     
     AdjustSectionHeights: function () {
         if (MystaysBookingWidget.IsMobile()) {
-            document.querySelector('.mbsc-fr-c .mbsc-cal-body').style.height = (window.innerHeight - (document.querySelector('.mbsc-range-btn-t').offsetHeight + document.querySelector('.mystays-bookingwidget-calendarheader').offsetHeight - 50)) + 'px';
+            document.querySelector('.mbsc-fr-c .mbsc-cal-body').style.height = (window.innerHeight - (document.querySelector('.mbsc-range-btn-t').offsetHeight + document.querySelector('.mystays-bookingwidget-calendarheader').offsetHeight + 50)) + 'px';
         }
     },
     //Method to create custom selectors for start and end date

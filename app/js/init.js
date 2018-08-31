@@ -280,6 +280,11 @@ var MystaysBookingWidget = {
                 if (event.active === 'start') {
                     MystaysBookingWidget.DisablePreviousDates(event.target.getAttribute('data-full'));
                 }
+
+                
+                
+                
+                
             },
             onMarkupReady: function (event, inst) {
 
@@ -300,10 +305,6 @@ var MystaysBookingWidget = {
                     inst.setVal([startDate, nextDay], true, true, false);
 
                 }
-
-                //Updating  custom selector
-                MystaysBookingWidget.SetCustomSelector(null, startvalue, endvalue);
-                
             },
             onShow: function (event, inst) {
                 MystaysBookingWidget.Constants.CheckNextDaySetManually = false;
@@ -357,6 +358,7 @@ var MystaysBookingWidget = {
                 var startval = inst.startVal;
                 var endval = inst.endVal;
                 MystaysBookingWidget.SetDateValues(inst);
+                MystaysBookingWidget.SetCustomSelector(null, startval, endval);
             }
         });
 

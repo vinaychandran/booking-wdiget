@@ -6,7 +6,8 @@ var MystaysBookingWidget = {
         CurrentStatus: '',
         //Variable used to identify if the checkout date is manually set to the next day
         CheckNextDaySetManually: false,
-        EnglishMonthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+        EnglishMonthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+        CalendarHeader:['Japanese Calendar','English Calendar','Chinese Calendar','Taiwanese calendar','Korean calendar']
 
     },
     HelperMethods: {
@@ -221,6 +222,36 @@ var MystaysBookingWidget = {
             updateContainer.querySelector('.mbsc-range-btn-end .mbsc-range-btn').appendChild(checkoutDateElement);
         }
     },
+    //Added a header section to the calendar 
+    SetCustomerCalendarHeader: function (calendarElement) {
+
+        if (calendarElement) {
+            var updateContainer = calendarElement;
+        } else {
+            var updateContainer = document;
+        }
+
+        var calendarheadersection = updateContainer.querySelector('.mbsc-fr-focus');
+
+        //Write logic only when selector is present
+        if (calendarheadersection && MystaysBookingWidget.IsMobile()) {
+
+        var calendarHeader = document.createElement('div');
+            calendarHeader.classList = 'mystays-bookingwidget-calendarheader';
+            if (MystaysBookingWidget.SelectedLanguage=='ja') {
+                calendarHeader.innerHTML = MystaysBookingWidget.Constants.CalendarHeader[0];
+            } else if (MystaysBookingWidget.SelectedLanguage == 'en') {
+                calendarHeader.innerHTML = MystaysBookingWidget.Constants.CalendarHeader[1];
+            } else if (MystaysBookingWidget.SelectedLanguage == 'zh') {
+                calendarHeader.innerHTML = MystaysBookingWidget.Constants.CalendarHeader[2];
+            } else if (MystaysBookingWidget.SelectedLanguage == 'ja') {
+                calendarHeader.innerHTML = MystaysBookingWidget.Constants.CalendarHeader[3];
+            }
+        
+            calendarheadersection.insertAdjacentHTML('beforebegin', calendarHeader.outerHTML);
+
+        }
+    },
     CheckStartEndDay: function (event, inst) {
         
         var startvalue = inst.startVal;
@@ -286,13 +317,22 @@ var MystaysBookingWidget = {
         var rangeObject = mobiscroll.range('#range-container', {
             theme: 'mobiscroll',
             lang: MystaysBookingWidget.SelectedLanguage,
+            display:'center',
             cssClass: 'mystays-bookingwidget',
             context: '#calender-render-container',
             dateFormat: 'dd|M|yy|mm/dd/yy|yy-m-d|D',
             controls: ['calendar'],
             startInput: "#bookingwidget-checkin",
             endInput: '#bookingwidget-checkout',
-            buttons: ['set'],
+            buttons: [
+                
+                {
+                    text: '<',
+                    cssClass: 'mystays-bookingwidget-cancel-btn',
+                    handler:'cancel'
+                },
+                'set'
+            ],
             months: 1,
             minRange: 86400000,
             outerMonthChange: false,
@@ -300,11 +340,15 @@ var MystaysBookingWidget = {
             min: new Date(),
             layout: 'liquid',
             showSelector: true,
+            animate:'slidehorizontal',
             closeOnOverlayTap: true,
             responsive: {
                 medium: {
                     months: 2,
                     showSelector: false,
+                    animate: 'pop',
+                    display: 'bubble',
+                    layout: 'fixed',
                     calendarScroll: 'horizontal',
                     focusOnClose: '.booking-box.guests',
                     buttons: []
@@ -348,7 +392,7 @@ var MystaysBookingWidget = {
                 
             },
             onMarkupReady: function (event, inst) {
-
+                MystaysBookingWidget.SetCustomerCalendarHeader(event.target);
                 MystaysBookingWidget.SetCustomSelector(event.target, inst.startVal, inst.endVal);
                 MystaysBookingWidget.ClickOutside();
                 MystaysBookingWidget.SetFooterText(inst.startVal.split('|')[4], inst.endVal.split('|')[4], true, event.target);

@@ -386,7 +386,7 @@ var MystaysBookingWidget = {
                 }
 
             },
-            onPageChange: function (event, inst) {
+            onMonthChange: function (event, inst) {
                 MystaysBookingWidget.SetCustomMonthHeader();
             },
             onSetDate: function (event, inst) {

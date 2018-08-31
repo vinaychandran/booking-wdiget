@@ -174,26 +174,49 @@ var MystaysBookingWidget = {
     //Method to create custom selectors for start and end date
     SetCustomSelector: function (calendarElement, startval, endval) {
 
-        //Start date
-        var startdate = startval.split('|')[0];
-        var startday = startval.split('|')[5];
-        var startmonth = startval.split('|')[1];
+        if (calendarElement) {
+            var updateContainer = calendarElement;
+        } else {
+            var updateContainer = document;
+        }
+
+        //Write logic only when selector is present
+        if (updateContainer.querySelector('.mbsc-range-btn-start')) {
+            //Removing existing elemtn
+            if (updateContainer.querySelectorAll('.mystays-range-selector-header').length > 0) {
+                var customSelector = updateContainer.getElementsByClassName("mystays-range-selector-header");
+
+                while (customSelector[0]) {
+                    customSelector[0].parentNode.removeChild(customSelector[0]);
+                }
+            }
 
 
-        var checkinDateElement = document.createElement('div');
-        checkinDateElement.innerHTML = '<div><div class="mystays-range-btn-heading">Checkin</div><div class="mystays-range-btn-date"><span>{date}</span><span>{day}</span><span>{month}</span></div></div>'.replace('{date}', startdate).replace('{day}', startday).replace('{month}', startmonth);
-        calendarElement.querySelector('.mbsc-range-btn-start .mbsc-range-btn').appendChild(checkinDateElement);
+            //Start date
+            var startdate = startval.split('|')[0];
+            var startday = startval.split('|')[5];
+            var startmonth = startval.split('|')[1];
 
-        
-        //End date
+            var checkinDateElement = document.createElement('div');
+            checkinDateElement.innerHTML = '<div class="mystays-range-selector-header" ><div class="mystays-range-btn-heading">Checkin</div><div class="mystays-range-btn-date"><span>{date}</span><span>{day}</span><span>{month}</span></div></div>'.replace('{date}', startdate).replace('{day}', startday).replace('{month}', startmonth);
+            updateContainer.querySelector('.mbsc-range-btn-start .mbsc-range-btn').appendChild(checkinDateElement);
 
-        var enddate = endval.split('|')[0];
-        var endday = endval.split('|')[5];
-        var endmonth = endval.split('|')[1];
-        var checkoutDateElement = document.createElement('div');
-        checkoutDateElement.innerHTML = '<div><div class="mystays-range-btn-heading">Check out</div><div class="mystays-range-btn-date"><span>{date}</span><span>{day}</span><span>{month}</span></div></div>'.replace('{date}', enddate).replace('{day}', endday).replace('{month}', endmonth);;
-        calendarElement.querySelector('.mbsc-range-btn-end .mbsc-range-btn').appendChild(checkoutDateElement);
 
+            //End date
+            if (endval === '') {
+                var enddate = '';
+                var endday = '';
+                var endmonth = '';
+            } else {
+                var enddate = endval.split('|')[0];
+                var endday = endval.split('|')[5];
+                var endmonth = endval.split('|')[1];
+            }
+
+            var checkoutDateElement = document.createElement('div');
+            checkoutDateElement.innerHTML = '<div class="mystays-range-selector-header" ><div class="mystays-range-btn-heading">Check out</div><div class="mystays-range-btn-date"><span>{date}</span><span>{day}</span><span>{month}</span></div></div>'.replace('{date}', enddate).replace('{day}', endday).replace('{month}', endmonth);;
+            updateContainer.querySelector('.mbsc-range-btn-end .mbsc-range-btn').appendChild(checkoutDateElement);
+        }
     },
     InitiateRange: function InitiateRange() {
 
@@ -220,6 +243,7 @@ var MystaysBookingWidget = {
             responsive: {
                 medium: {
                     months: 2,
+                    showSelector: false,
                     calendarScroll: 'horizontal',
                     focusOnClose: '.booking-box.guests',
                     buttons: []
@@ -276,6 +300,10 @@ var MystaysBookingWidget = {
                     inst.setVal([startDate, nextDay], true, true, false);
 
                 }
+
+                //Updating  custom selector
+                MystaysBookingWidget.SetCustomSelector(null, startvalue, endvalue);
+                
             },
             onShow: function (event, inst) {
                 MystaysBookingWidget.Constants.CheckNextDaySetManually = false;

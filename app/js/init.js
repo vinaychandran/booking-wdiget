@@ -212,7 +212,8 @@ var MystaysBookingWidget = {
             var startmonth = startval.split('|')[1];
 
             var checkinDateElement = document.createElement('div');
-            checkinDateElement.innerHTML = '<div class="mystays-range-selector-header" ><div class="mystays-range-btn-heading">Checkin</div><div class="mystays-range-btn-date"><span>{date}</span><span>{day}</span><span>{month}</span></div></div>'.replace('{date}', startdate).replace('{day}', startday).replace('{month}', startmonth);
+            checkinDateElement.className = 'mystays-range-selector-header';
+            checkinDateElement.innerHTML = '<div class="mystays-range-btn-heading">Checkin</div><div class="mystays-range-btn-date"><span>{date}</span><span>{day}</span><span>{month}</span></div>'.replace('{date}', startdate).replace('{day}', startday).replace('{month}', startmonth);
             updateContainer.querySelector('.mbsc-range-btn-start .mbsc-range-btn').appendChild(checkinDateElement);
 
 
@@ -228,7 +229,8 @@ var MystaysBookingWidget = {
             }
 
             var checkoutDateElement = document.createElement('div');
-            checkoutDateElement.innerHTML = '<div class="mystays-range-selector-header" ><div class="mystays-range-btn-heading">Check out</div><div class="mystays-range-btn-date"><span>{date}</span><span>{day}</span><span>{month}</span></div></div>'.replace('{date}', enddate).replace('{day}', endday).replace('{month}', endmonth);;
+            checkoutDateElement.className = 'mystays-range-selector-header';
+            checkoutDateElement.innerHTML = '<div class="mystays-range-btn-heading">Check out</div><div class="mystays-range-btn-date"><span>{date}</span><span>{day}</span><span>{month}</span></div>'.replace('{date}', enddate).replace('{day}', endday).replace('{month}', endmonth);;
             updateContainer.querySelector('.mbsc-range-btn-end .mbsc-range-btn').appendChild(checkoutDateElement);
         }
     },

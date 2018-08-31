@@ -1,17 +1,20 @@
 
 var MystaysBookingWidget = {
+    SelectedLanguage:'',
     Constants: {
         //Variable used to store the current active button
         CurrentStatus: '',
         //Variable used to identify if the checkout date is manually set to the next day
-        CheckNextDaySetManually: false
+        CheckNextDaySetManually: false,
+        EnglishMonthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
     },
     HelperMethods: {
         GetNightsOfStayString: function () {
-            if (SelectedLanguage === 'en') {
+            if (MystaysBookingWidget.SelectedLanguage  === 'en') {
                 return 'Nights Of Stay';
             }
-            else if (SelectedLanguage === 'ja') {
+            else if (MystaysBookingWidget.SelectedLanguage  === 'ja') {
                 return '‘ØÝ‚Ì–é';
             }
         },
@@ -218,13 +221,55 @@ var MystaysBookingWidget = {
             updateContainer.querySelector('.mbsc-range-btn-end .mbsc-range-btn').appendChild(checkoutDateElement);
         }
     },
+    //Method to set custom header for each month
+    SetCustomMonthHeader: function (calendarElement) {
+
+        if (MystaysBookingWidget.IsMobile()) {
+
+            if (calendarElement) {
+                var updateContainer = calendarElement;
+            } else {
+                var updateContainer = document;
+            }
+
+            //Removing the header before adding again
+            if (updateContainer.querySelectorAll('.mystays-bookingwidget-header-month').length > 0) {
+                var customSelector = updateContainer.getElementsByClassName("mystays-bookingwidget-header-month");
+
+                while (customSelector[0]) {
+                    customSelector[0].parentNode.removeChild(customSelector[0]);
+                }
+            }
+
+            //Looping through each month and dding the custom header
+            for (var i = 0; i < updateContainer.querySelectorAll('.mbsc-cal-day-picker .mbsc-cal-table').length; i++) {
+                //Get the date for the section
+                var sectionContainer = updateContainer.querySelectorAll('.mbsc-cal-day-picker .mbsc-cal-table')[i];
+                var sectionStartDate = sectionContainer.querySelector('[data-full]').getAttribute('data-full');
+                var sectionStartMonth = new Date(sectionStartDate).getMonth();
+                var sectionStartYear = new Date(sectionStartDate).getFullYear();
+                var headerText = '';
+                if (MystaysBookingWidget.SelectedLanguage === 'en') {
+                    headerText = MystaysBookingWidget.Constants.EnglishMonthNames[sectionStartMonth] + ' ' + sectionStartYear;
+                }
+
+                var sectionheader = document.createElement('div');
+                sectionheader.className = 'mystays-bookingwidget-header-month';
+                sectionheader.innerHTML = headerText;
+                sectionContainer.insertAdjacentHTML('beforebegin', sectionheader.outerHTML);
+
+
+            }
+            
+        }
+    },
     InitiateRange: function InitiateRange() {
 
         
 
         var rangeObject = mobiscroll.range('#range-container', {
             theme: 'mobiscroll',
-            lang: SelectedLanguage,
+            lang: MystaysBookingWidget.SelectedLanguage,
             cssClass: 'mystays-bookingwidget',
             context: '#calender-render-container',
             dateFormat: 'dd|M|yy|mm/dd/yy|yy-m-d|D',
@@ -291,6 +336,7 @@ var MystaysBookingWidget = {
                 MystaysBookingWidget.SetCustomSelector(event.target, inst.startVal, inst.endVal);
                 MystaysBookingWidget.ClickOutside();
                 MystaysBookingWidget.SetFooterText(inst.startVal.split('|')[4], inst.endVal.split('|')[4], true, event.target);
+                MystaysBookingWidget.SetCustomMonthHeader(event.target);
             },
             onSet: function (event, inst) {
                 var startvalue = inst.startVal;
@@ -340,6 +386,9 @@ var MystaysBookingWidget = {
                 }
 
             },
+            onPageChange: function (event, inst) {
+                MystaysBookingWidget.SetCustomMonthHeader();
+            },
             onSetDate: function (event, inst) {
                 //A variable to check which date is currently active(start or end)
 
@@ -371,6 +420,6 @@ var MystaysBookingWidget = {
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    SelectedLanguage = 'en';
+    MystaysBookingWidget.SelectedLanguage = 'en';
     bookingWidgetRange = MystaysBookingWidget.InitiateRange();
 });

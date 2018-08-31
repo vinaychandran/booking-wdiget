@@ -20,6 +20,8 @@
 		&:after{
 			border-top-right-radius: 2em;
     		border-bottom-right-radius: 2em;
+    		    right: 50%;
+					margin-right: -1em;
 		}
 	}   	
 }
@@ -34,10 +36,42 @@
 		}
 	}
 
+	.mbsc-cal-sel-end.mystays-hover-intermediate{
+		.mbsc-cal-day-date{
+			background: none;
+			color: #454545;
+			border-color:transparent;
+		}
+		&:after{
+			border-top-right-radius:0;
+			border-bottom-right-radius:0;
+			right: 0;
+			margin-right: 0;
+		}
+	}
+
 	.mystays-bookingengine-disabled{
 		cursor: not-allowed;
 		.mbsc-cal-cell-txt {
 		    opacity: .2;
 		}
 	}
+}
+
+.mystays-calendar-footer{
+	// position: absolute;
+	// left: 0;
+	// right: 0;
+	// bottom: -30px;
+	// background: #f7f7f7;
+}
+
+
+#calender-render-container{
+	position: fixed;
+	width: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
+	left:0;	
 }

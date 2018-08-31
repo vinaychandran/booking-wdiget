@@ -12,6 +12,7 @@ var MystaysBookingWidget = {
         CalendarHeader:['Japanese Calendar','Calendar','Chinese Calendar','Taiwanese calendar','Korean calendar']
 
     },
+    //All helper methods
     HelperMethods: {
         GetNightsOfStayString: function () {
             if (MystaysBookingWidget.SelectedLanguage  === 'en') {
@@ -32,21 +33,26 @@ var MystaysBookingWidget = {
             return false;
         }
     },
-    //Function to close the calendar when the user clicks outside
-    ClickOutside: function clickOutside() {
+    CustomHTML: {
 
-        document.addEventListener('click', function (e) {
-            var container = document.getElementById('calender-render-container');
-            var checkinContainer = document.getElementById('bookingwidget-checkin');
-            var checkoutContainer = document.getElementById('bookingwidget-checkout');
-            if ((!(container === e.target) && !MystaysBookingWidget.HelperMethods.IsDescendant(container, e.target)) && (!(checkinContainer === e.target) && !MystaysBookingWidget.HelperMethods.IsDescendant(checkinContainer, e.target)) && (!(checkoutContainer === e.target) && !MystaysBookingWidget.HelperMethods.IsDescendant(checkoutContainer, e.target))) {
-
-                if (bookingWidgetRange) {
-                    bookingWidgetRange.hide();
-                }
-            }
-        })
     },
+    CustomHTMLEvents: {
+        //Function to close the calendar when the user clicks outside
+        ClickOutside: function ClickOutside() {
+            document.addEventListener('click', function (e) {
+                var container = document.getElementById('calender-render-container');
+                var checkinContainer = document.getElementById('bookingwidget-checkin');
+                var checkoutContainer = document.getElementById('bookingwidget-checkout');
+                if ((!(container === e.target) && !MystaysBookingWidget.HelperMethods.IsDescendant(container, e.target)) && (!(checkinContainer === e.target) && !MystaysBookingWidget.HelperMethods.IsDescendant(checkinContainer, e.target)) && (!(checkoutContainer === e.target) && !MystaysBookingWidget.HelperMethods.IsDescendant(checkoutContainer, e.target))) {
+
+                    if (bookingWidgetRange) {
+                        bookingWidgetRange.hide();
+                    }
+                }
+            })
+        },
+    },
+    
     //Method to disable previous dates after start date is selected
     DisablePreviousDates: function DisablePreviousDates(dateToCheck) {
         MystaysBookingWidget.EnableAllDates();
@@ -182,7 +188,7 @@ var MystaysBookingWidget = {
     },
     AdjustSectionHeights: function () {
         if (MystaysBookingWidget.IsMobile()) {
-            document.querySelector('.mbsc-fr-c .mbsc-cal-body').style.height = (window.innerHeight - (document.querySelector('.mbsc-range-btn-t').offsetHeight + document.querySelector('.mystays-bookingwidget-calendarheader').offsetHeight + 100)) + 'px';
+            document.querySelector('.mbsc-fr-c .mbsc-cal-body').style.height = (window.innerHeight - (document.querySelector('.mbsc-range-btn-t').offsetHeight + document.querySelector('.mystays-bookingwidget-calendarheader').offsetHeight - 50)) + 'px';
         }
     },
     //Method to create custom selectors for start and end date
@@ -344,7 +350,8 @@ var MystaysBookingWidget = {
             display:'center',
             cssClass: 'mystays-bookingwidget',
             fromText: '',
-            toText:'',
+            toText: '',
+            weekDays: 'short',
             context: '#calender-render-container',
             dateFormat: 'dd|M|yy|mm/dd/yy|yy-m-d|D',
             controls: ['calendar'],
@@ -414,7 +421,7 @@ var MystaysBookingWidget = {
             onMarkupReady: function (event, inst) {
                 MystaysBookingWidget.SetCustomerCalendarHeader(event.target);
                 MystaysBookingWidget.SetCustomSelector(event.target, inst.startVal, inst.endVal);
-                MystaysBookingWidget.ClickOutside();
+                MystaysBookingWidget.CustomHTMLEvents.ClickOutside();
                 MystaysBookingWidget.SetFooterText(inst.startVal.split('|')[4], inst.endVal.split('|')[4], true, event.target);
                 MystaysBookingWidget.SetCustomMonthHeader(event.target);
             },

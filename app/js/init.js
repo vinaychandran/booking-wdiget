@@ -1,3 +1,5 @@
+//This javascript file contains methods used by the booking widget
+
 
 var MystaysBookingWidget = {
     SelectedLanguage:'',
@@ -30,7 +32,7 @@ var MystaysBookingWidget = {
             return false;
         }
     },
-    //Function to trigger click out event
+    //Function to close the calendar when the user clicks outside
     ClickOutside: function clickOutside() {
 
         document.addEventListener('click', function (e) {
@@ -179,7 +181,9 @@ var MystaysBookingWidget = {
         bookingWidgetRange.clear();
     },
     AdjustSectionHeights: function () {
-        document.querySelector('.mbsc-fr-c .mbsc-cal-body').style.height = (window.innerHeight - (document.querySelector('.mbsc-range-btn-t').offsetHeight + document.querySelector('.mystays-bookingwidget-calendarheader').offsetHeight + 100)) + 'px';
+        if (MystaysBookingWidget.IsMobile()) {
+            document.querySelector('.mbsc-fr-c .mbsc-cal-body').style.height = (window.innerHeight - (document.querySelector('.mbsc-range-btn-t').offsetHeight + document.querySelector('.mystays-bookingwidget-calendarheader').offsetHeight + 100)) + 'px';
+        }
     },
     //Method to create custom selectors for start and end date
     SetCustomSelector: function (calendarElement, startval, endval) {
@@ -341,6 +345,8 @@ var MystaysBookingWidget = {
             lang: MystaysBookingWidget.SelectedLanguage,
             display:'center',
             cssClass: 'mystays-bookingwidget',
+            fromText: '',
+            toText:'',
             context: '#calender-render-container',
             dateFormat: 'dd|M|yy|mm/dd/yy|yy-m-d|D',
             controls: ['calendar'],
@@ -382,7 +388,7 @@ var MystaysBookingWidget = {
             },
             onDayChange: function (event, inst) {
                 
-                console.log('onDayChange - status - ' + MystaysBookingWidget.Constants.CurrentStatus);
+                
 
                 //Logic to check only if that end date that is lesser than start date cannot be selected
                 if (event.active === 'end') {
@@ -419,12 +425,12 @@ var MystaysBookingWidget = {
             },
             onShow: function (event, inst) {
 
-                if (MystaysBookingWidget.IsMobile()) {
-                    MystaysBookingWidget.AdjustSectionHeights();
-                }
+                
+                MystaysBookingWidget.AdjustSectionHeights();
+                
                 
                 MystaysBookingWidget.Constants.CheckNextDaySetManually = false;
-                console.log('onShow - status - ' + MystaysBookingWidget.Constants.CurrentStatus);
+                
 
 
                 if (!MystaysBookingWidget.IsMobile()) {
@@ -478,7 +484,7 @@ var MystaysBookingWidget = {
                     }
                 }
 
-                console.log('onSetDate - status - ' + MystaysBookingWidget.Constants.CurrentStatus);
+                
                 var startval = inst.startVal;
                 var endval = inst.endVal;
                 MystaysBookingWidget.SetDateValues(inst);

@@ -97,7 +97,7 @@ body{
 
 .mystays-booking-widget{
 	padding: 15px 15px 20px;	
-	@include md {
+	@include sm {
 		padding: 35px 40px 40px;	
 		box-shadow: 0 50px 46px -46px rgba(37,58,106,.3);
 		border: 1px solid #ccc;
@@ -106,7 +106,7 @@ body{
 	}
 	.booking-box{
 		margin-bottom: 14px;
-		@include md {
+		@include sm {
 			margin-bottom: 0;
 		}
 		> p{
@@ -125,7 +125,7 @@ body{
 			position: relative;
 			padding: 20px 22px;
 		}
-		@include md {
+		@include sm {
 			width: 280px;
 		}
 	}
@@ -142,7 +142,7 @@ body{
 		.booking-checkin-checkout{			
 			position: relative;
 			overflow: hidden;	
-			@include md {
+			@include sm {
 				width: 200px;
 			}		
 			.checkin, .checkout{
@@ -178,7 +178,7 @@ body{
 		margin-right: 4%;
 		position: relative;
 		float: left;
-		@include md {
+		@include sm {
 			width: 75px;
 			margin-right: 0;
 			float: none;
@@ -204,7 +204,7 @@ body{
 		position: relative;
 		text-align: center;
 		float: right;
-		@include md {
+		@include sm {
 			width: 110px;
 			float: none;
 		}
@@ -222,6 +222,7 @@ body{
 		transform: translateY(-50%);
 		font-family: $lato;
 		cursor: pointer;
+		padding: 10px 0;
 		.title{
 			line-height: 1.38;
 			color: #232e48;			
@@ -230,7 +231,7 @@ body{
 		    cursor: pointer;
 		    display: inline-block;
 		    margin-right: 10px;
-		    @include md {
+		    @include sm {
 				display: block;
 				font-size: 16px;
 				margin-right: 0;
@@ -241,7 +242,7 @@ body{
 			opacity: 0.75;
 			color: #7b7b85;
 			display: inline-block;
-			@include md {
+			@include sm {
 				display: block;
 				font-size: 12px;
 			}
@@ -250,7 +251,7 @@ body{
 
 	.search-button{
 		clear: both;
-		@include md {			
+		@include sm {			
 			width: 110px;
 		}
 		>p {
@@ -319,7 +320,7 @@ body{
   		border: solid 2px #e4e4e7;
   		height: 50px;
   		position: relative;
-  		@include md {
+  		@include sm {
 			height: 60px;
   		}
   		input[type='text']{
@@ -330,7 +331,7 @@ body{
   			font-family: $lato;
   			color: #7b7b85;
   			opacity: 0.75;
-  			@include md {
+  			@include sm {
   				height: 56px;
   			}
   		}
@@ -421,6 +422,7 @@ body{
 	    }  
 	}
 }
+
 
 
 

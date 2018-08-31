@@ -221,6 +221,22 @@ var MystaysBookingWidget = {
             updateContainer.querySelector('.mbsc-range-btn-end .mbsc-range-btn').appendChild(checkoutDateElement);
         }
     },
+    CheckStartEndDay: function (event, inst) {
+        
+        var startvalue = inst.startVal;
+        var endvalue = inst.endVal;
+        MystaysBookingWidget.Constants.CheckNextDaySetManually = false;
+
+        //If start date is equal to end date then set end date as next day
+        if ((new Date(endvalue.split('|')[4]) <= new Date(startvalue.split('|')[4])) || inst.endVal == '') {
+            MystaysBookingWidget.Constants.CheckNextDaySetManually = true;
+            var startDate = new Date(inst.startVal.split('|')[4]);
+            var nextDay = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 1, 0, 0);
+            inst.setVal([startDate, nextDay], true, true, false);
+
+        }
+        
+    },
     //Method to set custom header for each month
     SetCustomMonthHeader: function (calendarElement) {
 
@@ -305,7 +321,7 @@ var MystaysBookingWidget = {
                 var endval = inst.endVal;
             },
             onDayChange: function (event, inst) {
-
+                
                 console.log('onDayChange - status - ' + MystaysBookingWidget.Constants.CurrentStatus);
 
                 //Logic to check only if that end date that is lesser than start date cannot be selected
@@ -339,40 +355,34 @@ var MystaysBookingWidget = {
                 MystaysBookingWidget.SetCustomMonthHeader(event.target);
             },
             onSet: function (event, inst) {
-                var startvalue = inst.startVal;
-                var endvalue = inst.endVal;
-                MystaysBookingWidget.Constants.CheckNextDaySetManually = false;
-
-                //If start date is equal to end date then set end date as next day
-                if ((new Date(endvalue.split('|')[4]) <= new Date(startvalue.split('|')[4])) || inst.endVal == '') {
-                    MystaysBookingWidget.Constants.CheckNextDaySetManually = true;
-                    var startDate = new Date(inst.startVal.split('|')[4]);
-                    var nextDay = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 1, 0, 0);
-                    inst.setVal([startDate, nextDay], true, true, false);
-
-                }
+                MystaysBookingWidget.CheckStartEndDay(event, inst);
             },
             onShow: function (event, inst) {
                 MystaysBookingWidget.Constants.CheckNextDaySetManually = false;
                 console.log('onShow - status - ' + MystaysBookingWidget.Constants.CurrentStatus);
-                
-                var dateList = document.querySelectorAll('.mbsc-cal-slide .mbsc-cal-day:not(.mystays-hover-added):not(.mbsc-disabled):not([aria-hidden="true"])');
 
-                for (var i = 0; i < dateList.length; i++) {
-                    dateList[i].classList.add('mystays-hover-added');
-                    dateList[i].addEventListener('mouseover', function (e, args) {
-                        MystaysBookingWidget.CheckHover(this, document.querySelectorAll('.mystays-hover-added'), inst);
-                    });
+
+                if (!MystaysBookingWidget.IsMobile()) {
+                    var dateList = document.querySelectorAll('.mbsc-cal-slide .mbsc-cal-day:not(.mystays-hover-added):not(.mbsc-disabled):not([aria-hidden="true"])');
+                    for (var i = 0; i < dateList.length; i++) {
+                        dateList[i].classList.add('mystays-hover-added');
+                        dateList[i].addEventListener('mouseover', function (e, args) {
+                            MystaysBookingWidget.CheckHover(this, document.querySelectorAll('.mystays-hover-added'), inst);
+                        });
+                    }
                 }
 
                 MystaysBookingWidget.CalendarCustomFunctions();
             }, onPageChange: function (event, inst) {
-                var dateList = document.querySelectorAll('.mbsc-cal-slide .mbsc-cal-day:not(.mystays-hover-added):not(.mbsc-disabled):not([aria-hidden="true"])');
-                for (var i = 0; i < dateList.length; i++) {
-                    dateList[i].classList.add('mystays-hover-added');
-                    dateList[i].addEventListener('mouseover', function (e, args) {
-                        MystaysBookingWidget.CheckHover(this, document.querySelectorAll('.mystays-hover-added'), inst);
-                    });
+
+                if (!MystaysBookingWidget.IsMobile()) {
+                    var dateList = document.querySelectorAll('.mbsc-cal-slide .mbsc-cal-day:not(.mystays-hover-added):not(.mbsc-disabled):not([aria-hidden="true"])');
+                    for (var i = 0; i < dateList.length; i++) {
+                        dateList[i].classList.add('mystays-hover-added');
+                        dateList[i].addEventListener('mouseover', function (e, args) {
+                            MystaysBookingWidget.CheckHover(this, document.querySelectorAll('.mystays-hover-added'), inst);
+                        });
+                    }
                 }
 
             }, onClose: function (event, inst) {
@@ -386,7 +396,7 @@ var MystaysBookingWidget = {
                 }
 
             },
-            onMonthChange: function (event, inst) {
+            onPageLoaded: function (event, inst) {
                 MystaysBookingWidget.SetCustomMonthHeader();
             },
             onSetDate: function (event, inst) {

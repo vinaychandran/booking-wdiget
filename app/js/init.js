@@ -10,10 +10,12 @@ var MystaysBookingWidget = {
         //Variable used to identify if the checkout date is manually set to the next day
         CheckNextDaySetManually: false,
         EnglishMonthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+        EnglishMonthNamesShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        EnglishDayNamesShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
         CalendarHeader: ['Japanese Calendar', 'Calendar', 'Chinese Calendar', 'Taiwanese calendar', 'Korean calendar'],
-        NightsOfStayDesktop: ['ëÿç›ÇÃñÈ', '({days} Nights}', 'Chinese Nights', 'Taiwanese Nights', 'Korean Nights'],
+        NightsOfStayDesktop: ['ëÿç›ÇÃñÈ', '({days} Nights)', 'Chinese Nights', 'Taiwanese Nights', 'Korean Nights'],
         NightsOfStayOneNightDesktop: ['ëÿç›ÇÃñÈ', '(1 Night)', 'Chinese Nights', 'Taiwanese Nights', 'Korean Nights'],
-        NightsOfStayMobile: ['ëÿç›ÇÃñÈ', 'Ok ({days} Nights}', 'Chinese Nights', 'Taiwanese Nights', 'Korean Nights'],
+        NightsOfStayMobile: ['ëÿç›ÇÃñÈ', 'Ok ({days} Nights)', 'Chinese Nights', 'Taiwanese Nights', 'Korean Nights'],
         NightsOfStayOneNightMobile: ['ëÿç›ÇÃñÈ', 'Ok (1 Night)', 'Chinese Nights', 'Taiwanese Nights', 'Korean Nights']
     },
     //All helper methods
@@ -121,22 +123,28 @@ var MystaysBookingWidget = {
         },
         //Method to render the text on the footer
         SetFooterText: function SetFooterText(startval, endval,  RenderedElement, IsEndDateADate) {
-
-            if (RenderedElement) {
-                var documentElement = RenderedElement;
-            } else {
-                var documentElement = document;
-            }
-
-            //Removing the footer if it is already present
-            var customcalendarfooter = documentElement.querySelector('.mystays-calendar-footer');
-            if (customcalendarfooter) {
-                customcalendarfooter.parentNode.removeChild(customcalendarfooter);
-            }
             if (!MystaysBookingWidget.HelperMethods.IsMobile()) {
+                if (RenderedElement) {
+                    var documentElement = RenderedElement;
+                } else {
+                    var documentElement = document;
+                }
+
+                //Removing the footer if it is already present
+                var customcalendarfooter = documentElement.querySelector('.mystays-calendar-footer');
+                if (customcalendarfooter) {
+                    customcalendarfooter.parentNode.removeChild(customcalendarfooter);
+                }
+
 
                 var calendarbody = documentElement.querySelector('.mbsc-cal-body');
-                var dateDifference = MystaysBookingWidget.HelperMethods.GetDays(startval.split('|')[4], endval.split('|')[4]);
+
+                if (!IsEndDateADate) {
+                    var dateDifference = MystaysBookingWidget.HelperMethods.GetDays(startval.split('|')[4], endval.split('|')[4]);
+                } else {
+                    var dateDifference = MystaysBookingWidget.HelperMethods.GetDays(startval.split('|')[4], endval);
+                }
+                
                 var htmlString = '<p class="mystays-calendar-footer" >{startday}, {startdate} {startmonth} {startyear} - {endday}, {enddate} {endmonth} {endyear} - {NightsOfStay}</p>';
                 htmlString = htmlString.replace('{startday}', startval.split('|')[5]);
                 htmlString = htmlString.replace('{startdate}', startval.split('|')[0]);
@@ -149,7 +157,18 @@ var MystaysBookingWidget = {
                     htmlString = htmlString.replace('{enddate}', endval.split('|')[0]);
                     htmlString = htmlString.replace('{endmonth}', endval.split('|')[1]);
                     htmlString = htmlString.replace('{endyear}', endval.split('|')[2]);
-                } else {
+                }
+                //When a date is passed for endval(When hovering over dates in desktop)
+                else {
+
+                    var endDate = new Date(endval);
+
+                    if (MystaysBookingWidget.SelectedLanguage === 'en') {
+                        htmlString = htmlString.replace('{endday}', MystaysBookingWidget.Constants.EnglishDayNamesShort[endDate.getDay()]);
+                        htmlString = htmlString.replace('{enddate}', ('0' + endDate.getDate()).slice(-2));
+                        htmlString = htmlString.replace('{endmonth}', MystaysBookingWidget.Constants.EnglishMonthNamesShort[endDate.getDay()]);
+                        htmlString = htmlString.replace('{endyear}', endDate.getFullYear());   
+                    }
                     htmlString = htmlString.replace('{endday}', endval.split('|')[5]);
                     htmlString = htmlString.replace('{enddate}', endval.split('|')[0]);
                     htmlString = htmlString.replace('{endmonth}', endval.split('|')[1]);
@@ -193,7 +212,7 @@ var MystaysBookingWidget = {
 
             //Changing footer only when element date is greater than the start date
             if ((MystaysBookingWidget.Constants.CheckNextDaySetManually || MystaysBookingWidget.Constants.CurrentStatus === 'end') && new Date(rangeObject.startVal.split('|')[4]) < new Date(element.getAttribute('data-full'))) {
-                MystaysBookingWidget.CustomHTML.SetFooterText(rangeObject.startVal, element.getAttribute('data-full'), false);
+                MystaysBookingWidget.CustomHTML.SetFooterText(rangeObject.startVal, element.getAttribute('data-full'), null, true);
             }
             //Else setting it to start and end date
             else {

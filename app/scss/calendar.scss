@@ -292,6 +292,11 @@ $lato: 'Lato', sans-serif;
 					z-index: 2; 				
 					border-color: transparent;
 				}
+				&.mbsc-cal-sel-end.mbsc-cal-day-hl.mystays-hover-intermediate{
+					.mbsc-cal-day-date{
+						background: none;
+					}
+				}
 			}			
 		} 
 
@@ -353,12 +358,22 @@ $lato: 'Lato', sans-serif;
 .mbsc-mobiscroll.mbsc-range .mbsc-ltr {
 	.mbsc-cal-sel-start.mbsc-cal-sel-end{    	
 		&:after{
-			border-top-right-radius:0;
-		    border-bottom-right-radius:0;
-			right: 0;
-			margin-right: 0;
+			@include sm {
+				border-top-right-radius:0;
+			    border-bottom-right-radius:0;
+				right: 0;
+				margin-right: 0;
+			}
 		}
 	}
+
+	.mbsc-cal-sel-end.mbsc-cal-day-hl{
+		&:hover{
+			.mbsc-cal-day-date{
+				background: none;
+			}
+		}
+	} 
 
 	.mbsc-cal-sel-end.mystays-hover-intermediate{
 		.mbsc-cal-day-date{

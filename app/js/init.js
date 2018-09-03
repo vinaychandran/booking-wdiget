@@ -76,6 +76,9 @@ var MystaysBookingWidget = {
             dateItemList.forEach(function (element, index) {
                 if (new Date(element.getAttribute('data-full')) < new Date(dateToCheck)) {
                     element.classList.add('mystays-bookingengine-disabled');
+                    //element.classList.add('mbsc-disabled');
+                    element.classList.add('mbsc-sc-itm-inv');
+                    
                 }
 
             });
@@ -87,6 +90,9 @@ var MystaysBookingWidget = {
 
             dateItemList.forEach(function (element, index) {
                 element.classList.remove('mystays-bookingengine-disabled');
+                //element.classList.remove('mbsc-disabled');
+                element.classList.remove('mbsc-sc-itm-inv');
+                
             });
         },
         SetDateValues: function SetDateValues(mobiScrollInstance) {
@@ -303,15 +309,9 @@ var MystaysBookingWidget = {
                 var calendarHeaderElement = document.createElement('span');
 
                 calendarHeader.classList = 'mystays-bookingwidget-calendarheader';
-                if (MystaysBookingWidget.SelectedLanguage == 'ja') {
-                    calendarHeaderElement.innerHTML = MystaysBookingWidget.Constants.CalendarHeader[0];
-                } else if (MystaysBookingWidget.SelectedLanguage == 'en') {
-                    calendarHeaderElement.innerHTML = MystaysBookingWidget.Constants.CalendarHeader[1];
-                } else if (MystaysBookingWidget.SelectedLanguage == 'zh') {
-                    calendarHeaderElement.innerHTML = MystaysBookingWidget.Constants.CalendarHeader[2];
-                } else if (MystaysBookingWidget.SelectedLanguage == 'ja') {
-                    calendarHeaderElement.innerHTML = MystaysBookingWidget.Constants.CalendarHeader[3];
-                }
+                
+                calendarHeaderElement.innerHTML = MystaysBookingWidget.HelperMethods.GetCustomText(MystaysBookingWidget.Constants.CalendarHeader);
+            
 
                 calendarHeader.appendChild(calendarHeaderElement);
 
@@ -416,13 +416,13 @@ var MystaysBookingWidget = {
     },
 
     //Method to initialize range
-    InitiateRange: function InitiateRange() {
+    InitiateRange: function InitiateRange(language) {
 
 
 
         var rangeObject = mobiscroll.range('#range-container', {
             theme: 'mobiscroll',
-            lang: MystaysBookingWidget.SelectedLanguage,
+            lang: language,
             display: 'center',
             cssClass: 'mystays-bookingwidget',
             fromText: '',
@@ -522,8 +522,6 @@ var MystaysBookingWidget = {
                 if (event.active === 'start') {
                     MystaysBookingWidget.CustomHTML.RemoveIntermediateHoverClass();
                 }
-
-
                 var startval = inst.startVal;
                 var endval = inst.endVal;
                 MystaysBookingWidget.CustomHTML.SetDateValues(inst);
@@ -534,12 +532,32 @@ var MystaysBookingWidget = {
 
 
         return rangeObject;
+    },
+    CheckInButtonHandler: function CheckInButtonHandler(element,args) {
+
+    },
+    CheckInOutButtonHandlers: function () {
+        var checkinbtn = document.getElementById('calendar-checkindate');
+        var checkoutbtn = document.getElementById('calendar-checkindate');
+
+        checkinbtn.addEventListener('click', CheckInButtonHandler);
+        checkoutbtn.addEventListener('click', CheckOutButtonHandler);
+
+    },
+    Loaded: function (selectedLanguage) {
+        MystaysBookingWidget.SelectedLanguage = selectedLanguage;
+        language = MystaysBookingWidget.SelectedLanguage;
+        if (language==='tw') {
+            language = 'zh';
+        }
+        bookingWidgetRange = MystaysBookingWidget.InitiateRange(language);
     }
 };
 
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    MystaysBookingWidget.SelectedLanguage = 'en';
-    bookingWidgetRange = MystaysBookingWidget.InitiateRange();
+    
+    MystaysBookingWidget.Loaded('en');
+    
 });

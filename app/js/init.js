@@ -508,10 +508,12 @@ var MystaysBookingWidget = {
                     } else {
                         MystaysBookingWidget.CustomHTML.UpdateSetButton(inst.startVal.split('|')[4], event.date);
                     }
+                    MystaysBookingWidget.CustomHTML.RepositionSelectorIndicator(true);
                 }
 
                 if (event.active === 'start') {
                     MystaysBookingWidget.CustomHTML.DisablePreviousDates(event.target.getAttribute('data-full'));
+                    MystaysBookingWidget.CustomHTML.RepositionSelectorIndicator(false);
                 }
             },
             onMarkupReady: function (event, inst) {
@@ -562,13 +564,15 @@ var MystaysBookingWidget = {
     CheckInButtonHandler: function CheckInButtonHandler(element, args) {
         MystaysBookingWidget.CustomHTML.RepositionSelectorIndicator(true);
 
+        MystaysBookingWidget.CustomHTML.EnableAllDates();
+
         //Removing all intermediate hover classes
-        MystaysBookingWidget.CustomHTML.RemoveIntermediateHoverLogic();
+        MystaysBookingWidget.CustomHTML.RemoveIntermediateHoverLogic();        
     },
     ///Click Event Handler for the Check out section
     CheckOutButtonHandler: function CheckOutButtonHandler(element, args) {
         MystaysBookingWidget.CustomHTML.RepositionSelectorIndicator(false);
-
+        
     },
     CheckInOutButtonHandlers: function () {
         var checkinbtn = document.getElementById('bookingwidget-checkin');

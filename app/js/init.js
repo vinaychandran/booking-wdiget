@@ -57,6 +57,31 @@ var MystaysBookingWidget = {
     },
     //Contains methods that alter the HTML of the calendar
     CustomHTML: {
+        //Method to reposition the indicator icon based on user selection of start or end date
+        RepositionSelectorIndicator: function RepositionSelectorIndicator(IsCheckin) {
+            var rangeBubbleContainer = document.querySelector('.mbsc-fr-bubble-bottom');
+            if (rangeBubbleContainer) {
+
+                var rangeLeftProperty = document.querySelector('.mbsc-fr-bubble-bottom').style.left;
+                var btncontainer = document.querySelector('.booking-checkin-checkout');
+                var currentLeftPropertyValue = parseInt(rangeLeftProperty.replace('px', ''));
+
+                //When checkin button is clicked
+                if (IsCheckin) {
+                    //Check if icon is currently in checkout position
+                    if (currentLeftPropertyValue > btncontainer.offsetWidth / 2) {
+                        rangeBubbleContainer.style.left = (currentLeftPropertyValue - (btncontainer.offsetWidth / 2)) + "px";
+                    }
+                } else {
+
+                    //Check if icon is currently in checkin position
+                    if (currentLeftPropertyValue < btncontainer.offsetWidth / 2) {
+                        rangeBubbleContainer.style.left = (currentLeftPropertyValue + (btncontainer.offsetWidth / 2)) + "px";
+                    }
+                    
+                }
+            }
+        },
         UpdateSetButton: function (startdate, enddate) {
             if (MystaysBookingWidget.HelperMethods.IsMobile()) {
 
@@ -192,7 +217,7 @@ var MystaysBookingWidget = {
         },
 
         //Method to remove all the intermediate classes
-        RemoveIntermediateHoverClass: function RemoveIntermediateHoverClass() {
+        RemoveIntermediateHoverLogic: function RemoveIntermediateHoverLogic() {
 
             var dateListWithInterMediate = document.querySelectorAll('.mystays-hover-intermediate');
 
@@ -205,7 +230,7 @@ var MystaysBookingWidget = {
 
         //Method to add a custom class on all dates in between a start and end date
         CheckHover: function CheckHover(element, dateList, rangeObject) {
-            MystaysBookingWidget.CustomHTML.RemoveIntermediateHoverClass();
+            MystaysBookingWidget.CustomHTML.RemoveIntermediateHoverLogic();
 
 
             //Adding class from existing elements(rangeObject.endVal === "")
@@ -379,13 +404,13 @@ var MystaysBookingWidget = {
         },
         CalendarCustomFunctions: function CalendarCustomFunctions() {
             document.querySelector('.mbsc-cal-body').addEventListener('mouseout', function () {
-                MystaysBookingWidget.CustomHTML.RemoveIntermediateHoverClass();
+                MystaysBookingWidget.CustomHTML.RemoveIntermediateHoverLogic();
             });
         },
         AddCancelEvent: function () {
             bookingWidgetRange.clear();
         },
-        AddIntermediateHover: function (inst) {
+        AddIntermediateHoverLogic: function (inst) {
 
             if (!MystaysBookingWidget.HelperMethods.IsMobile()) {
                 var dateList = document.querySelectorAll('.mbsc-cal-slide .mbsc-cal-day:not(.mystays-hover-added):not(.mbsc-disabled):not([aria-hidden="true"])');
@@ -503,11 +528,11 @@ var MystaysBookingWidget = {
             onShow: function (event, inst) {
                 MystaysBookingWidget.CustomHTML.AdjustSectionHeights();
                 MystaysBookingWidget.Constants.CheckNextDaySetManually = false;
-                MystaysBookingWidget.CustomHTMLEvents.AddIntermediateHover(inst);
+                MystaysBookingWidget.CustomHTMLEvents.AddIntermediateHoverLogic(inst);
                 MystaysBookingWidget.CustomHTMLEvents.CalendarCustomFunctions();
                 MystaysBookingWidget.CustomHTML.UpdateSetButton(inst.startVal.split('|')[4], inst.endVal.split('|')[4]);
             }, onPageChange: function (event, inst) {
-                MystaysBookingWidget.CustomHTMLEvents.AddIntermediateHover(inst);
+                MystaysBookingWidget.CustomHTMLEvents.AddIntermediateHoverLogic(inst);
             }, onClose: function (event, inst) {
                 MystaysBookingWidget.ValidateStartEndDate(event, inst);
             },
@@ -520,7 +545,7 @@ var MystaysBookingWidget = {
                 MystaysBookingWidget.Constants.CurrentStatus = event.active;
 
                 if (event.active === 'start') {
-                    MystaysBookingWidget.CustomHTML.RemoveIntermediateHoverClass();
+                    MystaysBookingWidget.CustomHTML.RemoveIntermediateHoverLogic();
                 }
                 var startval = inst.startVal;
                 var endval = inst.endVal;
@@ -533,15 +558,28 @@ var MystaysBookingWidget = {
 
         return rangeObject;
     },
-    CheckInButtonHandler: function CheckInButtonHandler(element,args) {
+    ///Click Event Handler for the Check in section
+    CheckInButtonHandler: function CheckInButtonHandler(element, args) {
+        MystaysBookingWidget.CustomHTML.RepositionSelectorIndicator(true);
+
+        //Removing all intermediate hover classes
+        MystaysBookingWidget.CustomHTML.RemoveIntermediateHoverLogic();
+    },
+    ///Click Event Handler for the Check out section
+    CheckOutButtonHandler: function CheckOutButtonHandler(element, args) {
+        MystaysBookingWidget.CustomHTML.RepositionSelectorIndicator(false);
 
     },
     CheckInOutButtonHandlers: function () {
-        var checkinbtn = document.getElementById('calendar-checkindate');
-        var checkoutbtn = document.getElementById('calendar-checkindate');
+        var checkinbtn = document.getElementById('bookingwidget-checkin');
+        var checkoutbtn = document.getElementById('bookingwidget-checkout');
 
-        checkinbtn.addEventListener('click', CheckInButtonHandler);
-        checkoutbtn.addEventListener('click', CheckOutButtonHandler);
+        checkinbtn.addEventListener("click", function () {
+            MystaysBookingWidget.CheckInButtonHandler();
+        });
+        checkoutbtn.addEventListener("click", function () {
+            MystaysBookingWidget.CheckOutButtonHandler();
+        });
 
     },
     Loaded: function (selectedLanguage) {
@@ -551,6 +589,7 @@ var MystaysBookingWidget = {
             language = 'zh';
         }
         bookingWidgetRange = MystaysBookingWidget.InitiateRange(language);
+        MystaysBookingWidget.CheckInOutButtonHandlers();
     }
 };
 

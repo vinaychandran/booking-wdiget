@@ -562,6 +562,8 @@ var MystaysBookingWidget = {
     },
     ///Click Event Handler for the Check in section
     CheckInButtonHandler: function CheckInButtonHandler(element, args) {
+        MystaysBookingWidget.Constants.CurrentStatus = 'start';
+        MystaysBookingWidget.Constants.CheckNextDaySetManually = false;
         MystaysBookingWidget.CustomHTML.RepositionSelectorIndicator(true);
 
         MystaysBookingWidget.CustomHTML.EnableAllDates();
@@ -571,6 +573,7 @@ var MystaysBookingWidget = {
     },
     ///Click Event Handler for the Check out section
     CheckOutButtonHandler: function CheckOutButtonHandler(element, args) {
+        MystaysBookingWidget.Constants.CurrentStatus = 'end';
         MystaysBookingWidget.CustomHTML.RepositionSelectorIndicator(false);
         
     },

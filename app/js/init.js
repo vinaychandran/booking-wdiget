@@ -216,7 +216,7 @@ var MystaysBookingWidget = {
             }
             //Else setting it to start and end date
             else {
-                MystaysBookingWidget.CustomHTML.SetFooterText(rangeObject.startVal, rangeObject.endVal.split('|')[4]);
+                MystaysBookingWidget.CustomHTML.SetFooterText(rangeObject.startVal, rangeObject.endVal.split('|')[4],null, true);
             }
         },
         //Alter section heights

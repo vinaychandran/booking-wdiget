@@ -610,7 +610,7 @@ var MystaysBookingWidget = {
                         } else {
                             MystaysBookingWidget.BookingCalendar.CustomHTML.UpdateSetButton(inst.startVal.split('|')[4], event.date);
                         }
-                        MystaysBookingWidget.BookingCalendar.CustomHTML.RepositionSelectorIndicator(true);
+                        
                     }
 
                     if (event.active === 'start') {
@@ -715,34 +715,63 @@ var MystaysBookingWidget = {
             })
         },
 
-        RoomsButtonAdd: function RoomsButtonAdd(element) {
+        RoomsButtonAdd: function RoomsButtonAdd(event) {
             var element = document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.RoomElement);
 
             if (parseInt(element.children[0].innerHTML) < MystaysBookingWidget.GuestsWidget.Constants.MaximumRooms) {
                 element.children[0].innerHTML = parseInt(element.children[0].innerHTML) + 1;
                 element.children[0].setAttribute("data-count", (parseInt(element.children[0].getAttribute("data-count")) + 1));
+
+                //Adding disabled class to not allow more button click
+                if (parseInt(element.children[0].innerHTML) == MystaysBookingWidget.GuestsWidget.Constants.MaximumRooms) {
+                    event.target.classList.add('disabled');
+                } else {
+                    event.target.classList.remove('disabled');
+                    event.target.parentNode.querySelector(MystaysBookingWidget.GuestsWidget.Constants.ButtonRemove).classList.remove('disabled');
+                }
+
+
+            } else {
+                event.target.classList.add('disabled');
             }
             
 
             
         },
 
-        RoomsButtonRemove: function RoomsButtonRemove(element) {
+        RoomsButtonRemove: function RoomsButtonRemove(event) {
             var element = document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.RoomElement);
 
             if (parseInt(element.children[0].innerHTML) > 1) {
                 element.children[0].innerHTML = parseInt(element.children[0].innerHTML) - 1;
                 element.children[0].setAttribute("data-count", (parseInt(element.children[0].getAttribute("data-count")) - 1));
+
+                //Adding disabled class to not allow more button click
+                if (parseInt(element.children[0].innerHTML) == 1) {
+                    event.target.classList.add('disabled');
+                } else {
+                    event.target.classList.remove('disabled');
+                    event.target.parentNode.querySelector(MystaysBookingWidget.GuestsWidget.Constants.ButtonAdd).classList.remove('disabled');
+                }
             }
         },
 
-        AdultButtonAdd: function ChildButtonAdd(element) {
+        AdultButtonAdd: function ChildButtonAdd(event) {
             var element = document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.AdultElement);
 
 
             if (parseInt(element.children[0].innerHTML) < MystaysBookingWidget.GuestsWidget.Constants.MaximumAdults) {
+
                 element.children[0].innerHTML = parseInt(element.children[0].innerHTML) + 1;
                 element.children[0].setAttribute("data-count", (parseInt(element.children[0].getAttribute("data-count")) + 1));
+
+                //Adding disabled class to not allow more button click
+                if (parseInt(element.children[0].innerHTML) == MystaysBookingWidget.GuestsWidget.Constants.MaximumAdults) {
+                    event.target.classList.add('disabled');
+                } else {
+                    event.target.classList.remove('disabled');
+                    event.target.parentNode.querySelector(MystaysBookingWidget.GuestsWidget.Constants.ButtonRemove).classList.remove('disabled');
+                }
 
                 //Updating main guests section
                 var MainGuestsButtonTitle = document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.MainGuestsButtonTitle);
@@ -751,12 +780,20 @@ var MystaysBookingWidget = {
             }
         },
 
-        AdultButtonRemove: function ChildButtonRemove(element) {
+        AdultButtonRemove: function ChildButtonRemove(event) {
             var element = document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.AdultElement);
 
             if (parseInt(element.children[0].innerHTML) > 1) {
                 element.children[0].innerHTML = parseInt(element.children[0].innerHTML) - 1;
                 element.children[0].setAttribute("data-count", (parseInt(element.children[0].getAttribute("data-count")) - 1));
+
+                //Adding disabled class to not allow more button click
+                if (parseInt(element.children[0].innerHTML) == 1) {
+                    event.target.classList.add('disabled');
+                } else {
+                    event.target.classList.remove('disabled');
+                    event.target.parentNode.querySelector(MystaysBookingWidget.GuestsWidget.Constants.ButtonAdd).classList.remove('disabled');
+                }
 
                 //Updating main guests section
                 var MainGuestsButtonTitle = document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.MainGuestsButtonTitle);
@@ -765,12 +802,21 @@ var MystaysBookingWidget = {
             }
         },
 
-        ChildButtonAdd: function ChildButtonAdd(element) {
+        ChildButtonAdd: function ChildButtonAdd(event) {
             var element = document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.ChildElement);
 
             if (parseInt(element.children[0].innerHTML) < MystaysBookingWidget.GuestsWidget.Constants.MaximumChildren) {
+
                 element.children[0].innerHTML = parseInt(element.children[0].innerHTML) + 1;
                 element.children[0].setAttribute("data-count", (parseInt(element.children[0].getAttribute("data-count")) + 1));
+
+                //Adding disabled class to not allow more button click
+                if (parseInt(element.children[0].innerHTML) == MystaysBookingWidget.GuestsWidget.Constants.MaximumChildren) {
+                    event.target.classList.add('disabled');
+                } else {
+                    event.target.classList.remove('disabled');
+                    event.target.parentNode.querySelector(MystaysBookingWidget.GuestsWidget.Constants.ButtonRemove).classList.remove('disabled');
+                }
 
                 //Updating main guests section
                 var MainGuestsButtonTitle = document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.MainGuestsButtonTitle);
@@ -779,12 +825,20 @@ var MystaysBookingWidget = {
             }
         },
 
-        ChildButtonRemove: function ChildButtonRemove(element) {
+        ChildButtonRemove: function ChildButtonRemove(event) {
             var element = document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.ChildElement);
 
-            if (parseInt(element.children[0].innerHTML) > 0 ) {
+            if (parseInt(element.children[0].innerHTML) > 0) {
                 element.children[0].innerHTML = parseInt(element.children[0].innerHTML) - 1;
                 element.children[0].setAttribute("data-count", (parseInt(element.children[0].getAttribute("data-count")) - 1));
+
+                //Adding disabled class to not allow more button click
+                if (parseInt(element.children[0].innerHTML) == 0) {
+                    event.target.classList.add('disabled');
+                } else {
+                    event.target.classList.remove('disabled');
+                    event.target.parentNode.querySelector(MystaysBookingWidget.GuestsWidget.Constants.ButtonAdd).classList.remove('disabled');
+                }
 
                 //Updating main guests section
                 var MainGuestsButtonTitle = document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.MainGuestsButtonTitle);

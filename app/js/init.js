@@ -521,8 +521,7 @@ var MystaysBookingWidget = {
                         calendarScroll: 'horizontal',
                         focusOnClose: '.booking-box.guests',
                         buttons: [],
-                        calendarWidth: 654,
-                        calendarHeight: 250
+                        calendarWidth: 654
                     }
                 },
                 yearChange: false,

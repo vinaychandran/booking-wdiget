@@ -209,6 +209,9 @@ $lato: 'Lato', sans-serif;
 		}
 
 		.mbsc-fr-bubble-bottom{
+			&.mystays-bookingwidget-animate-slide{
+				transition: left 0.5s ease-out;
+			}						 
 			.mbsc-fr-arr{
 				border-color: transparent transparent $cal-primary-bg transparent;
 			}

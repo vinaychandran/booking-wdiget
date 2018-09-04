@@ -185,6 +185,14 @@ $lato: 'Lato', sans-serif;
 		@include device {
 			display: none;
 		}
+		@include sm {
+			padding: 15px 0;
+		}
+		.mbsc-cal-month{
+			font-style:16px;
+			font-weight: 700;
+			font-family: $lato;
+		}
 	}
 
 	.mbsc-mobiscroll {
@@ -197,10 +205,14 @@ $lato: 'Lato', sans-serif;
 
 		.mbsc-cal-cell:focus,  .mbsc-cal-cell:not(.mbsc-disabled):hover
 		{
-			.mbsc-cal-cell-txt{background: #fff;}
+			.mbsc-cal-cell-txt{background:$cal-primary-bg;}
 		}
 
-		
+		.mbsc-fr-bubble-bottom{
+			.mbsc-fr-arr{
+				border-color: transparent transparent $cal-primary-bg transparent;
+			}
+		}		
 
 		.mbsc-fr-overlay{
 			display: none;
@@ -232,13 +244,14 @@ $lato: 'Lato', sans-serif;
 			background: $cal-primary-bg;			
 			position: relative;
 			z-index: 1;	
+			
 			> div{
 				color: $cal-secondar-color;
 				font-size: 16px;
 				font-family: $lato;
 				border-bottom: 0;
 			}
-		}		
+		}	
 
 		.mystays-bookingwidget-header-month{
 			padding: 17px 0;
@@ -254,7 +267,8 @@ $lato: 'Lato', sans-serif;
 
 		.mbsc-cal-table{
 			background: $cal-secondary-bg;
-			padding: 10px 0;
+			padding: 0;
+
 		}
 
 		.mbsc-cal-day-date{
@@ -334,7 +348,25 @@ $lato: 'Lato', sans-serif;
 			    line-height: 1;
 				height: auto;
 			}
-		}		
+		}
+
+		.mystays-calendar-footer{
+			font-size: 14px;
+			font-family: $lato;
+			font-weight: 700;
+			margin: 0;
+			padding: 13px 0;
+		}	
+
+		.mbsc-cal-prev, .mbsc-cal-next{
+			&.mbsc-disabled{
+				opacity: 0;
+			}
+			&.mbsc-active, &.mbsc-fr-btn-e:not(.mbsc-disabled):hover{
+				background: transparent;
+			}
+			color: $cal-secondar-color;
+		}	
 	}
 }
 

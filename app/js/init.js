@@ -457,10 +457,9 @@ var MystaysBookingWidget = {
             //Function to close the calendar when the user clicks outside
             ClickOutside: function ClickOutside() {
                 document.addEventListener('click', function (e) {
-                    var container = document.getElementById('calender-render-container');
-                    var checkinContainer = document.getElementById('bookingwidget-checkin');
-                    var checkoutContainer = document.getElementById('bookingwidget-checkout');
-                    if ((!(container === e.target) && !MystaysBookingWidget.Helper.IsDescendant(container, e.target)) && (!(checkinContainer === e.target) && !MystaysBookingWidget.Helper.IsDescendant(checkinContainer, e.target)) && (!(checkoutContainer === e.target) && !MystaysBookingWidget.Helper.IsDescendant(checkoutContainer, e.target))) {
+                    var container = document.querySelector('#booking-widget-container')
+                    
+                    if ((!(container === e.target) && !MystaysBookingWidget.Helper.IsDescendant(container, e.target)) ) {
 
                         if (MystaysRangeObject) {
                             MystaysRangeObject.hide();
@@ -606,12 +605,8 @@ var MystaysBookingWidget = {
                         }
                         //Automatically hide widget on selection of end date for non mobile devices
                         if (!MystaysBookingWidget.Helper.IsMobile()) {
-                            window.setTimeout(
-                                function () {
-                                    MystaysBookingWidget.GuestsWidget.DisplayGuestSection(true)
-                                }, 500);
                             inst.hide();
-                            
+                            MystaysBookingWidget.GuestsWidget.DisplayGuestSection(true);
                         } else {
                             MystaysBookingWidget.BookingCalendar.CustomHTML.UpdateSetButton(inst.startVal.split('|')[4], event.date);
                         }
@@ -645,7 +640,8 @@ var MystaysBookingWidget = {
                     MystaysBookingWidget.BookingCalendar.CustomHTML.UpdateSetButton(inst.startVal.split('|')[4], inst.endVal.split('|')[4]);
                 },
                 onClose: function (event, inst) {
-                     MystaysBookingWidget.BookingCalendar.ValidateStartEndDate(event, inst);
+                    MystaysBookingWidget.BookingCalendar.ValidateStartEndDate(event, inst);
+                    
                     MystaysBookingWidget.Common.HideOverlayLogic();
                 },
                 onPageChange: function (event, inst) {
@@ -710,9 +706,9 @@ var MystaysBookingWidget = {
         //Hide guest section when user clicks outside the widget
         ClickOutside: function ClickOutside() {
             document.addEventListener('click', function (e) {
-                var container = document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.GuestSectionClass);
-                var guestButtonContainer = document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.GuestButtonContainer);
-                if ((!(container === e.target) && !MystaysBookingWidget.Helper.IsDescendant(container, e.target)) && (!(guestButtonContainer === e.target) && !MystaysBookingWidget.Helper.IsDescendant(guestButtonContainer, e.target)) ) {
+                
+                var container = document.querySelector('#booking-widget-container');
+                if ((!(container === e.target) && !MystaysBookingWidget.Helper.IsDescendant(container, e.target))) {
                     MystaysBookingWidget.GuestsWidget.DisplayGuestSection(false);
                     
                 }

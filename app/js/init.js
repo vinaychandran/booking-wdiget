@@ -3,6 +3,27 @@
 
 var MystaysBookingWidget = {
     Helper: {
+        
+        Loaded: function Loaded() {
+            MystaysBookingWidget.Helper.LoadExtensions();
+        },
+        //Method to add extension methods
+        LoadExtensions: function LoadExtensions() {
+            HTMLElement.prototype.ShowElement = function () {
+                this.classList.add('show');
+                this.classList.remove('hide');
+            };
+            HTMLElement.prototype.HideElement = function () {
+                this.classList.add('hide');
+                this.classList.remove('show');
+            };
+            NodeList.prototype.ShowElement = function () {
+                this.forEach(el => el.ShowElement())
+            };
+            NodeList.prototype.HideElement = function () {
+                this.forEach(el => el.HideElement())
+            };
+        },
         //Method to check if the device is a mobile or not
         IsMobile: function IsMobile() {
             return window.innerWidth < 767;
@@ -44,7 +65,8 @@ var MystaysBookingWidget = {
             else if (MystaysBookingWidget.BookingCalendar.SelectedLanguage === 'ko') {
                 return typeOfConstant[4];
             }
-        }
+        },
+
     },
     //All functionalities related to the booking widget calendar
     BookingCalendar: {
@@ -71,6 +93,7 @@ var MystaysBookingWidget = {
                 var rangeBubbleContainer = document.querySelector('.mbsc-fr-bubble-bottom');
                 if (rangeBubbleContainer) {
 
+                    rangeBubbleContainer.classList.add('range-add-animation');
                     var rangeLeftProperty = document.querySelector('.mbsc-fr-bubble-bottom').style.left;
                     var btncontainer = document.querySelector('.booking-checkin-checkout');
                     var currentLeftPropertyValue = parseInt(rangeLeftProperty.replace('px', ''));
@@ -484,8 +507,8 @@ var MystaysBookingWidget = {
             });
 
         },
-        //Method to initialize range
-        InitiateRange: function InitiateRange(selectedLanguage) {
+        //Method to initialize/load range
+        Loaded: function Loaded(selectedLanguage) {
 
             MystaysBookingWidget.BookingCalendar.SelectedLanguage = selectedLanguage;
             if (selectedLanguage === 'tw') {
@@ -606,7 +629,7 @@ var MystaysBookingWidget = {
                 }
             });
 
-            
+
 
             return rangeObject;
         }
@@ -614,10 +637,17 @@ var MystaysBookingWidget = {
     },
     //Functionalities related to the guests section
     GuestsWidget: {
-
+        Constants: {
+            GuestSectionClass: 'booking-guestselect-wrap '
+        },
+        ShowGuestSection: function GuestsWidget() {
+            document.querySelector('.' + MystaysBookingWidget.GuestsWidget.Constants.GuestSectionClass).ShowElement();
+        }
     },
     Loaded: function (selectedLanguage) {
-        bookingWidgetRange = MystaysBookingWidget.BookingCalendar.InitiateRange(selectedLanguage);
+        MystaysBookingWidget.Helper.Loaded();
+        bookingWidgetRange = MystaysBookingWidget.BookingCalendar.Loaded(selectedLanguage);
+
     }
 };
 

@@ -458,8 +458,8 @@ var MystaysBookingWidget = {
                     var checkoutContainer = document.getElementById('bookingwidget-checkout');
                     if ((!(container === e.target) && !MystaysBookingWidget.Helper.IsDescendant(container, e.target)) && (!(checkinContainer === e.target) && !MystaysBookingWidget.Helper.IsDescendant(checkinContainer, e.target)) && (!(checkoutContainer === e.target) && !MystaysBookingWidget.Helper.IsDescendant(checkoutContainer, e.target))) {
 
-                        if (bookingWidgetRange) {
-                            bookingWidgetRange.hide();
+                        if (MystaysRangeObject) {
+                            MystaysRangeObject.hide();
                         }
                     }
                 })
@@ -472,7 +472,7 @@ var MystaysBookingWidget = {
             },
             //Hiding the calendar on back button press
             AddHideEvent: function () {
-                bookingWidgetRange.hide();
+                MystaysRangeObject.hide();
             },
             AddIntermediateHoverLogic: function (inst) {
 
@@ -671,21 +671,46 @@ var MystaysBookingWidget = {
     //Functionalities related to the guests section
     GuestsWidget: {
         Constants: {
-            GuestSectionClass: 'booking-guestselect-wrap'
+            GuestSectionClass: '.booking-guestselect-wrap',
+            GuestButtonContainer :'.booking-box.guests .booking-box-wrap' 
         },
         DisplayGuestSection: function DisplayGuestSection(ShowSection) {
             if (ShowSection) {
-                document.querySelector('.' + MystaysBookingWidget.GuestsWidget.Constants.GuestSectionClass).ShowElement();
+                document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.GuestSectionClass).ShowElement();
             } else {
-                document.querySelector('.' + MystaysBookingWidget.GuestsWidget.Constants.GuestSectionClass).HideElement();
+                document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.GuestSectionClass).HideElement();
             }
             
+        },
+        //Hide guest section when user clicks outside the widget
+        ClickOutside: function ClickOutside() {
+            document.addEventListener('click', function (e) {
+                var container = document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.GuestSectionClass);
+                var guestButtonContainer = document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.GuestButtonContainer);
+                if ((!(container === e.target) && !MystaysBookingWidget.Helper.IsDescendant(container, e.target)) && (!(guestButtonContainer === e.target) && !MystaysBookingWidget.Helper.IsDescendant(guestButtonContainer, e.target)) ) {
+                    MystaysBookingWidget.GuestsWidget.DisplayGuestSection(false);
+                    
+                }
+            })
+        },
+        CustomHTMLEvents: function CustomHTMLEvents() {
+            document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.GuestButtonContainer).addEventListener('click', function () {
+                //Hide calendar
+                if (MystaysRangeObject) {
+                    MystaysRangeObject.hide();
+                }
+                MystaysBookingWidget.GuestsWidget.DisplayGuestSection(true);
+            })
+        },
+        Loaded: function Loaded() {
+            MystaysBookingWidget.GuestsWidget.CustomHTMLEvents();
+            MystaysBookingWidget.GuestsWidget.ClickOutside();
         }
     },
     Loaded: function (selectedLanguage) {
         MystaysBookingWidget.Helper.Loaded();
-        bookingWidgetRange = MystaysBookingWidget.BookingCalendar.Loaded(selectedLanguage);
-
+        MystaysRangeObject = MystaysBookingWidget.BookingCalendar.Loaded(selectedLanguage);
+        MystaysBookingWidget.GuestsWidget.Loaded();
     }
 };
 

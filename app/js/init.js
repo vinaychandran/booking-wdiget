@@ -2,6 +2,19 @@
 
 
 var MystaysBookingWidget = {
+    Common: {
+        //Method to add custom logic when the calendar is shown
+        ShowOverlayLogic: function ShowOverlayLogic() {
+            document.getElementById('booking-widget-overlay').ShowElement();
+            document.getElementById('booking-widget-module').classList.add('mystays-bookingwidget-visible');
+        },
+        //Method to add custom logic when the calendar is hidden
+        HideOverlayLogic: function HideOverlayLogic() {
+            document.getElementById('booking-widget-overlay').HideElement();
+            document.getElementById('booking-widget-module').classList.remove('mystays-bookingwidget-visible');
+        }
+    },
+
     //All generic helper methods
     Helper: {
         
@@ -437,16 +450,7 @@ var MystaysBookingWidget = {
 
                 }
             },
-            //Method to add custom logic when the calendar is shown
-            ShowCalendarCustomLogic: function ShowCalendarCustomLogic() {
-                document.getElementById('booking-widget-overlay').ShowElement();
-                document.getElementById('booking-widget-module').classList.add('mystays-bookingwidget-visible');
-            },
-            //Method to add custom logic when the calendar is hidden
-            HideCalendarCustomLogic: function HideCalendarCustomLogic() {
-                document.getElementById('booking-widget-overlay').HideElement();
-                document.getElementById('booking-widget-module').classList.remove('mystays-bookingwidget-visible');
-            }
+            
 
         },
         CustomHTMLEvents: {
@@ -602,6 +606,10 @@ var MystaysBookingWidget = {
                         }
                         //Automatically hide widget on selection of end date for non mobile devices
                         if (!MystaysBookingWidget.Helper.IsMobile()) {
+                            window.setTimeout(
+                                function () {
+                                    MystaysBookingWidget.GuestsWidget.DisplayGuestSection(true)
+                                }, 500);
                             inst.hide();
                             
                         } else {
@@ -629,7 +637,7 @@ var MystaysBookingWidget = {
                 },  
                 onShow: function (event, inst) {
                     MystaysBookingWidget.GuestsWidget.DisplayGuestSection();
-                    MystaysBookingWidget.BookingCalendar.CustomHTML.ShowCalendarCustomLogic();
+                    MystaysBookingWidget.Common.ShowOverlayLogic();
                     MystaysBookingWidget.BookingCalendar.CustomHTML.AdjustSectionHeights();
                     MystaysBookingWidget.BookingCalendar.Constants.CheckNextDaySetManually = false;
                     MystaysBookingWidget.BookingCalendar.CustomHTMLEvents.AddIntermediateHoverLogic(inst);
@@ -637,9 +645,8 @@ var MystaysBookingWidget = {
                     MystaysBookingWidget.BookingCalendar.CustomHTML.UpdateSetButton(inst.startVal.split('|')[4], inst.endVal.split('|')[4]);
                 },
                 onClose: function (event, inst) {
-                    MystaysBookingWidget.BookingCalendar.ValidateStartEndDate(event, inst);
-                    MystaysBookingWidget.GuestsWidget.DisplayGuestSection(true);
-                    MystaysBookingWidget.BookingCalendar.CustomHTML.HideCalendarCustomLogic();
+                     MystaysBookingWidget.BookingCalendar.ValidateStartEndDate(event, inst);
+                    MystaysBookingWidget.Common.HideOverlayLogic();
                 },
                 onPageChange: function (event, inst) {
                     MystaysBookingWidget.BookingCalendar.CustomHTMLEvents.AddIntermediateHoverLogic(inst);
@@ -672,16 +679,34 @@ var MystaysBookingWidget = {
     GuestsWidget: {
         Constants: {
             GuestSectionClass: '.booking-guestselect-wrap',
-            GuestButtonContainer :'.booking-box.guests .booking-box-wrap' 
+            GuestButtonContainer: '.booking-box.guests .booking-box-wrap',
+            ButtonAdd: '.guest-row .plus',
+            ButtonRemove: '.guest-row .minus',
+            RoomElement: '.booking-guestselect .room',
+            AdultElement: '.booking-guestselect .adult',
+            ChildElement: '.booking-guestselect .child',
+            MainGuestsButtonTitle: '.booking-box.guests .input-top-wrap .title',
+            MaximumRooms: 9,
+            MaximumAdults: 15,
+            MaximumChildren:9
+
+
+        },
+        CustomHTMLEvents: function CustomHTMLEvents() {
+            MystaysBookingWidget.GuestsWidget.GuestButtonContainerClick();
         },
         DisplayGuestSection: function DisplayGuestSection(ShowSection) {
             if (ShowSection) {
                 document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.GuestSectionClass).ShowElement();
+                MystaysBookingWidget.Common.ShowOverlayLogic();
             } else {
                 document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.GuestSectionClass).HideElement();
+                MystaysBookingWidget.Common.HideOverlayLogic();
             }
             
         },
+
+
         //Hide guest section when user clicks outside the widget
         ClickOutside: function ClickOutside() {
             document.addEventListener('click', function (e) {
@@ -693,7 +718,119 @@ var MystaysBookingWidget = {
                 }
             })
         },
-        CustomHTMLEvents: function CustomHTMLEvents() {
+
+        RoomsButtonAdd: function RoomsButtonAdd(element) {
+            var element = document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.RoomElement);
+
+            if (parseInt(element.children[0].innerHTML) < MystaysBookingWidget.GuestsWidget.Constants.MaximumRooms) {
+                element.children[0].innerHTML = parseInt(element.children[0].innerHTML) + 1;
+                element.children[0].setAttribute("data-count", (parseInt(element.children[0].getAttribute("data-count")) + 1));
+            }
+            
+
+            
+        },
+
+        RoomsButtonRemove: function RoomsButtonRemove(element) {
+            var element = document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.RoomElement);
+
+            if (parseInt(element.children[0].innerHTML) > 1) {
+                element.children[0].innerHTML = parseInt(element.children[0].innerHTML) - 1;
+                element.children[0].setAttribute("data-count", (parseInt(element.children[0].getAttribute("data-count")) - 1));
+            }
+        },
+
+        AdultButtonAdd: function ChildButtonAdd(element) {
+            var element = document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.AdultElement);
+
+
+            if (parseInt(element.children[0].innerHTML) < MystaysBookingWidget.GuestsWidget.Constants.MaximumAdults) {
+                element.children[0].innerHTML = parseInt(element.children[0].innerHTML) + 1;
+                element.children[0].setAttribute("data-count", (parseInt(element.children[0].getAttribute("data-count")) + 1));
+
+                //Updating main guests section
+                var MainGuestsButtonTitle = document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.MainGuestsButtonTitle);
+                MainGuestsButtonTitle.innerHTML = parseInt(MainGuestsButtonTitle.innerHTML) + 1;
+                MainGuestsButtonTitle.setAttribute("data-count", (parseInt(MainGuestsButtonTitle.getAttribute("data-count")) + 1));
+            }
+        },
+
+        AdultButtonRemove: function ChildButtonRemove(element) {
+            var element = document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.AdultElement);
+
+            if (parseInt(element.children[0].innerHTML) > 1) {
+                element.children[0].innerHTML = parseInt(element.children[0].innerHTML) - 1;
+                element.children[0].setAttribute("data-count", (parseInt(element.children[0].getAttribute("data-count")) - 1));
+
+                //Updating main guests section
+                var MainGuestsButtonTitle = document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.MainGuestsButtonTitle);
+                MainGuestsButtonTitle.innerHTML = parseInt(MainGuestsButtonTitle.innerHTML) - 1;
+                MainGuestsButtonTitle.setAttribute("data-count", (parseInt(MainGuestsButtonTitle.getAttribute("data-count")) - 1));
+            }
+        },
+
+        ChildButtonAdd: function ChildButtonAdd(element) {
+            var element = document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.ChildElement);
+
+            if (parseInt(element.children[0].innerHTML) < MystaysBookingWidget.GuestsWidget.Constants.MaximumChildren) {
+                element.children[0].innerHTML = parseInt(element.children[0].innerHTML) + 1;
+                element.children[0].setAttribute("data-count", (parseInt(element.children[0].getAttribute("data-count")) + 1));
+
+                //Updating main guests section
+                var MainGuestsButtonTitle = document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.MainGuestsButtonTitle);
+                MainGuestsButtonTitle.innerHTML = parseInt(MainGuestsButtonTitle.innerHTML) + 1;
+                MainGuestsButtonTitle.setAttribute("data-count", (parseInt(MainGuestsButtonTitle.getAttribute("data-count")) + 1));
+            }
+        },
+
+        ChildButtonRemove: function ChildButtonRemove(element) {
+            var element = document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.ChildElement);
+
+            if (parseInt(element.children[0].innerHTML) > 0 ) {
+                element.children[0].innerHTML = parseInt(element.children[0].innerHTML) - 1;
+                element.children[0].setAttribute("data-count", (parseInt(element.children[0].getAttribute("data-count")) - 1));
+
+                //Updating main guests section
+                var MainGuestsButtonTitle = document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.MainGuestsButtonTitle);
+                MainGuestsButtonTitle.innerHTML = parseInt(MainGuestsButtonTitle.innerHTML) - 1;
+                MainGuestsButtonTitle.setAttribute("data-count", (parseInt(MainGuestsButtonTitle.getAttribute("data-count")) - 1));
+            }
+        },
+
+        ButtonClick: function ButtonClick() {
+            var addbuttons = document.querySelectorAll(MystaysBookingWidget.GuestsWidget.Constants.ButtonAdd);
+            var removebuttons = document.querySelectorAll(MystaysBookingWidget.GuestsWidget.Constants.ButtonRemove);
+
+            var roomsElement = document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.RoomElement);
+            var adultElement = document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.AdultElement);
+            var childElement = document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.ChildElement);
+
+            for (var i = 0; i < addbuttons.length; i++) {
+
+                if (addbuttons[i].parentElement.contains(roomsElement)) {
+                    addbuttons[i].addEventListener('click', MystaysBookingWidget.GuestsWidget.RoomsButtonAdd);
+                } else if (addbuttons[i].parentElement.contains(adultElement)) {
+                    addbuttons[i].addEventListener('click', MystaysBookingWidget.GuestsWidget.AdultButtonAdd);
+                } else if (addbuttons[i].parentElement.contains(childElement)) {
+                    addbuttons[i].addEventListener('click', MystaysBookingWidget.GuestsWidget.ChildButtonAdd);
+                }
+            }
+
+            for (var i = 0; i < removebuttons.length; i++) {
+                if (removebuttons[i].parentElement.contains(roomsElement)) {
+                    removebuttons[i].addEventListener('click', MystaysBookingWidget.GuestsWidget.RoomsButtonRemove);
+                } else if (removebuttons[i].parentElement.contains(adultElement)) {
+                    removebuttons[i].addEventListener('click', MystaysBookingWidget.GuestsWidget.AdultButtonRemove);
+                } else if (removebuttons[i].parentElement.contains(childElement)) {
+                    removebuttons[i].addEventListener('click', MystaysBookingWidget.GuestsWidget.ChildButtonRemove);
+                }
+            }
+        },
+
+        
+
+        //Method invoked when user clicks on the guest button
+        GuestButtonContainerClick: function GuestButtonContainerClick() {
             document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.GuestButtonContainer).addEventListener('click', function () {
                 //Hide calendar
                 if (MystaysRangeObject) {
@@ -702,9 +839,11 @@ var MystaysBookingWidget = {
                 MystaysBookingWidget.GuestsWidget.DisplayGuestSection(true);
             })
         },
+        //Method called on document ready to invoke guest wigdget functionality
         Loaded: function Loaded() {
             MystaysBookingWidget.GuestsWidget.CustomHTMLEvents();
             MystaysBookingWidget.GuestsWidget.ClickOutside();
+            MystaysBookingWidget.GuestsWidget.ButtonClick();
         }
     },
     Loaded: function (selectedLanguage) {

@@ -93,7 +93,7 @@ var MystaysBookingWidget = {
                 var rangeBubbleContainer = document.querySelector('.mbsc-fr-bubble-bottom');
                 if (rangeBubbleContainer) {
 
-                    rangeBubbleContainer.classList.add('range-animate-slide');
+                    rangeBubbleContainer.classList.add('mystays-bookingwidget-animate-slide');
                     var rangeLeftProperty = document.querySelector('.mbsc-fr-bubble-bottom').style.left;
                     var btncontainer = document.querySelector('.booking-checkin-checkout');
                     var currentLeftPropertyValue = parseInt(rangeLeftProperty.replace('px', ''));

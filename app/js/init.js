@@ -247,7 +247,7 @@ var MystaysBookingWidget = {
             }
             //Else setting it to start and end date
             else {
-                MystaysBookingWidget.CustomHTML.SetFooterText(rangeObject.startVal, rangeObject.endVal.split('|')[4],null, true);
+                MystaysBookingWidget.CustomHTML.SetFooterText(rangeObject.startVal, rangeObject.endVal,null, false);
             }
         },
         //Alter section heights
@@ -402,9 +402,10 @@ var MystaysBookingWidget = {
                 }
             })
         },
-        CalendarCustomFunctions: function CalendarCustomFunctions() {
+        CalendarCustomFunctions: function CalendarCustomFunctions(inst) {
             document.querySelector('.mbsc-cal-body').addEventListener('mouseout', function () {
                 MystaysBookingWidget.CustomHTML.RemoveIntermediateHoverLogic();
+                MystaysBookingWidget.CustomHTML.SetFooterText(inst.startVal, inst.endVal, null, false);
             });
         },
         AddCancelEvent: function () {
@@ -531,7 +532,7 @@ var MystaysBookingWidget = {
                 MystaysBookingWidget.CustomHTML.AdjustSectionHeights();
                 MystaysBookingWidget.Constants.CheckNextDaySetManually = false;
                 MystaysBookingWidget.CustomHTMLEvents.AddIntermediateHoverLogic(inst);
-                MystaysBookingWidget.CustomHTMLEvents.CalendarCustomFunctions();
+                MystaysBookingWidget.CustomHTMLEvents.CalendarCustomFunctions(inst);
                 MystaysBookingWidget.CustomHTML.UpdateSetButton(inst.startVal.split('|')[4], inst.endVal.split('|')[4]);
             }, onPageChange: function (event, inst) {
                 MystaysBookingWidget.CustomHTMLEvents.AddIntermediateHoverLogic(inst);

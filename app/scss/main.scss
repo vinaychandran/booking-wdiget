@@ -7,6 +7,13 @@ $sm-width: 768px;
 $xs-width: 481px;
 $xxs-width: 360px;
 
+$cal-color : #232e48;
+$cal-primaray-color:#ffd25d;
+$cal-secondar-color:#7b7b85;
+$cal-primary-bg: #fff;
+$cal-secondary-bg: #f2f2f2;
+
+
 @mixin lg {
     @media screen and (min-width: #{$lg-width}) {
         @content;
@@ -99,7 +106,7 @@ body{
 	padding: 15px 0 20px;	
 	@include sm {
 		padding: 35px 40px 40px;	
-		box-shadow: 0 50px 46px -46px rgba(37,58,106,.3);
+		box-shadow: 0px 15px 32px -4px rgba(37, 58, 106, 0.3);
 		border: 1px solid #ccc;
 		display: flex;
 		justify-content:space-between;
@@ -107,6 +114,7 @@ body{
 	.booking-box{
 		margin-bottom: 14px;
 		padding: 0 8px;
+		position: relative;
 		@include sm {
 			margin-bottom: 0;
 			padding: 0;
@@ -120,6 +128,12 @@ body{
 			line-height: 1;
 			margin: 0 0 10px;
 			white-space:nowrap;
+		}
+	}
+
+	&.mystays-bookingwidget-visible{
+		.booking-box > p{
+			color: $cal-primary-bg;
 		}
 	}
 	.autocomplete{
@@ -342,14 +356,33 @@ body{
 	}
 }
 
+
+
 .booking-guestselect-wrap{
 	position: absolute;
-	width: 564px;
+	
 	background: #ffffff;
 	left: -240px;
-	 box-shadow: 0 15px 15px 0 rgba(35, 46, 72, 0.25);
-	 border-bottom: 5px solid #ffd25d;
-	 top: 105%;
+	box-shadow: 0 15px 15px 0 rgba(35, 46, 72, 0.25);
+	border-bottom: 5px solid #ffd25d;
+	top: 105%;
+	width: 564px;
+	opacity: 0;
+	-webkit-animation-name: mbsc-anim-p-out;
+	-webkit-animation-duration: 150ms;
+	animation-name: mbsc-anim-p-out;
+	animation-duration: 150ms; 
+	-webkit-transform-origin: 50% 50%;
+  	transform-origin: 50% 50%;
+	&.show{
+		opacity: 1;
+		-webkit-animation-name: mbsc-anim-p-in;
+		-webkit-animation-duration: 1s;
+		-webkit-transform: scale(1);
+		animation-name: mbsc-anim-p-in;
+		animation-duration: 1s;
+		transform: scale(1);
+	}
 	.booking-guestselect{
 		display: flex;
 		justify-content:space-between;
@@ -358,7 +391,6 @@ body{
 		width: 50%;
 		padding: 20px;
 	}
-	
 
 	.guest-row{
 		border-bottom: 1px solid #dddee0;
@@ -427,13 +459,50 @@ body{
 	}
 }
 
+@keyframes mbsc-anim-p-in {
+  from {
+    opacity: 0;
+    transform: translateY(8%); }
+  to {
+    opacity: 1;
+    transform: translateY(0); } 
+}
+
+@-webkit-keyframes mbsc-anim-p-in {
+  from {
+    opacity: 0;
+    transform: translateY(8%); }
+  to {
+    opacity: 1;
+    transform: translateY(0); } 
+}
+
+@keyframes mbsc-anim-p-out {
+  from {
+    opacity: 1;
+    transform: translateY(0); }
+  to {
+    opacity: 0;
+    transform: translateY(5%); } 
+}
+
+@-webkit-keyframes mbsc-anim-p-out {
+  from {
+    opacity: 1;
+    -webkit-transform: translateY(0); }
+  to {
+    opacity: 0;
+    -webkit-transform: translateY(5%); } 
+}
+
 #booking-widget-overlay{
 	position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba(0, 0, 0, 0.7);
+    background-color: #232e48;
+     opacity: 0.9;
 }
 
 

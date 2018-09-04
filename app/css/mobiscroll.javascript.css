@@ -519,10 +519,10 @@
 .mbsc-anim-in .mbsc-anim-pop {
   opacity: 1;
   -webkit-animation-name: mbsc-anim-p-in;
-  -webkit-animation-duration: 100ms;
+  -webkit-animation-duration: 1s;
   -webkit-transform: scale(1);
   animation-name: mbsc-anim-p-in;
-  animation-duration: 100ms;
+  animation-duration: 1s;
   transform: scale(1); }
 
 .mbsc-anim-out .mbsc-anim-pop {
@@ -757,7 +757,7 @@
 @keyframes mbsc-anim-sh-in {
   from {
     opacity: 0;
-    transform: translateX(-100%); }
+    transform: translateX(100%); }
   to {
     opacity: 1;
     transform: translateX(0); } }
@@ -765,7 +765,7 @@
 @-webkit-keyframes mbsc-anim-sh-in {
   from {
     opacity: 0;
-    -webkit-transform: translateX(-100%); }
+    -webkit-transform: translateX(100%); }
   to {
     opacity: 1;
     -webkit-transform: translateX(0); } }

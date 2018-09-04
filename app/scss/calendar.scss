@@ -115,10 +115,11 @@ $lato: 'Lato', sans-serif;
 	#mystays-bookingwidget-clr-btn{
 		position: absolute;
 		left: 20px;		
+		z-index: 2;
 	}	
 
 	.mbsc-range-btn-t{
-		border-bottom: 1px solid #e4e4e7;
+		
 		padding-bottom: 20px;
 	}
 
@@ -215,14 +216,22 @@ $lato: 'Lato', sans-serif;
 			}
 		}
 
-		.mbsc-cal-days{
+		.mbsc-cal-days-c{
 			background: $cal-primary-bg;
-			padding: 20px 0 0;
 			position: relative;
-			z-index: 1;
+			z-index: 3;
+			border-top: 1px solid #e4e4e7;
+			padding: 20px 0 5px;
 			@include sm {
+				border-top: 0;
 				padding: 0;
 			}
+		}
+
+		.mbsc-cal-days{
+			background: $cal-primary-bg;			
+			position: relative;
+			z-index: 1;	
 			> div{
 				color: $cal-secondar-color;
 				font-size: 16px;
@@ -285,7 +294,11 @@ $lato: 'Lato', sans-serif;
 					background-color: $cal-primaray-color;
 					z-index: 1;
 					height: 2.6em;
-					top: 3px;				
+					top: 3px;
+					@include device {
+						margin-right: -1.3em;		
+					}	
+								
 				}
 				&.mbsc-cal-day-hl .mbsc-cal-day-date{
 					background-color:$cal-primary-bg;

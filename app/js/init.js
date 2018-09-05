@@ -14,7 +14,6 @@ var MystaysBookingWidget = {
             document.getElementById('booking-widget-module').classList.remove('mystays-bookingwidget-visible');
         }
     },
-
     //All generic helper methods
     Helper: {
 
@@ -267,6 +266,7 @@ var MystaysBookingWidget = {
 
                         var endDate = new Date(endval);
 
+                        //TODO add other languages
                         if (MystaysBookingWidget.BookingCalendar.SelectedLanguage === 'en') {
                             htmlString = htmlString.replace('{endday}', MystaysBookingWidget.BookingCalendar.Constants.EnglishDayNamesShort[endDate.getDay()]);
                             htmlString = htmlString.replace('{enddate}', ('0' + endDate.getDate()).slice(-2));
@@ -449,6 +449,7 @@ var MystaysBookingWidget = {
                         var sectionStartMonth = new Date(sectionStartDate).getMonth();
                         var sectionStartYear = new Date(sectionStartDate).getFullYear();
                         var headerText = '';
+                        //TO add other languages
                         if (MystaysBookingWidget.BookingCalendar.SelectedLanguage === 'en') {
                             headerText = MystaysBookingWidget.BookingCalendar.Constants.EnglishMonthNames[sectionStartMonth] + ' ' + sectionStartYear;
                         }
@@ -704,7 +705,8 @@ var MystaysBookingWidget = {
             MaximumAdults: 15,
             MaximumChildren: 9,
             ChildAgeList: '.chidren-ages-dropndown',
-            ChildAgeInfo: '.child-age-info'
+            ChildAgeInfo: '.child-age-info',
+            MaximumChildAge :12
             //ChildAgeSection='<li><select class="mystays-bookingengine-age"></select></li>'
 
         },
@@ -833,17 +835,21 @@ var MystaysBookingWidget = {
 
             var ageListItem = document.createElement('li');
             ageListItem.className = 'mystays-bookingengine-child-age';
+            var ageSelectContainer = document.createElement('div');
+            var ageSelect = document.createElement('select');
+            var ageSelectInfo = document.createElement('i');
 
-            var ageSelectList = document.createElement('select');
-
-
-            for (var i = 1; i <= 17; i++) {
+            for (var i = 1; i <= MystaysBookingWidget.GuestsWidget.Constants.MaximumChildAge ; i++) {
                 var ageOption = document.createElement('option');
                 ageOption.setAttribute('value', i);
                 ageOption.innerHTML = i;
-                ageSelectList.appendChild(ageOption);
+                ageSelect.appendChild(ageOption);
             }
-            ageListItem.appendChild(ageSelectList);
+
+            ageSelectContainer.appendChild(ageSelect);
+            ageSelectContainer.appendChild(ageSelectInfo);
+
+            ageListItem.appendChild(ageSelectContainer);
             ageContainer.appendChild(ageListItem);
 
             //Show age info box
@@ -963,6 +969,14 @@ var MystaysBookingWidget = {
             MystaysBookingWidget.GuestsWidget.ButtonClick();
         }
     },
+    //Hotel Search
+    HotelSearch: {
+        Loaded: function () {
+
+        }
+    },
+
+    //Main initialization function
     Loaded: function (selectedLanguage) {
         MystaysBookingWidget.Helper.Loaded();
         MystaysRangeObject = MystaysBookingWidget.BookingCalendar.Loaded(selectedLanguage);

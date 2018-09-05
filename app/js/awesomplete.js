@@ -53,14 +53,14 @@ var _ = function (input, o) {
 		inside: this.container
 	});
 
-	this.status = $.create("span", {
-		className: "visually-hidden",
-		role: "status",
-		"aria-live": "assertive",
-        "aria-atomic": true,
-        inside: this.container,
-        textContent: this.minChars != 0 ? ("Type " + this.minChars + " or more characters for results.") : "Begin typing for results."
-	});
+	//this.status = $.create("span", {
+	//	className: "visually-hidden",
+	//	role: "status",
+	//	"aria-live": "assertive",
+ //       "aria-atomic": true,
+ //       inside: this.container,
+ //       textContent: this.minChars != 0 ? ("Type " + this.minChars + " or more characters for results.") : "Begin typing for results."
+	//});
 
 	// Bind events
 

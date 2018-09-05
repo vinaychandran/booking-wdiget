@@ -1017,7 +1017,7 @@ var MystaysBookingWidget = {
                     return (element.value.toLowerCase().indexOf(userText.toLowerCase())>-1);
                 },
                 filter: function (element, userText) {
-                    return (element.value.toLowerCase().indexOf(userText.toLowerCase()) > -1);
+                    return (element.value.hotelsearchnames.toLowerCase().indexOf(userText.toLowerCase()) > -1);
                 }
             });
 

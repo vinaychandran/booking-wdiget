@@ -17,23 +17,23 @@ var MystaysBookingWidget = {
 
     //All generic helper methods
     Helper: {
-        
+
         Loaded: function Loaded() {
             MystaysBookingWidget.Helper.LoadExtensions();
         },
         //Method to add extension methods
         LoadExtensions: function LoadExtensions() {
             HTMLElement.prototype.ShowElement = function () {
-                
-                    this.classList.add('show');
-                    this.classList.remove('hide');
-                
+
+                this.classList.add('show');
+                this.classList.remove('hide');
+
             };
             HTMLElement.prototype.HideElement = function () {
-                
-                    this.classList.add('hide');
-                    this.classList.remove('show');
-                
+
+                this.classList.add('hide');
+                this.classList.remove('show');
+
             };
             NodeList.prototype.ShowElement = function () {
                 this.forEach(el => el.ShowElement())
@@ -115,29 +115,43 @@ var MystaysBookingWidget = {
                 var rangeBubbleContainer = document.querySelector('.mbsc-fr-bubble-bottom');
                 if (rangeBubbleContainer) {
 
-                    
-                    var rangeLeftProperty = document.querySelector('.mbsc-fr-bubble-bottom').style.left;
-                    var btncontainer = document.querySelector('.booking-checkin-checkout');
-                    var currentLeftPropertyValue = parseInt(rangeLeftProperty.replace('px', ''));
 
-                    if (currentLeftPropertyValue > btncontainer.offsetWidth / 2) {
-                        rangeBubbleContainer.style.left = (currentLeftPropertyValue - (btncontainer.offsetWidth / 2)) + "px";
+
+                    var rangeBubbleContainerLeft = rangeBubbleContainer.style.left;
+                    var currentRangeLeftPropertyValue = parseInt(rangeBubbleContainerLeft.replace('px', ''));
+
+                    var indicator = document.querySelector('.mbsc-fr-arr');
+                    var indicatorLeftProperty = indicator.style.left;
+
+                    var btncontainer = document.querySelector('.booking-checkin-checkout');
+                    var currentLeftPropertyValue = parseInt(indicatorLeftProperty.replace('px', ''));
+
+
+                    //Ensuring that the calendar is always static(To override default mobiscroll logic)
+                    if (currentRangeLeftPropertyValue > btncontainer.offsetWidth / 2) {
+                        rangeBubbleContainer.style.left = (currentRangeLeftPropertyValue - (btncontainer.offsetWidth / 2)) + "px";
                     }
 
                     //When checkin button is clicked
                     if (IsCheckin) {
-                        
-                        
+                        //Move indicator to checkin if necessary
+                        if (currentLeftPropertyValue > rangeBubbleContainer.offsetWidth / 2) {
+                            indicator.style.left = (currentLeftPropertyValue - (btncontainer.offsetWidth / 2)) + "px";
+                        }
+
                     } else {
 
-                        
+                        //Move indicator to checkout if necessary
+                        if (currentLeftPropertyValue < rangeBubbleContainer.offsetWidth / 2) {
+                            indicator.style.left = (currentLeftPropertyValue + (btncontainer.offsetWidth / 2)) + "px";
+                        }
 
                     }
                     //If element is visiable then add class to allow animation on slide
                     if (MystaysBookingWidget.Helper.IsVisiable(rangeBubbleContainer)) {
-                        rangeBubbleContainer.classList.add('mystays-bookingwidget-animate-slide');
+                        indicator.classList.add('mystays-bookingwidget-animate-slide');
                     }
-                    
+
                 }
             },
             UpdateSetButton: function (startdate, enddate) {
@@ -449,7 +463,7 @@ var MystaysBookingWidget = {
 
                 }
             },
-            
+
 
         },
         CustomHTMLEvents: {
@@ -457,8 +471,8 @@ var MystaysBookingWidget = {
             ClickOutside: function ClickOutside() {
                 document.addEventListener('click', function (e) {
                     var container = document.querySelector('#booking-widget-container')
-                    
-                    if ((!(container === e.target) && !MystaysBookingWidget.Helper.IsDescendant(container, e.target)) ) {
+
+                    if ((!(container === e.target) && !MystaysBookingWidget.Helper.IsDescendant(container, e.target))) {
 
                         if (MystaysRangeObject) {
                             MystaysRangeObject.hide();
@@ -689,7 +703,8 @@ var MystaysBookingWidget = {
             MaximumRooms: 9,
             MaximumAdults: 15,
             MaximumChildren: 9,
-            ChildAgeList:'.chidren-ages-dropndown'
+            ChildAgeList: '.chidren-ages-dropndown',
+            ChildAgeInfo: '.child-age-info'
             //ChildAgeSection='<li><select class="mystays-bookingengine-age"></select></li>'
 
         },
@@ -707,18 +722,18 @@ var MystaysBookingWidget = {
                 document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.GuestSectionClass).HideElement();
                 MystaysBookingWidget.Common.HideOverlayLogic();
             }
-            
+
         },
 
 
         //Hide guest section when user clicks outside the widget
         ClickOutside: function ClickOutside() {
             document.addEventListener('click', function (e) {
-                
+
                 var container = document.querySelector('#booking-widget-container');
                 if ((!(container === e.target) && !MystaysBookingWidget.Helper.IsDescendant(container, e.target))) {
                     MystaysBookingWidget.GuestsWidget.DisplayGuestSection(false);
-                    
+
                 }
             })
         },
@@ -741,9 +756,9 @@ var MystaysBookingWidget = {
 
 
             }
-            
 
-            
+
+
         },
 
         //Remove room
@@ -820,7 +835,7 @@ var MystaysBookingWidget = {
             ageListItem.className = 'mystays-bookingengine-child-age';
 
             var ageSelectList = document.createElement('select');
-            
+
 
             for (var i = 1; i <= 17; i++) {
                 var ageOption = document.createElement('option');
@@ -828,16 +843,22 @@ var MystaysBookingWidget = {
                 ageOption.innerHTML = i;
                 ageSelectList.appendChild(ageOption);
             }
-
             ageListItem.appendChild(ageSelectList);
-
             ageContainer.appendChild(ageListItem);
+
+            //Show age info box
+            document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.ChildAgeInfo).ShowElement();
         },
 
         //Method to remove child when child count is reduced
         RemoveChildAge: function RemoveChildAge() {
             var ageContainer = document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.ChildAgeList);
             ageContainer.removeChild(ageContainer.lastChild);
+
+            //Hide age info box
+            if (ageContainer.children.length === 0) {
+                document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.ChildAgeInfo).HideElement();
+            }
         },
 
         //Add child
@@ -923,7 +944,7 @@ var MystaysBookingWidget = {
             }
         },
 
-        
+
 
         //Method invoked when user clicks on the guest button
         GuestButtonContainerClick: function GuestButtonContainerClick() {

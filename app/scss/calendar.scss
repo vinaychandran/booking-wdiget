@@ -201,6 +201,7 @@ $lato: 'Lato', sans-serif;
 			background: $cal-primary-bg;
 			box-shadow: 35.4px 35.4px 90px 0 rgba(0,0,0,.15);
 			border-bottom: 5px solid $cal-primaray-color;
+			border-radius: 0;
 		}
 
 		.mbsc-cal-cell:focus,  .mbsc-cal-cell:not(.mbsc-disabled):hover
@@ -209,11 +210,13 @@ $lato: 'Lato', sans-serif;
 		}
 
 		.mbsc-fr-bubble-bottom{
-			&.mystays-bookingwidget-animate-slide{
+			.mystays-bookingwidget-animate-slide{
 				transition: left 0.5s ease-out;
 			}						 
 			.mbsc-fr-arr{
 				border-color: transparent transparent $cal-primary-bg transparent;
+				border-width: 9px 9px;
+				margin-left: -9px;
 			}
 		}		
 

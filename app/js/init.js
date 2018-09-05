@@ -120,18 +120,17 @@ var MystaysBookingWidget = {
                     var btncontainer = document.querySelector('.booking-checkin-checkout');
                     var currentLeftPropertyValue = parseInt(rangeLeftProperty.replace('px', ''));
 
+                    if (currentLeftPropertyValue > btncontainer.offsetWidth / 2) {
+                        rangeBubbleContainer.style.left = (currentLeftPropertyValue - (btncontainer.offsetWidth / 2)) + "px";
+                    }
+
                     //When checkin button is clicked
                     if (IsCheckin) {
-                        //Check if icon is currently in checkout position
-                        if (currentLeftPropertyValue > btncontainer.offsetWidth / 2) {
-                            rangeBubbleContainer.style.left = (currentLeftPropertyValue - (btncontainer.offsetWidth / 2)) + "px";
-                        }
+                        
+                        
                     } else {
 
-                        //Check if icon is currently in checkin position
-                        if (currentLeftPropertyValue < btncontainer.offsetWidth / 2) {
-                            rangeBubbleContainer.style.left = (currentLeftPropertyValue + (btncontainer.offsetWidth / 2)) + "px";
-                        }
+                        
 
                     }
                     //If element is visiable then add class to allow animation on slide

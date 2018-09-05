@@ -1,4 +1,4 @@
-//This javascript file contains methods used by the booking widget
+﻿//This javascript file contains methods used by the booking widget
 
 
 var MystaysBookingWidget = {
@@ -102,10 +102,10 @@ var MystaysBookingWidget = {
             EnglishMonthNamesShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
             EnglishDayNamesShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
             CalendarHeader: ['Japanese Calendar', 'Calendar', 'Chinese Calendar', 'Taiwanese calendar', 'Korean calendar'],
-            NightsOfStayDesktop: ['�؍݂̖�', '({days} Nights)', 'Chinese Nights', 'Taiwanese Nights', 'Korean Nights'],
-            NightsOfStayOneNightDesktop: ['�؍݂̖�', '(1 Night)', 'Chinese Nights', 'Taiwanese Nights', 'Korean Nights'],
-            NightsOfStayMobile: ['�؍݂̖�', 'Ok ({days} Nights)', 'Chinese Nights', 'Taiwanese Nights', 'Korean Nights'],
-            NightsOfStayOneNightMobile: ['�؍݂̖�', 'Ok (1 Night)', 'Chinese Nights', 'Taiwanese Nights', 'Korean Nights']
+            NightsOfStayDesktop: ['滞在の夜', '({days} Nights)', 'Chinese Nights', 'Taiwanese Nights', 'Korean Nights'],
+            NightsOfStayOneNightDesktop: ['滞在の夜', '(1 Night)', 'Chinese Nights', 'Taiwanese Nights', 'Korean Nights'],
+            NightsOfStayMobile: ['滞在の夜', 'Ok ({days} Nights)', 'Chinese Nights', 'Taiwanese Nights', 'Korean Nights'],
+            NightsOfStayOneNightMobile: ['滞在の夜', 'Ok (1 Night)', 'Chinese Nights', 'Taiwanese Nights', 'Korean Nights']
         },
         //Contains methods that alter the HTML of the calendar
         CustomHTML: {
@@ -695,6 +695,7 @@ var MystaysBookingWidget = {
         Constants: {
             GuestSectionClass: '.booking-guestselect-wrap',
             GuestButtonContainer: '.booking-box.guests .booking-box-wrap',
+            GuestButtonClose: '.booking-box.guests .booking-guestselect-close',
             ButtonAdd: '.guest-row .plus',
             ButtonRemove: '.guest-row .minus',
             RoomElement: '.booking-guestselect .room',
@@ -713,6 +714,7 @@ var MystaysBookingWidget = {
 
         CustomHTMLEvents: function CustomHTMLEvents() {
             MystaysBookingWidget.GuestsWidget.GuestButtonContainerClick();
+            MystaysBookingWidget.GuestsWidget.GuestButtonCloseClick();
         },
 
         //Method to show and hide the guest widget
@@ -962,6 +964,14 @@ var MystaysBookingWidget = {
                 MystaysBookingWidget.GuestsWidget.DisplayGuestSection(true);
             })
         },
+
+        //Close or back button to close the guest widget
+        GuestButtonCloseClick: function () {
+            document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.GuestButtonClose).addEventListener('click', function () {
+                
+                MystaysBookingWidget.GuestsWidget.DisplayGuestSection();
+            })
+        },
         //Method called on document ready to invoke guest wigdget functionality
         Loaded: function Loaded() {
             MystaysBookingWidget.GuestsWidget.CustomHTMLEvents();
@@ -971,7 +981,45 @@ var MystaysBookingWidget = {
     },
     //Hotel Search
     HotelSearch: {
+        Constants: {
+            SerachInputClass:'.hotel-search-input'
+        },
+        GetSearchList: function GetSearchList() {
+            var searchList = [];
+            searchList.push({
+                hotelname: 'Art Hotel Asahikawa',
+                hotelsearchnames: 'art hotel asahikawa|アートホテル旭川|art 旭川酒店',
+                hotelLink: 'https://www.mystays.com/en-us/hotel-art-hotel-asahikawa-hokkaido/',
+                UseTravelClick: true,
+                TrvelClickBookingID: 12345,
+                RWIthCode:555
+            });
+
+
+            searchList.push({
+                hotelname: 'Beppu Kamenoi Hotel',
+                hotelsearchnames: 'beppu kamenoi hotel|別府亀の井ホテル|别府龟之井温泉酒店|別府龜之井温泉酒店',
+                hotelLink: 'https://www.mystays.com/en-us/hotel-beppu-kamenoi-hotel-oita/',
+                UseTravelClick: false,
+                TrvelClickBookingID: 98765,
+                RWIthCode: 666
+            });
+
+            return searchList;
+        },
         Loaded: function () {
+
+            new Awesomplete(document.querySelector(MystaysBookingWidget.HotelSearch.Constants.SerachInputClass), {
+                minChars: 0,
+                maxItems: 15,
+                list: MystaysBookingWidget.HotelSearch.GetSearchList(),
+                item: function (element, userText) {
+                    return (element.value.toLowerCase().indexOf(userText.toLowerCase())>-1);
+                },
+                filter: function (element, userText) {
+                    return (element.value.toLowerCase().indexOf(userText.toLowerCase()) > -1);
+                }
+            });
 
         }
     },
@@ -981,6 +1029,7 @@ var MystaysBookingWidget = {
         MystaysBookingWidget.Helper.Loaded();
         MystaysRangeObject = MystaysBookingWidget.BookingCalendar.Loaded(selectedLanguage);
         MystaysBookingWidget.GuestsWidget.Loaded();
+        MystaysBookingWidget.HotelSearch.Loaded();
     }
 };
 

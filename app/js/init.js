@@ -501,7 +501,7 @@ var MystaysBookingWidget = {
 
                     //Removing the header before adding again
                     if (updateContainer.querySelectorAll(calendarContainer + ' .mystays-bookingwidget-header-month').length > 0) {
-                        var customSelector = updateContainer.querySelector(calendarContainer + ' .mystays-bookingwidget-header-month');
+                        var customSelector = updateContainer.getElementsByClassName('mystays-bookingwidget-header-month');
 
                         while (customSelector[0]) {
                             customSelector[0].parentNode.removeChild(customSelector[0]);

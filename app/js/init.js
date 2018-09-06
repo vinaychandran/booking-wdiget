@@ -458,7 +458,7 @@ var MystaysBookingWidget = {
                 //Write logic only when calendar selector is present
                 if (calendarheadersection && MystaysBookingWidget.Helper.IsMobile()) {
 
-                    updateContainer.querySelector(calendarContainer + ' .mbsc-fr-persp').style.height = window.outerHeight + 'px';
+                    updateContainer.querySelector(calendarContainer + ' .mbsc-fr-persp').style.height = window.innerHeight + 'px';
 
                     var calendarHeader = document.createElement('div');
 
@@ -1155,7 +1155,5 @@ var MystaysBookingWidget = {
 
 
 document.addEventListener("DOMContentLoaded", function () {
-
     MystaysBookingWidget.Loaded('en', '#booking-widget-container');
-
 });

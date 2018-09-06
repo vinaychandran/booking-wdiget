@@ -987,8 +987,8 @@ var MystaysBookingWidget = {
         GetSearchList: function GetSearchList() {
             var searchList = [];
             searchList.push({
-                hotelname: 'Art Hotel Asahikawa',
-                hotelsearchnames: 'art hotel asahikawa|アートホテル旭川|art 旭川酒店',
+                hotelName: 'Art Hotel Asahikawa',
+                hotelSearchNames: 'art hotel asahikawa|アートホテル旭川|art 旭川酒店',
                 hotelLink: 'https://www.mystays.com/en-us/hotel-art-hotel-asahikawa-hokkaido/',
                 UseTravelClick: true,
                 TrvelClickBookingID: 12345,
@@ -997,8 +997,8 @@ var MystaysBookingWidget = {
 
 
             searchList.push({
-                hotelname: 'Beppu Kamenoi Hotel',
-                hotelsearchnames: 'beppu kamenoi hotel|別府亀の井ホテル|别府龟之井温泉酒店|別府龜之井温泉酒店',
+                hotelName: 'Beppu Kamenoi Hotel',
+                hotelSearchNames: 'beppu kamenoi hotel|別府亀の井ホテル|别府龟之井温泉酒店|別府龜之井温泉酒店',
                 hotelLink: 'https://www.mystays.com/en-us/hotel-beppu-kamenoi-hotel-oita/',
                 UseTravelClick: false,
                 TrvelClickBookingID: 98765,
@@ -1013,11 +1013,13 @@ var MystaysBookingWidget = {
                 minChars: 0,
                 maxItems: 15,
                 list: MystaysBookingWidget.HotelSearch.GetSearchList(),
-                item: function (element, userText) {
-                    return (element.value.toLowerCase().indexOf(userText.toLowerCase())>-1);
-                },
                 filter: function (element, userText) {
-                    return (element.value.hotelsearchnames.toLowerCase().indexOf(userText.toLowerCase()) > -1);
+                    return (element.value.hotelSearchNames.toLocaleLowerCase().indexOf(userText.toLowerCase()) > -1);
+                },
+                item: function (selected, userText) {
+                    return (Awesomplete.ITEM(selected.value.hotelName, userText));
+                }, replace: function (selectedHotel) {
+                    this.input.value = selectedHotel.value.hotelName;
                 }
             });
 

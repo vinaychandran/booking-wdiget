@@ -184,7 +184,7 @@ _.prototype = {
 		this.isOpened = false;
 		this.index = -1;
 
-		this.status.setAttribute("hidden", "");
+		
 
 		$.fire(this.input, "awesomplete-close", o || {});
 	},
@@ -193,7 +193,7 @@ _.prototype = {
 		this.ul.removeAttribute("hidden");
 		this.isOpened = true;
 
-		this.status.removeAttribute("hidden");
+		
 
 		if (this.autoFirst && this.index === -1) {
 			this.goto(0);
@@ -253,7 +253,7 @@ _.prototype = {
 		if (i > -1 && lis.length > 0) {
 			lis[i].setAttribute("aria-selected", "true");
 
-			this.status.textContent = lis[i].textContent + ", list item " + (i + 1) + " of " + lis.length;
+			
 
             this.input.setAttribute("aria-activedescendant", this.ul.id + "_item_" + this.index);
 
@@ -320,20 +320,20 @@ _.prototype = {
 
 			if (this.ul.children.length === 0) {
 
-                this.status.textContent = "No results found";
+                
 
 				this.close({ reason: "nomatches" });
 
 			} else {
 				this.open();
 
-                this.status.textContent = this.ul.children.length + " results found";
+                
 			}
 		}
 		else {
 			this.close({ reason: "nomatches" });
 
-                this.status.textContent = "No results found";
+                
 		}
 	}
 };
@@ -366,9 +366,8 @@ _.CONTAINER = function (input) {
 }
 
 _.ITEM = function (text, input, item_id) {
-	var html = input.trim() === "" ? text : text.replace(RegExp($.regExpEscape(input.trim()), "gi"), "<mark>$&</mark>");
 	return $.create("li", {
-		innerHTML: html,
+        innerHTML: text,
 		"aria-selected": "false",
         "id": "awesomplete_list_" + this.count + "_item_" + item_id
 	});

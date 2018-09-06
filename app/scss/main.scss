@@ -368,6 +368,18 @@ body{
 	    margin: 0;
 	    width: 100%;
 	    z-index: 9;
+	    -webkit-transform: scale(1);
+		-webkit-animation-duration: 500ms;
+		transform: scale(1);
+		animation-duration: 500ms;
+	    &.show{
+			-webkit-animation-name: mbsc-anim-sh-in;			
+			animation-name: mbsc-anim-sh-in;
+	    }
+	    &.hide{
+			-webkit-animation-name: mbsc-anim-sh-out;			
+			animation-name: mbsc-anim-sh-out;
+	    }
 	}
 	@include sm {
 		position: absolute;			
@@ -651,6 +663,35 @@ body{
     height: 40px;
     transform: translateY(0); } 
 }
+
+
+@keyframes mys-anim-nights-in {
+  0 {opacity: 0; transform: translateY(100%);}
+  50% {opacity: 1; transform: translateY(90%);}
+  100% {opacity: 1;transform: translateY(0);} 
+}
+
+@-webkit-keyframes mys-anim-nights-in {
+  0 {opacity: 0; transform: translateY(100%);}
+  50% {opacity: 1; transform: translateY(90%);}
+  100% {opacity: 1;transform: translateY(0);} 
+}
+
+@keyframes mbsc-anim-sh-in {
+  from {opacity: 1;transform: translateX(100%); }
+  to {opacity: 1;transform: translateX(0); } }
+
+@-webkit-keyframes mbsc-anim-sh-in {
+  from {opacity: 1; -webkit-transform: translateX(100%); }
+  to {opacity: 1;-webkit-transform: translateX(0); } }
+
+@keyframes mbsc-anim-sh-out {
+  from {opacity: 1;transform: translateX(0); }
+  to {opacity: 1;transform: translateX(100%); } }
+
+@-webkit-keyframes mbsc-anim-sh-out {
+  from {opacity: 1;-webkit-transform: translateX(0); }
+  to {opacity: 1;-webkit-transform: translateX(100%); } }
 
 #booking-widget-overlay{
 	position: fixed;

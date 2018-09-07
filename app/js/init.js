@@ -604,11 +604,11 @@ var MystaysBookingWidget = {
             //Method to add a hover event to each date which will add an intermediate class('mystays-hover-intermediate') in the 'MystaysBookingWidget.BookingCalendar.CustomHTML.CheckHover' method
             AddIntermediateHoverLogic: function (inst) {
 
-                
+                if (!MystaysBookingWidget.Helper.IsMobile()) {
                 var dateList = document.querySelectorAll(MystaysBookingWidget.Common.BookingWidgetContainer + ' .mbsc-cal-slide .mbsc-cal-day:not(.mystays-selected-date):not(.mbsc-disabled):not([aria-hidden="true"])');
                     for (var i = 0; i < dateList.length; i++) {
                         dateList[i].classList.add('mystays-selected-date');
-                        if (!MystaysBookingWidget.Helper.IsMobile()) {
+                        
                             dateList[i].addEventListener('mouseover', function (e, args) {
                                 MystaysBookingWidget.BookingCalendar.CustomHTML.CheckHover(this, document.querySelectorAll(MystaysBookingWidget.BookingCalendar.Constants.MystaysSelectedDate()), inst);
                             });

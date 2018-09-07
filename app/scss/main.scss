@@ -720,9 +720,9 @@ body{
     height: 0px;
     transform: translateY(-20%); }
   to {
-    opacity: 1;
+    
     height: 40px;
-    transform: translateY(0); } 
+    transform: translateY(0);opacity: 1; } 
 }
 
 @-webkit-keyframes mys-anim-child-in {
@@ -731,9 +731,9 @@ body{
     height: 0px;
     transform: translateY(-20%); }
   to {
-    opacity: 1;
+    
     height: 40px;
-    transform: translateY(0); } 
+    transform: translateY(0); opacity: 1;} 
 }
 
 

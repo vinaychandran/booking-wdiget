@@ -99,8 +99,15 @@ $lato: 'Lato', sans-serif;
 		left:0;	
 	}	
 
+	.mbsc-fr-persp{
+		@include device {
+			background: $cal-primary-bg;
+		}
+		
+	}
+
 	.mystays-bookingwidget-calendarheader{
-		padding: 10px 20px 15px;
+		padding: 10px 20px 10px;
 		text-align: center;
 		background: $cal-primary-bg;
 		position: relative;
@@ -273,7 +280,7 @@ $lato: 'Lato', sans-serif;
 		.mbsc-cal-day-scroll-c {
 			background: $cal-secondary-bg;
 			@include device{
-				height: 320px;
+				height: 300px;
 			}
 			
 		}
@@ -282,7 +289,7 @@ $lato: 'Lato', sans-serif;
 			background: $cal-secondary-bg;
 			padding: 0;
 			@include device{
-				height: 275px;
+				height: 245px;
 			}			
 		}
 

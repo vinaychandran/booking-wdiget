@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Booking Widget</title>
+    <meta charset=utf-8>
+    <meta name=viewport content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <meta http-equiv=X-UA-Compatible content="IE=11">    
+    <link rel="stylesheet" type="text/css" href="css/mobiscroll.javascript.css" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+	<link rel="stylesheet" type="text/css" href="css/calendar.css" />
+    <style>
+        .testing {
+            position: relative;
+        }
+
+        .test1 {
+            position: absolute;
+            z-index: 1000;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div id="booking-widget-overlay" class="hide"></div>
+    <div class="container mys-be-inner-page" id="booking-widget-container">
+        <div id="booking-widget-module" class="mystays-booking-widget">
+            <div class="booking-box autocomplete">
+                <p>Where in Japan?</p>
+                <div class="booking-box-wrap">
+                    <input type="text" class="hotel-search-input" placeholder="Hotel & Area" />
+                </div>
+            </div>
+            <div class="booking-box date-picker">
+                <p><span>checkin</span><span>checkout</span></p>
+                <div class="booking-box-wrap range-container" id="range-container" >
+                    <div class="booking-checkin-checkout">
+                        <div class="checkin" id="bookingwidget-checkin">
+                            <input type="text" id="calendar-checkindate" value="">
+                            <div class="input-top-wrap">
+                                <div class="title"></div>
+                                <div class="desc"></div>
+                            </div>
+                        </div>
+                        <i class="icono-arrow1-left"></i>
+                        <div class="checkout" id="bookingwidget-checkout">
+                            <input type="text" id="calendar-checkoutdate" value="">
+                            <div class="input-top-wrap">
+                                <div class="title"></div>
+                                <div class="desc"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="booking-box guests">
+                <p>Guest No.</p>
+                <div class="booking-box-wrap">
+                    <div class="input-top-wrap">
+                        <div class="title" data-count="1">2</div>
+                        <div class="desc">
+                            <span class="guest">guest</span>
+                            <!-- <span class="guests hidden">guests</span> -->
+                        </div>
+                    </div>
+                    <input type="hidden" id="booking-totalguests">
+                </div>
+                <div class="booking-guestselect-wrap hide">
+                    <div class="booking-guestselect-heading">
+                        <span class="mbsc-ic-arrow-left5 mbsc-ic"></span>
+                        <span>calendar</span>
+                    </div>
+                    <div class="booking-guestselect">
+                        <div class="left">
+                            <div class="guest-row">
+                                <p class="room">
+                                    <span class="number" data-count="1">1</span>
+                                    <span class="room">Room</span>
+                                </p>
+                                <i class="minus disabled"></i>
+                                <i class="plus"></i>
+                            </div>
+                            <div class="guest-row">
+                                <p class="adult">
+                                    <span class="number" data-count="1">2</span>
+                                    <span class="adult">Adult</span>
+                                </p>
+                                <i class="minus disabled"></i>
+                                <i class="plus"></i>
+                            </div>
+                            <div class="guest-row">
+                                <p class="child">
+                                    <span class="number" data-count="0">0</span>
+                                    <span class="child">child</span>
+                                </p>
+                                <i class="minus disabled"></i>
+                                <i class="plus"></i>
+                            </div>
+                            <p class="child-age-info hide">Please include each child’s age so we can find you best room, bed configuration and deals.</p>
+                            <ul class="chidren-ages-dropndown"></ul>
+                        </div>
+                        <div class="right">
+                            <h3>小学生の添い寝について</h3>
+                            <ul>
+                                <li>大人1名様に対し、添い寝のお子様1名までとします。</li>
+                                <li>小学生の添い寝希望のお客様がご朝食をご希望の場合、現地にて別途1,306円頂戴いたします。（6歳以下は無料）</li>
+                            </ul>
+                        </div>
+                        <div class="booking-guestselect-close">Ok</div>
+                    </div>
+                </div>
+            </div>
+            <div class="booking-box promocode">
+                <p>Promocode</p>
+                <div class="booking-box-wrap">
+                    <input type="text" placeholder="----">
+                </div>
+            </div>
+            <div class="booking-box search-button">
+                <p>Best Price Guarantee!</p>
+                <button class="btn">Check availability</button>
+            </div>
+        </div>
+        <div id="calender-render-container" class="calender-render-container"></div>
+    </div>
+    <script type="text/javascript" src="js/mobiscroll.javascript.min.js"></script>
+    <script type="text/javascript" src="js/init.js"></script>
+
+</body>	
+</html>

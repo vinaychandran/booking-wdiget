@@ -110,6 +110,29 @@ body{
 		display: flex;
 		justify-content:space-between;
 	}
+
+	.booking-box-wrap{
+		background-color: #ffffff;
+  		border: solid 2px #e4e4e7;
+  		height: 50px;
+  		position: relative;
+  		@include sm {
+			height: 60px;
+  		}
+  		input[type='text']{
+  			border: 0;
+  			width: 100%;
+  			height: 46px;
+  			font-size: 12px;
+  			font-family: $lato;
+  			color: #7b7b85;
+  			opacity: 0.75;
+  			@include sm {
+  				height: 56px;
+  			}
+  		}
+	}
+
 	.booking-box{
 		margin-bottom: 14px;
 		padding: 0 8px;
@@ -330,32 +353,6 @@ body{
 		transform-origin: right top;
 	}		
 }
-
-#booking-widget-module{
-	.booking-box-wrap{
-		background-color: #ffffff;
-  		border: solid 2px #e4e4e7;
-  		height: 50px;
-  		position: relative;
-  		@include sm {
-			height: 60px;
-  		}
-  		input[type='text']{
-  			border: 0;
-  			width: 100%;
-  			height: 46px;
-  			font-size: 12px;
-  			font-family: $lato;
-  			color: #7b7b85;
-  			opacity: 0.75;
-  			@include sm {
-  				height: 56px;
-  			}
-  		}
-	}
-}
-
-
 
 .booking-guestselect-wrap{
 	background: #ffffff;
@@ -675,6 +672,105 @@ body{
 	}
 }
 
+
+#booking-widget-overlay{
+	position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #232e48;
+    opacity: 0.9;
+}
+
+
+
+.hide{
+	display: none;
+}
+
+.show{
+	display: block;
+}
+
+
+
+
+
+.mys-be-inner-page{
+	.mystays-booking-widget{
+		@include sm {
+			padding: 10px 0;
+			box-shadow: none;
+		}
+		
+		.booking-box {
+			> p {
+				@include sm {
+					display: none;
+				}
+			}
+		}
+
+		.autocomplete{
+			@include sm {
+				width: 315px;
+			}
+		}
+
+		.date-picker .booking-checkin-checkout{
+			@include sm {
+				width: 244px;
+			}
+		}
+
+		.guests{
+			@include sm {
+				width: 86px;
+			}
+		}
+
+		.promocode{
+			@include sm {
+				width: 96px;
+			}
+		}
+
+		.search-button{
+			@include sm {
+				width: 157px;
+				.btn{
+				 	line-height:38px;
+				}
+			}
+			 
+		}
+
+		.input-top-wrap{
+			@include sm {
+				.title{
+					display: inline-block;
+					margin-right: 5px;
+				}
+				.desc{
+					display: inline-block;
+				}
+			}
+		}
+	}
+	.booking-box-wrap{
+		@include sm {
+			height: 40px;
+		}
+		input[type='text']{
+			@include sm {
+				height: 36px;
+				padding: 10px 22px;
+			}
+		}
+	}
+}
+
 @keyframes mbsc-anim-p-in {
   from {
     opacity: 0;
@@ -764,24 +860,4 @@ body{
 @-webkit-keyframes mbsc-anim-sh-out {
   from {opacity: 1;-webkit-transform: translateX(0);  }
   to {opacity: 0;-webkit-transform: translateX(100%); } }
-
-#booking-widget-overlay{
-	position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: #232e48;
-     opacity: 0.9;
-}
-
-
-
-.hide{
-	display: none;
-}
-
-.show{
-	display: block;
-}
 

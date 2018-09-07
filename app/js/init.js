@@ -109,6 +109,7 @@ var MystaysBookingWidget = {
         Constants: {
             //Variable used to store the current active button
             CurrentStatus: '',
+            CalendarShown : false,
             //Variable used to identify if the checkout date is manually set to the next day
             CheckNextDaySetManually: false,
             EnglishMonthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
@@ -211,9 +212,6 @@ var MystaysBookingWidget = {
             RepositionSelectorIndicator: function RepositionSelectorIndicator(IsCheckin) {
                 var rangeBubbleContainer = document.querySelector(MystaysBookingWidget.BookingCalendar.Constants.RangeBubbleContainer());
                 if (rangeBubbleContainer) {
-
-
-
                     var rangeBubbleContainerLeft = rangeBubbleContainer.style.left;
                     var currentRangeLeftPropertyValue = parseInt(rangeBubbleContainerLeft.replace('px', ''));
 
@@ -270,7 +268,7 @@ var MystaysBookingWidget = {
                 dateItemList.forEach(function (element, index) {
                     if (new Date(element.getAttribute('data-full').ChangeDateFormat()) < new Date(dateToCheck)) {
                         element.classList.add('mystays-bookingengine-disabled');
-                        //element.classList.add('mbsc-disabled');
+                        element.classList.add('mbsc-disabled');
                         element.classList.add('mbsc-sc-itm-inv');
 
                     }
@@ -284,7 +282,7 @@ var MystaysBookingWidget = {
 
                 dateItemList.forEach(function (element, index) {
                     element.classList.remove('mystays-bookingengine-disabled');
-                    //element.classList.remove('mbsc-disabled');
+                    element.classList.remove('mbsc-disabled');
                     element.classList.remove('mbsc-sc-itm-inv');
 
                 });
@@ -639,8 +637,8 @@ var MystaysBookingWidget = {
             MystaysBookingWidget.BookingCalendar.Constants.CheckNextDaySetManually = false;
             MystaysBookingWidget.BookingCalendar.CustomHTML.RepositionSelectorIndicator(true);
 
-            
-
+            //Enabling all dates when user selects checkin date
+            MystaysBookingWidget.BookingCalendar.CustomHTML.EnableAllDates();
             //Removing all intermediate hover classes
             MystaysBookingWidget.BookingCalendar.CustomHTML.RemoveIntermediateHoverLogic();
         },
@@ -648,6 +646,9 @@ var MystaysBookingWidget = {
         CheckOutButtonHandler: function CheckOutButtonHandler(element, args) {
             MystaysBookingWidget.BookingCalendar.Constants.CurrentStatus = 'end';
             MystaysBookingWidget.BookingCalendar.CustomHTML.RepositionSelectorIndicator(false);
+
+            //Disabling all dates previous to check in date when user selects checkout date
+            MystaysBookingWidget.BookingCalendar.CustomHTML.DisablePreviousDates(MystaysRangeObject.startVal.split('|')[4]);
 
         },
         CheckInOutButtonHandlers: function () {
@@ -756,6 +757,7 @@ var MystaysBookingWidget = {
 
                 },
                 onShow: function (event, inst) {
+                    MystaysBookingWidget.BookingCalendar.CalendarShown = true;
                     MystaysBookingWidget.GuestsWidget.DisplayGuestSection();
                     MystaysBookingWidget.Common.ShowOverlayLogic();
                     MystaysBookingWidget.BookingCalendar.CustomHTML.AdjustSectionHeights();
@@ -767,6 +769,7 @@ var MystaysBookingWidget = {
                   
                 },
                 onClose: function (event, inst) {
+                    MystaysBookingWidget.BookingCalendar.CalendarShown = false;
                     MystaysBookingWidget.BookingCalendar.ValidateStartEndDate(event, inst);
 
                     MystaysBookingWidget.Common.HideOverlayLogic();
@@ -786,8 +789,19 @@ var MystaysBookingWidget = {
                         MystaysBookingWidget.BookingCalendar.CustomHTML.RemoveIntermediateHoverLogic();
                     }
 
-                   
-
+                    //if (MystaysBookingWidget.BookingCalendar.CalendarShown) {
+                    //    if (event.active === 'start') {
+                    //        MystaysBookingWidget.BookingCalendar.CustomHTML.DisablePreviousDates(inst.startVal.split('|')[4]);
+                    //    } else {
+                    //        MystaysBookingWidget.BookingCalendar.CustomHTML.EnableAllDates();
+                    //    }
+                    //} else {
+                    //    if (event.active === 'start') {
+                    //        MystaysBookingWidget.BookingCalendar.CustomHTML.EnableAllDates();
+                    //    } else {
+                    //        MystaysBookingWidget.BookingCalendar.CustomHTML.DisablePreviousDates(inst.startVal.split('|')[4]);
+                    //    }
+                    //}
                     var startval = inst.startVal;
                     var endval = inst.endVal;
                     MystaysBookingWidget.BookingCalendar.CustomHTML.SetDateValues(inst);

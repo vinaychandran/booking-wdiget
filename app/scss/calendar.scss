@@ -199,10 +199,12 @@ $lato: 'Lato', sans-serif;
 	.mbsc-mobiscroll {
 
 		.mbsc-fr-w{
-			background: $cal-primary-bg;
-			box-shadow: 35.4px 35.4px 90px 0 rgba(0,0,0,.15);
-			border-bottom: 5px solid $cal-primaray-color;
+			background: $cal-primary-bg;			
 			border-radius: 0;
+			@include sm {
+				box-shadow: 35.4px 35.4px 90px 0 rgba(0,0,0,.15);
+				border-bottom: 5px solid $cal-primaray-color;
+			}
 		}
 
 		.mbsc-cal-cell:focus,  .mbsc-cal-cell:not(.mbsc-disabled):hover
@@ -261,8 +263,8 @@ $lato: 'Lato', sans-serif;
 		}	
 
 		.mystays-bookingwidget-header-month{
-			padding: 15px 0;
-			font-size: 16px;
+			padding: 13px 0;
+			font-size: 15px;
 			font-family: $lato;
 			font-weight: 700;
 			background: $cal-primary-bg;
@@ -278,8 +280,10 @@ $lato: 'Lato', sans-serif;
 
 		.mbsc-cal-table{
 			background: $cal-secondary-bg;
-			padding: 5px 0;
-			height: auto;
+			padding: 0;
+			@include device{
+				height: 275px;
+			}			
 		}
 
 		.mbsc-cal-day-date{
@@ -349,7 +353,7 @@ $lato: 'Lato', sans-serif;
 			right: 0;
 			background-color:$cal-primary-bg;
 			text-align: center;
-			padding: 10px 0;
+			padding: 5px 0;
 			box-shadow: 0px -2px 16px -2px rgba(0, 0, 0, 0.2);
 			-webkit-animation-name: mys-anim-nights-in;
 			-webkit-animation-duration: 500ms;

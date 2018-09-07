@@ -199,10 +199,12 @@ $lato: 'Lato', sans-serif;
 	.mbsc-mobiscroll {
 
 		.mbsc-fr-w{
-			background: $cal-primary-bg;
-			box-shadow: 35.4px 35.4px 90px 0 rgba(0,0,0,.15);
-			border-bottom: 5px solid $cal-primaray-color;
+			background: $cal-primary-bg;			
 			border-radius: 0;
+			@include sm {
+				box-shadow: 35.4px 35.4px 90px 0 rgba(0,0,0,.15);
+				border-bottom: 5px solid $cal-primaray-color;
+			}
 		}
 
 		.mbsc-cal-cell:focus,  .mbsc-cal-cell:not(.mbsc-disabled):hover

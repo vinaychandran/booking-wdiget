@@ -735,10 +735,6 @@ var MystaysBookingWidget = {
                         } else {
                             MystaysBookingWidget.BookingCalendar.CustomHTML.UpdateSetButton(inst.startVal.split('|')[4], event.date);
                         }
-
-                        //Enable all dates after enddate is selected
-                        MystaysBookingWidget.BookingCalendar.CustomHTML.EnableAllDates();
-
                     }
 
                     if (event.active === 'start') {
@@ -768,11 +764,7 @@ var MystaysBookingWidget = {
                     MystaysBookingWidget.BookingCalendar.CustomHTMLEvents.CalendarCustomFunctions(inst);
                     MystaysBookingWidget.BookingCalendar.CustomHTML.UpdateSetButton(inst.startVal.split('|')[4], inst.endVal.split('|')[4]);
 
-                    if (MystaysBookingWidget.Helper.IsMobile() && MystaysBookingWidget.BookingCalendar.Constants.CurrentStatus === 'end') {
-                        MystaysBookingWidget.BookingCalendar.CustomHTML.DisablePreviousDates(inst.startVal.split('|')[4]);
-                        
-
-                    }
+                  
                 },
                 onClose: function (event, inst) {
                     MystaysBookingWidget.BookingCalendar.ValidateStartEndDate(event, inst);
@@ -794,9 +786,7 @@ var MystaysBookingWidget = {
                         MystaysBookingWidget.BookingCalendar.CustomHTML.RemoveIntermediateHoverLogic();
                     }
 
-                    //if (MystaysBookingWidget.Helper.IsMobile() && MystaysBookingWidget.BookingCalendar.Constants.CurrentStatus === 'end') {
-                    //    MystaysBookingWidget.BookingCalendar.CustomHTML.DisablePreviousDates(inst.startVal.split('|')[4]);
-                    //}
+                   
 
                     var startval = inst.startVal;
                     var endval = inst.endVal;

@@ -1130,15 +1130,95 @@ var MystaysBookingWidget = {
             SearchInputClass: function () {
                 return MystaysBookingWidget.Common.BookingWidgetContainer + ' .hotel-search-input';
             },
-            SearchInputClass: function () {
-                return MystaysBookingWidget.Common.BookingWidgetContainer + ' .hotel-search-input';
+            HotelBindList: function () {
+                return MystaysBookingWidget.Common.BookingWidgetContainer + ' .hotel-search-list';
             }
         },
         CustomHTMLEvents: {
             HotelSearchFocus: function HotelSearchFocus() {
+                document.querySelector(MystaysBookingWidget.HotelSearch.Constants.SearchInputClass()).addEventListener('focus', function (e, args) {
 
+                    var filteredHotelsList;
+                    if (e.target.value!= '') {
+                        var filteredHotelsList = MystaysBookingWidget.HotelSearch.LoadSearchResults(e.target.value);
+                    } else {
+                        var filteredHotelsList = MystaysBookingWidget.HotelSearch.LoadSearchResults();
+                    }
+                    MystaysBookingWidget.HotelSearch.BindHotelsData(filteredHotelsList);
+                })
+
+                document.querySelector(MystaysBookingWidget.HotelSearch.Constants.SearchInputClass()).addEventListener('focusout', function (e, args) {
+                    document.querySelector(MystaysBookingWidget.HotelSearch.Constants.HotelBindList()).parentNode.HideElement();
+                })
+            },
+            HotelSearchKeyUp: function HotelSearchKeyUp() {
+                document.querySelector(MystaysBookingWidget.HotelSearch.Constants.SearchInputClass()).addEventListener('keyup', function (e, args) {
+                    var filteredHotelsList = MystaysBookingWidget.HotelSearch.LoadSearchResults(e.target.value);
+
+                    MystaysBookingWidget.HotelSearch.BindHotelsData(filteredHotelsList);
+                })
+            },
+
+            HotelSearchKeyDown: function HotelSearchKeyDown() {
+                document.querySelector(MystaysBookingWidget.HotelSearch.Constants.SearchInputClass()).addEventListener('keyup', function (e, args) {
+                    if (e.which == 9 || e.which == 40) {
+                        // tab
+                        e.preventDefault();
+                        $(this).next().find('ul li span').first().addClass('active');
+                        $(this).next().find('ul li span').first().focus();
+                        $(this).blur();
+                    }
+                })
             }
         },
+
+        //Removing all hotels from list
+        RemoveHotelList: function () {
+            //Removing all child items
+            var bindList = document.querySelector(MystaysBookingWidget.HotelSearch.Constants.HotelBindList());
+            while (bindList.children[0]) {
+                bindList.children[0].remove();
+            }
+        },
+
+        //Binding hotels to DOM
+        BindHotelsData: function BindHotelsData(hotelList) {
+            //Removing all child items
+            MystaysBookingWidget.HotelSearch.RemoveHotelList();
+
+            var bindList = document.querySelector(MystaysBookingWidget.HotelSearch.Constants.HotelBindList());
+            for (var i = 0; i < hotelList.length; i++) {
+                var bindListItem = document.createElement('li');
+
+                bindListItem.innerHTML = hotelList[i].HotelName;
+
+                bindList.appendChild(bindListItem);
+            }
+
+            bindList.parentNode.ShowElement();
+        },
+        //Function to load all hotels or hotels(and cities) based on a searched text
+        LoadSearchResults: function (userInputText) {
+            var masterHotelList = MystaysBookingWidget.HotelSearch.GetSearchList();
+            //Filter text passed
+            if (userInputText) {
+                var filteredHotelList = [];
+                for (var i = 0; i < masterHotelList.length; i++) {
+                    if ((masterHotelList[i].HotelSearchNames.indexOf(userInputText) > -1) || (MystaysBookingWidget.HotelSearch.Constants.FilterCities ? masterHotelList[i].City.indexOf(userInputText) > -1 : false)) {
+                        filteredHotelList.push(masterHotelList[i]);
+                    }
+                }
+                return filteredHotelList;
+
+            }
+            //Load all hotels and cities
+            else {
+                return masterHotelList;
+            }
+        },
+
+        //Function to get all the hotel details from either and api or from another element on the DOM
+        //and convert it into a single format
         GetSearchList: function GetSearchList() {
             var searchList = [];
             searchList.push({
@@ -1167,7 +1247,10 @@ var MystaysBookingWidget = {
 
         //Method to initialize autocomplete
         InitializeAutocomplete: function () {
-            
+            //Attaching focus event
+            MystaysBookingWidget.HotelSearch.CustomHTMLEvents.HotelSearchFocus();
+            //Bind autocomplete to input search
+            MystaysBookingWidget.HotelSearch.CustomHTMLEvents.HotelSearchKeyUp();
         },
         Loaded: function () {
 
@@ -1177,11 +1260,12 @@ var MystaysBookingWidget = {
     },
 
     //Main initialization function
-    Loaded: function Loaded(selectedLanguage, BookingWidgetContainer) {
+    Loaded: function Loaded(selectedLanguage, FilterCities , BookingWidgetContainer) {
         MystaysBookingWidget.Common.SelectedLanguage = selectedLanguage;
 
         //Adding additional space(' ') just for safety
         MystaysBookingWidget.Common.BookingWidgetContainer = BookingWidgetContainer + ' ';
+        MystaysBookingWidget.HotelSearch.Constants.FilterCities = FilterCities;
 
         MystaysBookingWidget.Helper.Loaded();
         MystaysRangeObject = MystaysBookingWidget.BookingCalendar.Loaded();
@@ -1193,5 +1277,5 @@ var MystaysBookingWidget = {
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    MystaysBookingWidget.Loaded('en', '#booking-widget-container');
+    MystaysBookingWidget.Loaded('en', true, '#booking-widget-container');
 });

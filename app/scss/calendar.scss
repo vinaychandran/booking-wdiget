@@ -100,10 +100,11 @@ $lato: 'Lato', sans-serif;
 	}	
 
 	.mystays-bookingwidget-calendarheader{
-		padding: 15px 20px 20px;
+		padding: 10px 20px 15px;
 		text-align: center;
 		background: $cal-primary-bg;
 		position: relative;
+		z-index: 1;
 		span{
 			font-size: 20px;
 			font-family: $lato;
@@ -120,7 +121,7 @@ $lato: 'Lato', sans-serif;
 
 	.mbsc-range-btn-t{
 		
-		padding-bottom: 20px;
+		padding:0 0 10px;
 	}
 
 	.mbsc-mobiscroll .mbsc-range-btn{
@@ -134,7 +135,7 @@ $lato: 'Lato', sans-serif;
 		font-size: 16px;
   		font-weight: 400;
   		font-family: $lato;
-  		margin-bottom: 10px;
+  		margin-bottom: 5px;
 	}
 
 	.mystays-range-btn-date{
@@ -239,7 +240,7 @@ $lato: 'Lato', sans-serif;
 			position: relative;
 			z-index: 3;
 			border-top: 1px solid #e4e4e7;
-			padding: 20px 0 5px;
+			padding: 10px 0 0;
 			@include sm {
 				border-top: 0;
 				padding: 0;
@@ -260,7 +261,7 @@ $lato: 'Lato', sans-serif;
 		}	
 
 		.mystays-bookingwidget-header-month{
-			padding: 17px 0;
+			padding: 15px 0;
 			font-size: 16px;
 			font-family: $lato;
 			font-weight: 700;
@@ -269,12 +270,16 @@ $lato: 'Lato', sans-serif;
 
 		.mbsc-cal-day-scroll-c {
 			background: $cal-secondary-bg;
+			@include device{
+				height: 320px;
+			}
+			
 		}
 
 		.mbsc-cal-table{
 			background: $cal-secondary-bg;
-			padding: 0;
-
+			padding: 5px 0;
+			height: auto;
 		}
 
 		.mbsc-cal-day-date{
@@ -284,6 +289,9 @@ $lato: 'Lato', sans-serif;
 			 color: $cal-color;
 			 z-index: 2;
 			 position: relative;
+			 width: 32px;
+			 height: 32px;
+			 margin: 4px 0 2px; 
 		}
 
 		.mbsc-cal-cell.mbsc-disabled .mbsc-cal-cell-txt{
@@ -313,8 +321,8 @@ $lato: 'Lato', sans-serif;
 				&.mbsc-selected:after{
 					background-color: $cal-primaray-color;
 					z-index: 1;
-					height: 2.6em;
-					top: 3px;
+					height: 40px;
+					top: 2px;
 					@include device {
 						margin-right: -1.3em;		
 					}	
@@ -324,6 +332,7 @@ $lato: 'Lato', sans-serif;
 					background-color:$cal-primary-bg;
 					z-index: 2; 				
 					border-color: transparent;
+
 				}
 				&.mbsc-cal-sel-end.mbsc-cal-day-hl.mystays-hover-intermediate{
 					.mbsc-cal-day-date{
@@ -366,7 +375,7 @@ $lato: 'Lato', sans-serif;
 			font-weight: 700;
 			margin: 0;
 			padding: 13px 0;
-		}	
+		}			
 
 		.mbsc-cal-prev, .mbsc-cal-next{
 			&.mbsc-disabled{
@@ -376,7 +385,8 @@ $lato: 'Lato', sans-serif;
 				background: transparent;
 			}
 			color: $cal-secondar-color;
-		}	
+		}
+		 
 	}
 }
 
@@ -394,8 +404,8 @@ $lato: 'Lato', sans-serif;
 	    content: "";
 	    position: absolute;
 	    z-index: 1;
-	    height: 2.6em;
-		top: 3px;
+	    height: 40px;
+		top: 2px;
 	    left: 0px;
 	    right: 0px;
 	    background: $cal-primaray-color;

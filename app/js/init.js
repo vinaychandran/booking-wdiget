@@ -1147,6 +1147,7 @@ var MystaysBookingWidget = {
     HotelSearch: {
         Constants: {
             FilterCities: false,
+            MasterSearchList:[],
             SearchInputClass: function () {
                 return MystaysBookingWidget.Common.BookingWidgetContainer + ' .hotel-search-input';
             },
@@ -1155,7 +1156,28 @@ var MystaysBookingWidget = {
             },
             HotelBindListActiveElement: function () {
                 return '.hotel-search-list .active';
-            }
+            },
+
+            //Footer section
+            FooterCityList: function () {
+                return 'city-list';
+            },
+
+            FooterCityItemSelector: function () {
+                return 'span';
+            },
+
+            FooterHotelList: function () {
+                return 'hotel-list';
+            },
+
+            FooterHotelItemSelector: function () {
+                return '.hotel-search-item span';
+            },
+             //Footer section ends
+
+            CityLabel: 'Cities',
+            HotelLabel: 'Hotels',
 
         },
         CustomHTMLEvents: {
@@ -1259,7 +1281,49 @@ var MystaysBookingWidget = {
             //Removing all child items
             MystaysBookingWidget.HotelSearch.RemoveHotelList();
 
+            var cityList = hotelList.filter(function (item) {
+                return item.type === 'City';
+            })
+
+            var hotelList = hotelList.filter(function (item) {
+                return item.type === 'Hotel';
+            })
+
             var bindList = document.querySelector(MystaysBookingWidget.HotelSearch.Constants.HotelBindList());
+
+            //Create header item
+            var headerListItem = document.createElement('li');
+            headerListItem.className = 'mystyas-hotellist-heading';
+            headerListItem.innerHTML = MystaysBookingWidget.HotelSearch.Constants.CityLabel;
+            bindList.appendChild(headerListItem);
+
+
+            if (cityList.length > 0) {
+                for (var i = 0; i < cityList.length; i++) {
+                    var bindListItem = document.createElement('li');
+                    bindListItem.setAttribute('tabindex', i);
+
+                    bindListItem.setAttribute('data-HotelName', cityList[i].HotelName);
+                    bindListItem.setAttribute('data-HotelLink', cityList[i].HotelLink);
+                    bindListItem.setAttribute('data-HotelSearchNames', cityList[i].HotelSearchNames);
+                    bindListItem.setAttribute('data-UseTravelClick', cityList[i].UseTravelClick);
+                    bindListItem.setAttribute('data-TravelClickBookingID', cityList[i].TravelClickBookingID);
+                    bindListItem.setAttribute('data-RWIthCode', cityList[i].RWIthCode);
+                    bindListItem.setAttribute('data-HotelCity', cityList[i].HotelCity);
+
+
+                    bindListItem.innerHTML = cityList[i].HotelName;
+
+                    bindList.appendChild(bindListItem);
+                }
+            }
+
+            //Create header item
+            var headerListItem = document.createElement('li');
+            headerListItem.className = 'mystyas-hotellist-heading';
+            headerListItem.innerHTML = MystaysBookingWidget.HotelSearch.Constants.HotelLabel;
+            bindList.appendChild(headerListItem);
+            
             for (var i = 0; i < hotelList.length; i++) {
                 var bindListItem = document.createElement('li');
                 bindListItem.setAttribute('tabindex', i);
@@ -1307,6 +1371,7 @@ var MystaysBookingWidget = {
             inputElement.setAttribute('data-TravelClickBookingID', selectedHotel.TravelClickBookingID);
             inputElement.setAttribute('data-RWIthCode', selectedHotel.RWIthCode);
             inputElement.setAttribute('data-HotelCity', selectedHotel.HotelCity);
+            inputElement.setAttribute('data-HotelCity', selectedHotel.HotelCity);
 
             inputElement.value = selectedHotel.HotelName;
 
@@ -1338,49 +1403,104 @@ var MystaysBookingWidget = {
         //Function to get all the hotel details from either and api or from another element on the DOM
         //and convert it into a single format
         GetSearchList: function GetSearchList() {
-            var searchList = [];
-            searchList.push({
-                HotelName: 'Art Hotel Asahikawa',
-                HotelSearchNames: 'art hotel asahikawa|アートホテル旭川|art 旭川酒店',
-                HotelLink: 'https://www.mystays.com/en-us/hotel-art-hotel-asahikawa-hokkaido/',
-                UseTravelClick: true,
-                TravelClickBookingID: 12345,
-                RWIthCode: 555,
-                HotelCity: 'Tokyo'
-            });
+
+            if (MystaysBookingWidget.HotelSearch.Constants.MasterSearchList.length > 0) {
+
+                return MystaysBookingWidget.HotelSearch.Constants.MasterSearchList;
+
+            } else {
 
 
-            searchList.push({
-                HotelName: 'Beppu Kamenoi Hotel',
-                HotelSearchNames: 'beppu kamenoi hotel|別府亀の井ホテル|别府龟之井温泉酒店|別府龜之井温泉酒店',
-                HotelLink: 'https://www.mystays.com/en-us/hotel-beppu-kamenoi-hotel-oita/',
-                UseTravelClick: false,
-                TravelClickBookingID: 98765,
-                RWIthCode: 666,
-                HotelCity: 'Osaka'
-            });
+                var searchList = [];
+                var footerHotelListContainer = document.getElementById(MystaysBookingWidget.HotelSearch.Constants.FooterHotelList());
+                if (footerHotelListContainer) {
 
-            searchList.push({
-                HotelName: 'Narita hotel',
-                HotelSearchNames: 'narita hotel',
-                HotelLink: 'https://www.mystays.com/en-us//',
-                UseTravelClick: true,
-                TravelClickBookingID: 98765,
-                RWIthCode: 777,
-                HotelCity: 'Narita'
-            });
 
-            searchList.push({
-                HotelName: 'Narita hotel2',
-                HotelSearchNames: 'narita hotel2',
-                HotelLink: 'https://www.mystays.com/en-us//',
-                UseTravelClick: true,
-                TravelClickBookingID: 98765,
-                RWIthCode: 777,
-                HotelCity: 'Narita2'
-            });
+                    //Add cities
+                    var footerCityListContainer = document.getElementById(MystaysBookingWidget.HotelSearch.Constants.FooterCityList());
+                    if (footerCityListContainer) {
+                        var cityList = footerCityListContainer.querySelectorAll(MystaysBookingWidget.HotelSearch.Constants.FooterCityItemSelector())
+                        for (var i = 0; i < cityList.length; i++) {
+                            selectedCity = {};
 
-            return searchList;
+                            selectedCity.type = cityList[i].getAttribute('target-type');
+                            selectedCity.HotelName = cityList[i].innerHTML;
+                            selectedCity.Target = cityList[i].getAttribute('target');
+                            selectedCity.HotelSearchNames = cityList[i].getAttribute('names');
+                            selectedCity.HotelLink = cityList[i].getAttribute('hotel-url');
+                            selectedCity.HotelCity = cityList[i].getAttribute('target-city');
+                            selectedCity.ItemID = cityList[i].getAttribute('item-id');
+
+                            searchList.push(selectedCity);
+                        }
+                    }
+
+
+                    var hotelList = footerHotelListContainer.querySelectorAll(MystaysBookingWidget.HotelSearch.Constants.FooterHotelItemSelector())
+                    for (var i = 0; i < hotelList.length; i++) {
+                        selectedHotel = {};
+                        selectedHotel.type = hotelList[i].getAttribute('target-type');
+                        selectedHotel.HotelName = hotelList[i].innerHTML;
+                        selectedHotel.HotelSearchNames = hotelList[i].getAttribute('names');
+                        selectedHotel.HotelLink = hotelList[i].getAttribute('hotel-url');
+                        selectedHotel.UseTravelClick = hotelList[i].getAttribute('use-travel-click');;
+                        selectedHotel.TravelClickBookingID = hotelList[i].getAttribute('travel-click_booking_id');
+                        //selectedHotel.RWIthCode = hotelList[i].getAttribute('data-RWIthCode');
+                        selectedHotel.HotelCity = hotelList[i].getAttribute('city');
+                        selectedHotel.ItemID = hotelList[i].getAttribute('item-id');
+
+                        searchList.push(selectedHotel);
+                    }
+                } else {
+                    //Call API
+
+                    searchList.push({
+                        HotelName: 'Art Hotel Asahikawa',
+                        HotelSearchNames: 'art hotel asahikawa|アートホテル旭川|art 旭川酒店',
+                        HotelLink: 'https://www.mystays.com/en-us/hotel-art-hotel-asahikawa-hokkaido/',
+                        UseTravelClick: true,
+                        TravelClickBookingID: 12345,
+                        RWIthCode: 555,
+                        HotelCity: 'Tokyo'
+                    });
+
+
+                    searchList.push({
+                        HotelName: 'Beppu Kamenoi Hotel',
+                        HotelSearchNames: 'beppu kamenoi hotel|別府亀の井ホテル|别府龟之井温泉酒店|別府龜之井温泉酒店',
+                        HotelLink: 'https://www.mystays.com/en-us/hotel-beppu-kamenoi-hotel-oita/',
+                        UseTravelClick: false,
+                        TravelClickBookingID: 98765,
+                        RWIthCode: 666,
+                        HotelCity: 'Osaka'
+                    });
+
+                    searchList.push({
+                        HotelName: 'Narita hotel',
+                        HotelSearchNames: 'narita hotel',
+                        HotelLink: 'https://www.mystays.com/en-us//',
+                        UseTravelClick: true,
+                        TravelClickBookingID: 98765,
+                        RWIthCode: 777,
+                        HotelCity: 'Narita'
+                    });
+
+                    searchList.push({
+                        HotelName: 'Narita hotel2',
+                        HotelSearchNames: 'narita hotel2',
+                        HotelLink: 'https://www.mystays.com/en-us//',
+                        UseTravelClick: true,
+                        TravelClickBookingID: 98765,
+                        RWIthCode: 777,
+                        HotelCity: 'Narita2'
+                    });
+                }
+
+
+                MystaysBookingWidget.HotelSearch.Constants.MasterSearchList = searchList;
+
+                return MystaysBookingWidget.HotelSearch.Constants.MasterSearchList;
+            }
         },
 
         //Method to initialize autocomplete

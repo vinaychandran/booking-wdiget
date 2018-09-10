@@ -7,6 +7,12 @@ var MystaysBookingWidget = {
         //The language used 
         SelectedLanguage: '',
         BookingWidgetContainer: '',
+        BookingWidgetContainerElement: function () {
+            if (MystaysBookingWidget.Common.BookingWidgetContainer=== '' ) {
+                return document;
+            }
+            return document.getElementById(MystaysBookingWidget.Common.BookingWidgetContainer.replace('#','').replace(' ',''));
+        },
 
         //Method to add custom logic when the calendar is shown
         ShowOverlayLogic: function ShowOverlayLogic() {
@@ -155,11 +161,20 @@ var MystaysBookingWidget = {
                 return ' .mbsc-cal-body';
             },
 
+            CheckinButton: function () {
+                return MystaysBookingWidget.Common.BookingWidgetContainer + ' #bookingwidget-checkin';
+            },
+            
+
             CheckinButtonTitle: function () {
                 return MystaysBookingWidget.Common.BookingWidgetContainer + ' #bookingwidget-checkin .title';
             },
             CheckinButtonDesc: function () {
                 return MystaysBookingWidget.Common.BookingWidgetContainer + ' #bookingwidget-checkin .desc';
+            },
+
+            CheckoutButton: function () {
+                return MystaysBookingWidget.Common.BookingWidgetContainer + ' #bookingwidget-checkout';
             },
             CheckoutButtonTitle: function () {
                 return MystaysBookingWidget.Common.BookingWidgetContainer + ' #bookingwidget-checkout .title';
@@ -652,8 +667,8 @@ var MystaysBookingWidget = {
 
         },
         CheckInOutButtonHandlers: function () {
-            var checkinbtn = document.querySelector(MystaysBookingWidget.Common.BookingWidgetContainer + ' #bookingwidget-checkin');
-            var checkoutbtn = document.querySelector(MystaysBookingWidget.Common.BookingWidgetContainer + ' #bookingwidget-checkout');
+            var checkinbtn = document.querySelector(MystaysBookingWidget.BookingCalendar.Constants.CheckinButton());
+            var checkoutbtn = document.querySelector(MystaysBookingWidget.BookingCalendar.Constants.CheckoutButton());
 
             checkinbtn.addEventListener("click", function () {
                 MystaysBookingWidget.BookingCalendar.CheckInButtonHandler();
@@ -740,8 +755,13 @@ var MystaysBookingWidget = {
                     if (event.active === 'start') {
                         MystaysBookingWidget.BookingCalendar.CustomHTML.DisablePreviousDates(event.target.getAttribute('data-full').ChangeDateFormat());
                         MystaysBookingWidget.BookingCalendar.CustomHTML.RepositionSelectorIndicator(false);
-                        
                     }
+
+                    //if (event.active === 'end') {
+                    //    if (MystaysBookingWidget.Helper.IsMobile()) {
+                    //        MystaysBookingWidget.BookingCalendar.CustomHTML.DisablePreviousDates(inst.startVal.split('|')[4]);
+                    //    }
+                    //}
                 },
                 onMarkupReady: function (event, inst) {
                     MystaysBookingWidget.BookingCalendar.CustomHTML.SetCustomerCalendarHeader(event.target);
@@ -1127,46 +1147,371 @@ var MystaysBookingWidget = {
     HotelSearch: {
         Constants: {
             FilterCities: false,
+            MasterSearchList:[],
             SearchInputClass: function () {
                 return MystaysBookingWidget.Common.BookingWidgetContainer + ' .hotel-search-input';
             },
-            SearchInputClass: function () {
-                return MystaysBookingWidget.Common.BookingWidgetContainer + ' .hotel-search-input';
-            }
+            HotelBindList: function () {
+                return MystaysBookingWidget.Common.BookingWidgetContainer + ' .hotel-search-list';
+            },
+            HotelBindListActiveElement: function () {
+                return '.hotel-search-list .active';
+            },
+
+            //Footer section
+            FooterCityList: function () {
+                return 'city-list';
+            },
+
+            FooterCityItemSelector: function () {
+                return 'span';
+            },
+
+            FooterHotelList: function () {
+                return 'hotel-list';
+            },
+
+            FooterHotelItemSelector: function () {
+                return '.hotel-search-item span';
+            },
+             //Footer section ends
+
+            CityLabel: 'Cities',
+            HotelLabel: 'Hotels',
+
         },
         CustomHTMLEvents: {
             HotelSearchFocus: function HotelSearchFocus() {
+                document.querySelector(MystaysBookingWidget.HotelSearch.Constants.SearchInputClass()).addEventListener('focus', function (e, args) {
 
+                    var filteredHotelsList;
+                    if (e.target.value!= '') {
+                        var filteredHotelsList = MystaysBookingWidget.HotelSearch.LoadSearchResults(e.target.value);
+                    } else {
+                        var filteredHotelsList = MystaysBookingWidget.HotelSearch.LoadSearchResults();
+                    }
+                    MystaysBookingWidget.HotelSearch.BindHotelsData(filteredHotelsList);
+
+                    
+                    
+                })
+
+                
+            },
+            HotelSearchKeyUp: function HotelSearchKeyUp() {
+                document.querySelector(MystaysBookingWidget.HotelSearch.Constants.SearchInputClass()).addEventListener('keyup', function (e, args) {
+                    var filteredHotelsList = MystaysBookingWidget.HotelSearch.LoadSearchResults(e.target.value);
+
+                    MystaysBookingWidget.HotelSearch.BindHotelsData(filteredHotelsList);
+                })
+            },
+
+            HotelSearchKeyDown: function HotelSearchKeyDown() {
+                document.querySelector(MystaysBookingWidget.HotelSearch.Constants.SearchInputClass()).addEventListener('keydown', function (e, args) {
+                    if (e.which == 40) {
+                        e.preventDefault();
+                        MystaysBookingWidget.Common.BookingWidgetContainerElement().querySelector(MystaysBookingWidget.HotelSearch.Constants.HotelBindList() + ' li').classList.add('active');
+
+                        var activeElement = MystaysBookingWidget.Common.BookingWidgetContainerElement().getElementsByClassName('active')[0];
+                        e.target.blur();
+                        activeElement.focus();
+
+                        
+                    }
+                })
+            },
+
+            //Method to fire when user scrolls down on each hotel
+            HotelItemKeyDown: function HotelItemKeyDown() {
+
+                for (var i = 0; i < MystaysBookingWidget.Common.BookingWidgetContainerElement().querySelectorAll(MystaysBookingWidget.HotelSearch.Constants.HotelBindList() + ' li').length; i++) {
+                    var listItem = MystaysBookingWidget.Common.BookingWidgetContainerElement().querySelectorAll(MystaysBookingWidget.HotelSearch.Constants.HotelBindList() + ' li')[i];
+                    
+                    listItem.addEventListener('keydown', function (e, args) {
+
+                        e.preventDefault();
+                        e.target.classList.remove('active');
+                        
+                        //User clicks enter/selects 
+                        if (e.which === 13) {
+                            
+                            MystaysBookingWidget.HotelSearch.GetSelectedHotel(e.target);
+                            return;
+                        }
+
+                        //Tab and keydown
+                        if (e.which == 9 || e.which == 40) {
+                            e.target.classList.remove('active');
+                            var siblingHotelItem = e.target.nextSibling;
+                            
+                        }
+
+                        //Key up
+                        if (e.which == 38) {
+                            var siblingHotelItem = e.target.previousSibling;
+                           
+                        }
+
+                        if (siblingHotelItem && siblingHotelItem.tagName === 'LI') {
+                            siblingHotelItem.classList.add('active');
+                            e.target.blur();
+                            siblingHotelItem.focus();
+                        } else {
+                            MystaysBookingWidget.Common.BookingWidgetContainerElement().querySelector(MystaysBookingWidget.HotelSearch.Constants.SearchInputClass()).focus();
+                        }
+                    })
+                }
+               
+            },
+
+
+        },
+
+        //Removing all hotels from list
+        RemoveHotelList: function () {
+            //Removing all child items
+            var bindList = document.querySelector(MystaysBookingWidget.HotelSearch.Constants.HotelBindList());
+            while (bindList.children[0]) {
+                bindList.children[0].remove();
             }
         },
+
+        //Binding hotels to DOM
+        BindHotelsData: function BindHotelsData(hotelList) {
+            //Removing all child items
+            MystaysBookingWidget.HotelSearch.RemoveHotelList();
+
+            var cityList = hotelList.filter(function (item) {
+                return item.type === 'City';
+            })
+
+            var hotelList = hotelList.filter(function (item) {
+                return item.type === 'Hotel';
+            })
+
+            var bindList = document.querySelector(MystaysBookingWidget.HotelSearch.Constants.HotelBindList());
+
+            //Create header item
+            var headerListItem = document.createElement('li');
+            headerListItem.className = 'mystyas-hotellist-heading';
+            headerListItem.innerHTML = MystaysBookingWidget.HotelSearch.Constants.CityLabel;
+            bindList.appendChild(headerListItem);
+
+
+            if (cityList.length > 0) {
+                for (var i = 0; i < cityList.length; i++) {
+                    var bindListItem = document.createElement('li');
+                    bindListItem.setAttribute('tabindex', i);
+
+                    bindListItem.setAttribute('data-HotelName', cityList[i].HotelName);
+                    bindListItem.setAttribute('data-HotelLink', cityList[i].HotelLink);
+                    bindListItem.setAttribute('data-HotelSearchNames', cityList[i].HotelSearchNames);
+                    bindListItem.setAttribute('data-UseTravelClick', cityList[i].UseTravelClick);
+                    bindListItem.setAttribute('data-TravelClickBookingID', cityList[i].TravelClickBookingID);
+                    bindListItem.setAttribute('data-RWIthCode', cityList[i].RWIthCode);
+                    bindListItem.setAttribute('data-HotelCity', cityList[i].HotelCity);
+
+
+                    bindListItem.innerHTML = cityList[i].HotelName;
+
+                    bindList.appendChild(bindListItem);
+                }
+            }
+
+            //Create header item
+            var headerListItem = document.createElement('li');
+            headerListItem.className = 'mystyas-hotellist-heading';
+            headerListItem.innerHTML = MystaysBookingWidget.HotelSearch.Constants.HotelLabel;
+            bindList.appendChild(headerListItem);
+            
+            for (var i = 0; i < hotelList.length; i++) {
+                var bindListItem = document.createElement('li');
+                bindListItem.setAttribute('tabindex', i);
+
+                bindListItem.setAttribute('data-HotelName', hotelList[i].HotelName);
+                bindListItem.setAttribute('data-HotelLink', hotelList[i].HotelLink);
+                bindListItem.setAttribute('data-HotelSearchNames', hotelList[i].HotelSearchNames);
+                bindListItem.setAttribute('data-UseTravelClick', hotelList[i].UseTravelClick);
+                bindListItem.setAttribute('data-TravelClickBookingID', hotelList[i].TravelClickBookingID);
+                bindListItem.setAttribute('data-RWIthCode', hotelList[i].RWIthCode);
+                bindListItem.setAttribute('data-HotelCity', hotelList[i].HotelCity);
+                
+
+                bindListItem.innerHTML = hotelList[i].HotelName;
+
+                bindList.appendChild(bindListItem);
+            }
+            MystaysBookingWidget.HotelSearch.CustomHTMLEvents.HotelItemKeyDown();
+            bindList.parentNode.ShowElement();
+
+            //MystaysRangeObject.show();
+        },
+
+        //Method to create hotel object from LI item
+        GetSelectedHotel:function GetSelectedHotel(listItem){
+            var selectedHotel = {};
+            selectedHotel.HotelName = listItem.getAttribute('data-HotelName');
+            selectedHotel.HotelSearchNames = listItem.getAttribute('data-HotelSearchNames');
+            selectedHotel.HotelLink = listItem.getAttribute('data-HotelLink');
+            selectedHotel.UseTravelClick = listItem.getAttribute('data-UseTravelClick');;
+            selectedHotel.TravelClickBookingID = listItem.getAttribute('data-TravelClickBookingID');
+            selectedHotel.RWIthCode = listItem.getAttribute('data-RWIthCode');
+            selectedHotel.HotelCity = listItem.getAttribute('data-HotelCity');
+
+            MystaysBookingWidget.HotelSearch.SelectHotel(selectedHotel);
+
+        },
+        //Used to bind hotel data to input element
+        SelectHotel: function SelectHotel(selectedHotel) {
+            var inputElement = MystaysBookingWidget.Common.BookingWidgetContainerElement().querySelector(MystaysBookingWidget.HotelSearch.Constants.SearchInputClass());
+            inputElement.setAttribute('data-HotelName', selectedHotel.HotelName);
+            inputElement.setAttribute('data-HotelLink', selectedHotel.HotelLink);
+            inputElement.setAttribute('data-HotelSearchNames', selectedHotel.HotelSearchNames);
+            inputElement.setAttribute('data-UseTravelClick', selectedHotel.UseTravelClick);
+            inputElement.setAttribute('data-TravelClickBookingID', selectedHotel.TravelClickBookingID);
+            inputElement.setAttribute('data-RWIthCode', selectedHotel.RWIthCode);
+            inputElement.setAttribute('data-HotelCity', selectedHotel.HotelCity);
+            inputElement.setAttribute('data-HotelCity', selectedHotel.HotelCity);
+
+            inputElement.value = selectedHotel.HotelName;
+
+            //Trigger checkin button click
+            //MystaysBookingWidget.Common.BookingWidgetContainerElement().querySelector(MystaysBookingWidget.BookingCalendar.Constants.CheckinButton()).click();
+            MystaysRangeObject.show();
+        },
+
+        //Function to load all hotels or hotels(and cities) based on a searched text
+        LoadSearchResults: function (userInputText) {
+            var masterHotelList = MystaysBookingWidget.HotelSearch.GetSearchList();
+            //Filter text passed
+            if (userInputText) {
+                var filteredHotelList = [];
+                for (var i = 0; i < masterHotelList.length; i++) {
+                    if ((masterHotelList[i].HotelSearchNames.toLowerCase().indexOf(userInputText.toLowerCase()) > -1) || (MystaysBookingWidget.HotelSearch.Constants.FilterCities ? masterHotelList[i].HotelCity.toLowerCase().indexOf(userInputText) > -1 : false)) {
+                        filteredHotelList.push(masterHotelList[i]);
+                    }
+                }
+                return filteredHotelList;
+
+            }
+            //Load all hotels and cities
+            else {
+                return masterHotelList;
+            }
+        },
+
+        //Function to get all the hotel details from either and api or from another element on the DOM
+        //and convert it into a single format
         GetSearchList: function GetSearchList() {
-            var searchList = [];
-            searchList.push({
-                HotelName: 'Art Hotel Asahikawa',
-                HotelSearchNames: 'art hotel asahikawa|アートホテル旭川|art 旭川酒店',
-                HotelLink: 'https://www.mystays.com/en-us/hotel-art-hotel-asahikawa-hokkaido/',
-                UseTravelClick: true,
-                TrvelClickBookingID: 12345,
-                RWIthCode: 555,
-                City: 'Tokyo'
-            });
+
+            if (MystaysBookingWidget.HotelSearch.Constants.MasterSearchList.length > 0) {
+
+                return MystaysBookingWidget.HotelSearch.Constants.MasterSearchList;
+
+            } else {
 
 
-            searchList.push({
-                HotelName: 'Beppu Kamenoi Hotel',
-                HotelSearchNames: 'beppu kamenoi hotel|別府亀の井ホテル|别府龟之井温泉酒店|別府龜之井温泉酒店',
-                HotelLink: 'https://www.mystays.com/en-us/hotel-beppu-kamenoi-hotel-oita/',
-                UseTravelClick: false,
-                TrvelClickBookingID: 98765,
-                RWIthCode: 666,
-                City: 'Osaka'
-            });
+                var searchList = [];
+                var footerHotelListContainer = document.getElementById(MystaysBookingWidget.HotelSearch.Constants.FooterHotelList());
+                if (footerHotelListContainer) {
 
-            return searchList;
+
+                    //Add cities
+                    var footerCityListContainer = document.getElementById(MystaysBookingWidget.HotelSearch.Constants.FooterCityList());
+                    if (footerCityListContainer) {
+                        var cityList = footerCityListContainer.querySelectorAll(MystaysBookingWidget.HotelSearch.Constants.FooterCityItemSelector())
+                        for (var i = 0; i < cityList.length; i++) {
+                            selectedCity = {};
+
+                            selectedCity.type = cityList[i].getAttribute('target-type');
+                            selectedCity.HotelName = cityList[i].innerHTML;
+                            selectedCity.Target = cityList[i].getAttribute('target');
+                            selectedCity.HotelSearchNames = cityList[i].getAttribute('names');
+                            selectedCity.HotelLink = cityList[i].getAttribute('hotel-url');
+                            selectedCity.HotelCity = cityList[i].getAttribute('target-city');
+                            selectedCity.ItemID = cityList[i].getAttribute('item-id');
+
+                            searchList.push(selectedCity);
+                        }
+                    }
+
+
+                    var hotelList = footerHotelListContainer.querySelectorAll(MystaysBookingWidget.HotelSearch.Constants.FooterHotelItemSelector())
+                    for (var i = 0; i < hotelList.length; i++) {
+                        selectedHotel = {};
+                        selectedHotel.type = hotelList[i].getAttribute('target-type');
+                        selectedHotel.HotelName = hotelList[i].innerHTML;
+                        selectedHotel.HotelSearchNames = hotelList[i].getAttribute('names');
+                        selectedHotel.HotelLink = hotelList[i].getAttribute('hotel-url');
+                        selectedHotel.UseTravelClick = hotelList[i].getAttribute('use-travel-click');;
+                        selectedHotel.TravelClickBookingID = hotelList[i].getAttribute('travel-click_booking_id');
+                        //selectedHotel.RWIthCode = hotelList[i].getAttribute('data-RWIthCode');
+                        selectedHotel.HotelCity = hotelList[i].getAttribute('city');
+                        selectedHotel.ItemID = hotelList[i].getAttribute('item-id');
+
+                        searchList.push(selectedHotel);
+                    }
+                } else {
+                    //Call API
+
+                    searchList.push({
+                        HotelName: 'Art Hotel Asahikawa',
+                        HotelSearchNames: 'art hotel asahikawa|アートホテル旭川|art 旭川酒店',
+                        HotelLink: 'https://www.mystays.com/en-us/hotel-art-hotel-asahikawa-hokkaido/',
+                        UseTravelClick: true,
+                        TravelClickBookingID: 12345,
+                        RWIthCode: 555,
+                        HotelCity: 'Tokyo'
+                    });
+
+
+                    searchList.push({
+                        HotelName: 'Beppu Kamenoi Hotel',
+                        HotelSearchNames: 'beppu kamenoi hotel|別府亀の井ホテル|别府龟之井温泉酒店|別府龜之井温泉酒店',
+                        HotelLink: 'https://www.mystays.com/en-us/hotel-beppu-kamenoi-hotel-oita/',
+                        UseTravelClick: false,
+                        TravelClickBookingID: 98765,
+                        RWIthCode: 666,
+                        HotelCity: 'Osaka'
+                    });
+
+                    searchList.push({
+                        HotelName: 'Narita hotel',
+                        HotelSearchNames: 'narita hotel',
+                        HotelLink: 'https://www.mystays.com/en-us//',
+                        UseTravelClick: true,
+                        TravelClickBookingID: 98765,
+                        RWIthCode: 777,
+                        HotelCity: 'Narita'
+                    });
+
+                    searchList.push({
+                        HotelName: 'Narita hotel2',
+                        HotelSearchNames: 'narita hotel2',
+                        HotelLink: 'https://www.mystays.com/en-us//',
+                        UseTravelClick: true,
+                        TravelClickBookingID: 98765,
+                        RWIthCode: 777,
+                        HotelCity: 'Narita2'
+                    });
+                }
+
+
+                MystaysBookingWidget.HotelSearch.Constants.MasterSearchList = searchList;
+
+                return MystaysBookingWidget.HotelSearch.Constants.MasterSearchList;
+            }
         },
 
         //Method to initialize autocomplete
         InitializeAutocomplete: function () {
+            //Attaching focus event
+            MystaysBookingWidget.HotelSearch.CustomHTMLEvents.HotelSearchFocus();
+            //Bind autocomplete to input search
+            MystaysBookingWidget.HotelSearch.CustomHTMLEvents.HotelSearchKeyUp();
+            MystaysBookingWidget.HotelSearch.CustomHTMLEvents.HotelSearchKeyDown();
+
+            
             
         },
         Loaded: function () {
@@ -1177,11 +1522,12 @@ var MystaysBookingWidget = {
     },
 
     //Main initialization function
-    Loaded: function Loaded(selectedLanguage, BookingWidgetContainer) {
+    Loaded: function Loaded(selectedLanguage, FilterCities , BookingWidgetContainer) {
         MystaysBookingWidget.Common.SelectedLanguage = selectedLanguage;
 
         //Adding additional space(' ') just for safety
         MystaysBookingWidget.Common.BookingWidgetContainer = BookingWidgetContainer + ' ';
+        MystaysBookingWidget.HotelSearch.Constants.FilterCities = FilterCities;
 
         MystaysBookingWidget.Helper.Loaded();
         MystaysRangeObject = MystaysBookingWidget.BookingCalendar.Loaded();
@@ -1193,5 +1539,5 @@ var MystaysBookingWidget = {
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    MystaysBookingWidget.Loaded('en', '#booking-widget-container');
+    MystaysBookingWidget.Loaded('en', true, '#booking-widget-container');
 });

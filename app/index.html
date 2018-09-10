@@ -19,6 +19,10 @@
             z-index: 1000;
             display: block;
         }
+
+        .active{
+            background-color:yellow;
+        }
     </style>
 </head>
 <body>
@@ -31,14 +35,12 @@
                     <input type="text" class="hotel-search-input" placeholder="Hotel & Area" />
                 </div>
                 <div class="hide">
-                    <ul class="hotel-search-list">
-
-                    </ul>
+                    <ul class="hotel-search-list"></ul>
                 </div>
             </div>
             <div class="booking-box date-picker">
                 <p><span>checkin</span><span>checkout</span></p>
-                <div class="booking-box-wrap range-container" id="range-container" >
+                <div class="booking-box-wrap range-container" id="range-container">
                     <div class="booking-checkin-checkout">
                         <div class="checkin" id="bookingwidget-checkin">
                             <input type="text" id="calendar-checkindate" value="">

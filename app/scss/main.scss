@@ -104,6 +104,7 @@ body{
 
 .mystays-booking-widget{
 	padding: 15px 0 20px;	
+	 background: $cal-primary-bg; 
 	@include sm {
 		padding: 35px 40px 40px;	
 		box-shadow: 0px 15px 32px -4px rgba(37, 58, 106, 0.3);
@@ -127,6 +128,7 @@ body{
   			font-family: $lato;
   			color: #7b7b85;
   			opacity: 0.75;
+  			margin: 0;
   			@include sm {
   				height: 56px;
   			}
@@ -326,6 +328,7 @@ body{
 	    background:#ffd25d;
 	    font-weight: 900;
 	    font-family: $lato;
+	    height: 60px;
 	}	
 }
 
@@ -496,6 +499,7 @@ body{
 		    font-size: 20px;
 		    font-weight: 700;
 		    font-family: $lato;
+		    margin: 0;
 		    &::-ms-expand {
 			    display: none
 			}				    
@@ -567,6 +571,7 @@ body{
 		ul{
 			margin: 0;
 			padding: 0;
+			list-style:disc;
 			li{
 				font-size: 12px;
 				font-family: $lato;

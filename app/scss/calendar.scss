@@ -101,7 +101,7 @@ $lato: 'Lato', sans-serif;
 
 	.mbsc-fr-persp{
 		@include device {
-			background: $cal-primary-bg;
+			//background: $cal-primary-bg;
 		}
 		
 	}
@@ -469,6 +469,7 @@ $lato: 'Lato', sans-serif;
 
 .mbsc-fr-liq .mbsc-fr-popup{
 	bottom: 0;
+	background: $cal-primary-bg;
 }
 
 .mbsc-mobiscroll.mbsc-range .mbsc-ltr .mbsc-cal-sel-start:after, .mbsc-mobiscroll.mbsc-range .mbsc-rtl .mbsc-cal-sel-end:after {

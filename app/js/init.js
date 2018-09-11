@@ -1237,6 +1237,18 @@ var MystaysBookingWidget = {
 
         },
         CustomHTMLEvents: {
+            ClickOutside: function ClickOutside() {
+                if (!MystaysBookingWidget.Helper.IsMobile()) {
+                    document.addEventListener('click', function (e) {
+                        var container = document.querySelector(MystaysBookingWidget.Common.BookingWidgetContainer)
+
+                        if ((!(container === e.target) && !MystaysBookingWidget.Helper.IsDescendant(container, e.target))) {
+
+                            MystaysBookingWidget.HotelSearch.ShowHotelList(false);
+                        }
+                    })
+                }
+            },
             HotelSearchFocus: function HotelSearchFocus() {
                 document.querySelector(MystaysBookingWidget.HotelSearch.Constants.SearchInputClass()).addEventListener('focus', function (e, args) {
                     //Resetting the selected value to blank
@@ -1322,6 +1334,24 @@ var MystaysBookingWidget = {
                 }
 
             },
+
+            //When user selects a hotel item
+            HotelItemClick: function HotelItemClick() {
+
+                for (var i = 0; i < MystaysBookingWidget.Common.BookingWidgetContainerElement().querySelectorAll(MystaysBookingWidget.HotelSearch.Constants.HotelBindList() + ' .' + MystaysBookingWidget.HotelSearch.Constants.HotelSelectItem()).length; i++) {
+                    var listItem = MystaysBookingWidget.Common.BookingWidgetContainerElement().querySelectorAll(MystaysBookingWidget.HotelSearch.Constants.HotelBindList() + ' .' + MystaysBookingWidget.HotelSearch.Constants.HotelSelectItem())[i];
+
+                    listItem.addEventListener('click', function (e, args) {
+
+                        e.preventDefault();
+                        e.target.classList.remove('active');
+
+                        MystaysBookingWidget.HotelSearch.TriggerHotelCitySelect(e);
+                    })
+                }
+
+                
+            }
 
 
         },
@@ -1421,6 +1451,7 @@ var MystaysBookingWidget = {
                 }
             }
             MystaysBookingWidget.HotelSearch.CustomHTMLEvents.HotelItemKeyDown();
+            MystaysBookingWidget.HotelSearch.CustomHTMLEvents.HotelItemClick();
             bindList.parentNode.ShowElement();
 
             //MystaysRangeObject.show();
@@ -1437,17 +1468,23 @@ var MystaysBookingWidget = {
 
         //Method to create hotel/city object from LI item
         GetSelectedHotelCity: function GetSelectedHotelCity(listItem) {
-            var selectedHotel = {};
-            selectedHotel.Type = listItem.getAttribute('data-Type');
-            selectedHotel.TargetCities = listItem.getAttribute('data-TargetCities');
-            selectedHotel.HotelName = listItem.getAttribute('data-HotelName');
-            selectedHotel.HotelSearchNames = listItem.getAttribute('data-HotelSearchNames');
-            selectedHotel.HotelLink = listItem.getAttribute('data-HotelLink');
-            selectedHotel.UseTravelClick = listItem.getAttribute('data-UseTravelClick');;
-            selectedHotel.TravelClickBookingID = listItem.getAttribute('data-TravelClickBookingID');
-            selectedHotel.RWIthCode = listItem.getAttribute('data-RWIthCode');
-            selectedHotel.HotelCity = listItem.getAttribute('data-HotelCity');
-            selectedHotel.HotelCity = listItem.getAttribute('data-ItemID');
+            //For API
+            if (false) {
+
+            } else {
+                //For data list
+                var selectedHotel = {};
+                selectedHotel.Type = listItem.getAttribute('data-Type');
+                selectedHotel.TargetCities = listItem.getAttribute('data-TargetCities');
+                selectedHotel.HotelName = listItem.getAttribute('data-HotelName');
+                selectedHotel.HotelSearchNames = listItem.getAttribute('data-HotelSearchNames');
+                selectedHotel.HotelLink = listItem.getAttribute('data-HotelLink');
+                selectedHotel.UseTravelClick = listItem.getAttribute('data-UseTravelClick');;
+                selectedHotel.TravelClickBookingID = listItem.getAttribute('data-TravelClickBookingID');
+                selectedHotel.RWIthCode = listItem.getAttribute('data-RWIthCode');
+                selectedHotel.HotelCity = listItem.getAttribute('data-HotelCity');
+                selectedHotel.HotelCity = listItem.getAttribute('data-ItemID');
+            }
 
             MystaysBookingWidget.HotelSearch.SelectHotel(selectedHotel);
 
@@ -1609,6 +1646,7 @@ var MystaysBookingWidget = {
         Loaded: function () {
 
             MystaysBookingWidget.HotelSearch.InitializeAutocomplete();
+            MystaysBookingWidget.HotelSearch.CustomHTMLEvents.ClickOutside();
 
         }
     },

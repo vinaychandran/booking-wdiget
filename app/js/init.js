@@ -775,7 +775,8 @@ var MystaysBookingWidget = {
                         //Automatically hide widget on selection of end date for non mobile devices
                         if (!MystaysBookingWidget.Helper.IsMobile()) {
                             inst.hide();
-                            MystaysBookingWidget.GuestsWidget.DisplayGuestSection(true);
+                            MystaysBookingWidget.GuestsWidget.ShowGuestSection(true);
+                            MystaysBookingWidget.Common.ShowOverlayLogic();
                         } else {
                             MystaysBookingWidget.BookingCalendar.CustomHTML.UpdateSetButton(inst.startVal.split('|')[4], event.date);
                         }
@@ -806,8 +807,11 @@ var MystaysBookingWidget = {
                 },
                 onShow: function (event, inst) {
                     MystaysBookingWidget.BookingCalendar.CalendarShown = true;
-                    MystaysBookingWidget.GuestsWidget.DisplayGuestSection();
+                    
+                    MystaysBookingWidget.GuestsWidget.ShowGuestSection(false);
+                    //MystaysBookingWidget.HotelSearch.HideHotelList();
                     MystaysBookingWidget.Common.ShowOverlayLogic();
+                    
                     MystaysBookingWidget.BookingCalendar.CustomHTML.AdjustSectionHeights();
                     MystaysBookingWidget.BookingCalendar.Constants.CheckNextDaySetManually = false;
                     MystaysBookingWidget.BookingCalendar.CustomHTMLEvents.AddIntermediateHoverLogic(inst);
@@ -911,13 +915,13 @@ var MystaysBookingWidget = {
         },
 
         //Method to show and hide the guest widget
-        DisplayGuestSection: function DisplayGuestSection(ShowSection) {
-            if (ShowSection) {
+        ShowGuestSection: function ShowGuestSection(ShowSection) {
+            if (ShowSection===true) {
                 document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.GuestSectionClass()).ShowElement();
-                MystaysBookingWidget.Common.ShowOverlayLogic();
+                
             } else {
                 document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.GuestSectionClass()).HideElement();
-                MystaysBookingWidget.Common.HideOverlayLogic();
+                
             }
 
         },
@@ -931,7 +935,8 @@ var MystaysBookingWidget = {
 
                     var container = document.querySelector(MystaysBookingWidget.Common.BookingWidgetContainer);
                     if ((!(container === e.target) && !MystaysBookingWidget.Helper.IsDescendant(container, e.target))) {
-                        MystaysBookingWidget.GuestsWidget.DisplayGuestSection(false);
+                        MystaysBookingWidget.GuestsWidget.ShowGuestSection(false);
+                        MystaysBookingWidget.Common.HideOverlayLogic();
 
                     }
                 })
@@ -1150,7 +1155,8 @@ var MystaysBookingWidget = {
             var backButton = document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.GuestWidgetBackButton());
 
             backButton.addEventListener('click', function () {
-                MystaysBookingWidget.GuestsWidget.DisplayGuestSection(false);
+                MystaysBookingWidget.GuestsWidget.ShowGuestSection(false);
+                MystaysBookingWidget.Common.HideOverlayLogic();
             })
         },
 
@@ -1162,8 +1168,10 @@ var MystaysBookingWidget = {
                 //Hide calendar
                 if (MystaysRangeObject) {
                     MystaysRangeObject.hide();
+                    MystaysBookingWidget.HotelSearch.HideHotelList();
                 }
-                MystaysBookingWidget.GuestsWidget.DisplayGuestSection(true);
+                MystaysBookingWidget.GuestsWidget.ShowGuestSection(true);
+                MystaysBookingWidget.Common.ShowOverlayLogic();
             })
         },
 
@@ -1171,7 +1179,8 @@ var MystaysBookingWidget = {
         GuestButtonCloseClick: function () {
             document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.GuestButtonClose()).addEventListener('click', function () {
 
-                MystaysBookingWidget.GuestsWidget.DisplayGuestSection();
+                MystaysBookingWidget.GuestsWidget.ShowGuestSection(false);
+                MystaysBookingWidget.Common.HideOverlayLogic();
             })
         },
         //Method called on document ready to invoke guest wigdget functionality
@@ -1225,7 +1234,7 @@ var MystaysBookingWidget = {
         CustomHTMLEvents: {
             HotelSearchFocus: function HotelSearchFocus() {
                 document.querySelector(MystaysBookingWidget.HotelSearch.Constants.SearchInputClass()).addEventListener('focus', function (e, args) {
-
+                    MystaysBookingWidget.Common.ShowOverlayLogic();
                     var filteredHotelsList;
                     if (e.target.value != '') {
                         var filteredHotelsList = MystaysBookingWidget.HotelSearch.LoadSearchResults(e.target.value);
@@ -1305,12 +1314,18 @@ var MystaysBookingWidget = {
         },
 
         //Removing all hotels from list
-        RemoveHotelList: function () {
+        RemoveHotelList: function RemoveHotelList() {
             //Removing all child items
             var bindList = document.querySelector(MystaysBookingWidget.HotelSearch.Constants.HotelBindList());
             while (bindList.children[0]) {
                 bindList.children[0].remove();
             }
+        },
+
+        HideHotelList: function HideHotelList() {
+            //Removing all child items
+            var bindList = document.querySelector(MystaysBookingWidget.HotelSearch.Constants.HotelBindList());
+            bindList.HideElement();
         },
 
         //Binding hotels/city to DOM
@@ -1389,7 +1404,7 @@ var MystaysBookingWidget = {
         },
 
         //Method fired when used selects a hotel or city
-        TriggerHotelCitySelect: function TriggerHotelCitySelect() {
+        TriggerHotelCitySelect: function TriggerHotelCitySelect(e) {
             MystaysBookingWidget.HotelSearch.GetSelectedHotelCity(e.target);
             //Trigger calendar checkin button click
             MystaysBookingWidget.Common.BookingWidgetContainerElement().querySelector(MystaysBookingWidget.BookingCalendar.Constants.CheckinButton()).click();

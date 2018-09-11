@@ -680,17 +680,20 @@ var MystaysBookingWidget = {
             MystaysBookingWidget.BookingCalendar.Constants.CurrentStatus = 'start';
             MystaysBookingWidget.BookingCalendar.Constants.CheckNextDaySetManually = false;
             MystaysBookingWidget.BookingCalendar.CustomHTML.RepositionSelectorIndicator(true);
+            
 
             //Enabling all dates when user selects checkin date
             MystaysBookingWidget.BookingCalendar.CustomHTML.EnableAllDates();
             //Removing all intermediate hover classes
             MystaysBookingWidget.BookingCalendar.CustomHTML.RemoveIntermediateHoverLogic();
+
+            
         },
         ///Click Event Handler for the Check out section(The section on the booking widget)
         CheckOutButtonHandler: function CheckOutButtonHandler(element, args) {
             MystaysBookingWidget.BookingCalendar.Constants.CurrentStatus = 'end';
             MystaysBookingWidget.BookingCalendar.CustomHTML.RepositionSelectorIndicator(false);
-
+            
             //Disabling all dates previous to check in date when user selects checkout date
             MystaysBookingWidget.BookingCalendar.CustomHTML.DisablePreviousDates(MystaysRangeObject.startVal.split('|')[4]);
 
@@ -805,12 +808,14 @@ var MystaysBookingWidget = {
 
 
                 },
+                onBeforeShow: function () {
+                    MystaysBookingWidget.GuestsWidget.ShowGuestSection(false);
+                    MystaysBookingWidget.HotelSearch.ShowHotelList(false);
+                    MystaysBookingWidget.Common.ShowOverlayLogic();
+                },
                 onShow: function (event, inst) {
                     MystaysBookingWidget.BookingCalendar.CalendarShown = true;
                     
-                    MystaysBookingWidget.GuestsWidget.ShowGuestSection(false);
-                    //MystaysBookingWidget.HotelSearch.HideHotelList();
-                    MystaysBookingWidget.Common.ShowOverlayLogic();
                     
                     MystaysBookingWidget.BookingCalendar.CustomHTML.AdjustSectionHeights();
                     MystaysBookingWidget.BookingCalendar.Constants.CheckNextDaySetManually = false;
@@ -1168,7 +1173,7 @@ var MystaysBookingWidget = {
                 //Hide calendar
                 if (MystaysRangeObject) {
                     MystaysRangeObject.hide();
-                    MystaysBookingWidget.HotelSearch.HideHotelList();
+                    MystaysBookingWidget.HotelSearch.ShowHotelList(false);
                 }
                 MystaysBookingWidget.GuestsWidget.ShowGuestSection(true);
                 MystaysBookingWidget.Common.ShowOverlayLogic();
@@ -1234,14 +1239,23 @@ var MystaysBookingWidget = {
         CustomHTMLEvents: {
             HotelSearchFocus: function HotelSearchFocus() {
                 document.querySelector(MystaysBookingWidget.HotelSearch.Constants.SearchInputClass()).addEventListener('focus', function (e, args) {
-                    MystaysBookingWidget.Common.ShowOverlayLogic();
-                    var filteredHotelsList;
-                    if (e.target.value != '') {
-                        var filteredHotelsList = MystaysBookingWidget.HotelSearch.LoadSearchResults(e.target.value);
-                    } else {
-                        var filteredHotelsList = MystaysBookingWidget.HotelSearch.LoadSearchResults();
-                    }
+                    //Resetting the selected value to blank
+                    e.target.value = '';
+
+                    MystaysBookingWidget.HotelSearch.ShowHotelList(true);
+
+                    //Hiding calendar object if it is shown
+                    MystaysRangeObject.hide();
+
+                    //Hiding guests section if it is shown
+                    MystaysBookingWidget.GuestsWidget.ShowGuestSection(false);
+
+                    
+                    var filteredHotelsList = MystaysBookingWidget.HotelSearch.LoadSearchResults();
                     MystaysBookingWidget.HotelSearch.BindHotelsCityData(filteredHotelsList);
+
+                    //Showing overlay(Dont change position)
+                    MystaysBookingWidget.Common.ShowOverlayLogic();
                 })
 
 
@@ -1280,7 +1294,6 @@ var MystaysBookingWidget = {
 
                         //User clicks enter/selects 
                         if (e.which === 13) {
-
                             MystaysBookingWidget.HotelSearch.TriggerHotelCitySelect(e)
                             return;
                         }
@@ -1322,12 +1335,16 @@ var MystaysBookingWidget = {
             }
         },
 
-        HideHotelList: function HideHotelList() {
-            //Removing all child items
-            var bindList = document.querySelector(MystaysBookingWidget.HotelSearch.Constants.HotelBindList());
-            bindList.HideElement();
+        //Method to show and hide hotel list
+        ShowHotelList: function ShowHotelList(showHotelList) {
+            if (showHotelList === true) {
+                document.querySelector(MystaysBookingWidget.HotelSearch.Constants.HotelBindList()).parentElement.ShowElement();
+            } else {
+                document.querySelector(MystaysBookingWidget.HotelSearch.Constants.HotelBindList()).parentElement.HideElement();
+            }
+            
+            
         },
-
         //Binding hotels/city to DOM
         BindHotelsCityData: function BindHotelsCityData(hotelList) {
             //Removing all child items
@@ -1343,14 +1360,15 @@ var MystaysBookingWidget = {
 
             var bindList = document.querySelector(MystaysBookingWidget.HotelSearch.Constants.HotelBindList());
 
-            //Create header item
-            var headerListItem = document.createElement('li');
-            headerListItem.className = 'mystyas-hotellist-heading';
-            headerListItem.innerHTML = MystaysBookingWidget.HotelSearch.Constants.CityLabel;
-            bindList.appendChild(headerListItem);
+          
 
 
             if (cityList.length > 0) {
+                //Create header item
+                var headerListItem = document.createElement('li');
+                headerListItem.className = 'mystyas-hotellist-heading';
+                headerListItem.innerHTML = MystaysBookingWidget.HotelSearch.Constants.CityLabel;
+                bindList.appendChild(headerListItem);
                 for (var i = 0; i < cityList.length; i++) {
                     var bindListItem = document.createElement('li');
                     bindListItem.setAttribute('tabindex', i);
@@ -1364,6 +1382,7 @@ var MystaysBookingWidget = {
                     bindListItem.setAttribute('data-TravelClickBookingID', cityList[i].TravelClickBookingID);
                     bindListItem.setAttribute('data-RWIthCode', cityList[i].RWIthCode);
                     bindListItem.setAttribute('data-HotelCity', cityList[i].HotelCity);
+                    bindListItem.setAttribute('data-ItemID', cityList[i].ItemID);
                     bindListItem.classList.add(MystaysBookingWidget.HotelSearch.Constants.HotelSelectItem());
 
 
@@ -1373,29 +1392,33 @@ var MystaysBookingWidget = {
                 }
             }
 
-            //Create header item
-            var headerListItem = document.createElement('li');
-            headerListItem.className = 'mystyas-hotellist-heading';
-            headerListItem.innerHTML = MystaysBookingWidget.HotelSearch.Constants.HotelLabel;
-            bindList.appendChild(headerListItem);
 
-            for (var i = 0; i < hotelList.length; i++) {
-                var bindListItem = document.createElement('li');
-                bindListItem.setAttribute('tabindex', i);
-                bindListItem.setAttribute('data-Type', hotelList[i].Type);
-                bindListItem.setAttribute('data-HotelName', hotelList[i].HotelName);
-                bindListItem.setAttribute('data-HotelLink', hotelList[i].HotelLink);
-                bindListItem.setAttribute('data-HotelSearchNames', hotelList[i].HotelSearchNames);
-                bindListItem.setAttribute('data-UseTravelClick', hotelList[i].UseTravelClick);
-                bindListItem.setAttribute('data-TravelClickBookingID', hotelList[i].TravelClickBookingID);
-                bindListItem.setAttribute('data-RWIthCode', hotelList[i].RWIthCode);
-                bindListItem.setAttribute('data-HotelCity', hotelList[i].HotelCity);
-                bindListItem.classList.add(MystaysBookingWidget.HotelSearch.Constants.HotelSelectItem());
+            if (hotelList.length > 0) {
+                //Create header item
+                var headerListItem = document.createElement('li');
+                headerListItem.className = 'mystyas-hotellist-heading';
+                headerListItem.innerHTML = MystaysBookingWidget.HotelSearch.Constants.HotelLabel;
+                bindList.appendChild(headerListItem);
+
+                for (var i = 0; i < hotelList.length; i++) {
+                    var bindListItem = document.createElement('li');
+                    bindListItem.setAttribute('tabindex', i);
+                    bindListItem.setAttribute('data-Type', hotelList[i].Type);
+                    bindListItem.setAttribute('data-HotelName', hotelList[i].HotelName);
+                    bindListItem.setAttribute('data-HotelLink', hotelList[i].HotelLink);
+                    bindListItem.setAttribute('data-HotelSearchNames', hotelList[i].HotelSearchNames);
+                    bindListItem.setAttribute('data-UseTravelClick', hotelList[i].UseTravelClick);
+                    bindListItem.setAttribute('data-TravelClickBookingID', hotelList[i].TravelClickBookingID);
+                    bindListItem.setAttribute('data-RWIthCode', hotelList[i].RWIthCode);
+                    bindListItem.setAttribute('data-HotelCity', hotelList[i].HotelCity);
+                    bindListItem.setAttribute('data-ItemID', hotelList[i].ItemID);
+                    bindListItem.classList.add(MystaysBookingWidget.HotelSearch.Constants.HotelSelectItem());
 
 
-                bindListItem.innerHTML = hotelList[i].HotelName;
+                    bindListItem.innerHTML = hotelList[i].HotelName;
 
-                bindList.appendChild(bindListItem);
+                    bindList.appendChild(bindListItem);
+                }
             }
             MystaysBookingWidget.HotelSearch.CustomHTMLEvents.HotelItemKeyDown();
             bindList.parentNode.ShowElement();
@@ -1424,6 +1447,7 @@ var MystaysBookingWidget = {
             selectedHotel.TravelClickBookingID = listItem.getAttribute('data-TravelClickBookingID');
             selectedHotel.RWIthCode = listItem.getAttribute('data-RWIthCode');
             selectedHotel.HotelCity = listItem.getAttribute('data-HotelCity');
+            selectedHotel.HotelCity = listItem.getAttribute('data-ItemID');
 
             MystaysBookingWidget.HotelSearch.SelectHotel(selectedHotel);
 
@@ -1513,7 +1537,7 @@ var MystaysBookingWidget = {
                         selectedHotel.HotelLink = hotelList[i].getAttribute('hotel-url');
                         selectedHotel.UseTravelClick = hotelList[i].getAttribute('use-travel-click');;
                         selectedHotel.TravelClickBookingID = hotelList[i].getAttribute('travel-click_booking_id');
-                        //selectedHotel.RWIthCode = hotelList[i].getAttribute('data-RWIthCode');
+                        selectedHotel.RWIthCode = hotelList[i].getAttribute('target');
                         selectedHotel.HotelCity = hotelList[i].getAttribute('city');
                         selectedHotel.ItemID = hotelList[i].getAttribute('item-id');
 

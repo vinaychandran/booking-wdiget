@@ -776,11 +776,18 @@ body{
 }
 
 #hotel-search-list-wrap{
-	background: #fff;	
-	
+	background: #fff;		
 	position: absolute;
 	left: 0;
 	top: 120%;
+	padding: 10px 0;
+	-webkit-animation-name: mbsc-anim-p-in;
+    -webkit-animation-duration: 1s;
+    -webkit-transform: scale(1);
+    animation-name: mbsc-anim-p-in;
+    animation-duration: 1s;
+    transform: scale(1);
+    z-index: 13;
 	&:before{
 		content: "";
 	    width: 0;
@@ -799,6 +806,22 @@ body{
 		list-style: none;
 		overflow: auto;
 		max-height: 350px;	
+		&::-webkit-scrollbar {
+		    width: 5px;
+		    padding: 0 20px;
+		}
+		 
+		&::-webkit-scrollbar-track {
+		    -webkit-box-shadow: inset 0 0 6px #f2f2f2;
+		    // background: #f2f2f2;
+		}
+		 
+		&::-webkit-scrollbar-thumb {
+			width: 5px;
+		  	background-color: #7b7b85;
+		  	 margin: 0 5px;
+		  	 height: 100px;
+		}
 	}
 	li{
 		font-size: 16px;
@@ -807,16 +830,19 @@ body{
 		color: $cal-secondar-color;
 		font-family: 'Lato-Bold';
 		cursor: pointer;
-		&:hover{
+		&:hover, &:focus,&.active{
 			background-color: rgba( $cal-primaray-color, .3 )
 		}
 		&.mystyas-hotellist-heading{
-			padding-top: 0;
+			padding-top: 25px;
 			color: $cal-color;
 			padding-bottom: 15px;
 			cursor: default;
 			&:hover{
 				background: none;
+			}
+			&:first-child{
+				padding-top: 0;
 			}
 		}
 	}

@@ -103,317 +103,687 @@ body{
 }
 
 .mystays-booking-widget{
-	padding: 15px 0 20px;	
-	 background: $cal-primary-bg; 
-	@include sm {
-		padding: 35px 40px 40px;	
-		box-shadow: 0px 15px 32px -4px rgba(37, 58, 106, 0.3);
-		display: flex;
-		justify-content:space-between;
-	}
+    &.mystays-bookingwidget-visible{
+        @include sm {
+            background: #39435b;        
+        }
+        
+    }
+    padding: 15px 7px 10px;   
+    background: $cal-primary-bg;
+    @include sm {
+        padding: 35px 40px 40px;    
+        box-shadow: 0px 15px 32px -4px rgba(37, 58, 106, 0.3);
+        display: flex;
+        justify-content:space-between;
+    }
 
-	.booking-box-wrap{
-		background-color: #ffffff;
-  		border: solid 2px #e4e4e7;
-  		height: 50px;
-  		position: relative;
-  		@include sm {
-			height: 60px;
-  		}
-  		input[type='text']{
-  			border: 0;
-  			width: 100%;
-  			height: 46px;
-  			font-size: 12px;
-  			font-family: $lato;
-  			color: #7b7b85;
-  			opacity: 0.75;
-  			margin: 0;
-  			@include sm {
-  				height: 56px;
-  			}
-  		}
-	}
+    .booking-box-wrap{
+        background-color: $cal-primary-bg;
+        border: solid 2px #e4e4e7;
+        height: 50px;
+        position: relative;
+        @include sm {
+            height: 60px;
+        }
+        input[type='text']{
+            border: 0;
+            width: 100%;
+            height: 46px;
+            font-size: 12px;
+            font-family: 'Lato';
+            color: #7b7b85;
+            opacity: 0.75;
+            margin: 0;
+            @include sm {
+                height: 56px;
+            }
+        }
+    }
 
-	.booking-box{
-		margin-bottom: 14px;
-		padding: 0 8px;
-		position: relative;
-		@include sm {
-			margin-bottom: 0;
-			padding: 0;
-		}
-		> p{
-			text-align: center;
-			font-family: $lato;
-			font-size: 13px;
-			font-weight: 400;
-			color: #232e48;
-			line-height: 1;
-			margin: 0 0 10px;
-			white-space:nowrap;
-		}
-	}
+    .booking-box{
+        margin-bottom: 14px;
+        padding: 0 8px;
+        position: relative;
+        @include sm {
+            margin-bottom: 0;
+            padding: 0;
+        }
+        > p{
+            text-align: center;
+           font-family: 'Lato';
+            font-size: 13px;
+            font-weight: 400;
+            color: #232e48;
+            line-height: 1;
+            margin: 0 0 10px;
+            white-space:nowrap;
+        }
+    }
 
-	&.mystays-bookingwidget-visible{
-		.booking-box > p{
-			color: $cal-primary-bg;
-		}
-	}
-	.autocomplete{
-		input[type='text']{
-			position: relative;
-			padding: 20px 22px;
-		}
-		@include sm {
-			width: 280px;
-		}
-	}
+    &.mystays-bookingwidget-visible{
+        .booking-box > p{
+            color: $cal-primary-bg;
+        }
+    }
+    .autocomplete{
+        input[type='text']{
+            position: relative;
+            padding: 20px 22px;
+        }
+        @include sm {
+            width: 280px;
+        }
+    }
 
-	.date-picker{
-		> p{
-			display: flex;
-			justify-content:space-between;
-			span{
-				display: block;
-				width: 50%;
-				padding: 0 8px 0 0;
-				&:last-child{
-					padding: 0 0 0 8px;
-				}
-			}
-		}
-		.booking-checkin-checkout{			
-			position: relative;
-			overflow: hidden;	
-			@include sm {
-				width: 200px;
-			}		
-			.checkin, .checkout{
-				float: left;
-				width: 50%;
-				padding:0 12px;
-				position: relative;
-			}
-			> i{
-				position: absolute;
-				left: 51%;
-				top: 50%;
-				transform: translate(-50%, -50%) rotate(45deg);
+    .date-picker{
+        > p{
+            display: flex;
+            justify-content:space-between;
+            span{
+                display: block;
+                width: 50%;
+                padding: 0 8px 0 0;
+                &:last-child{
+                    padding: 0 0 0 8px;
+                }
+            }
+        }
+        .booking-checkin-checkout{          
+            position: relative;
+            overflow: hidden;   
+            @include sm {
+                width: 200px;
+            }       
+            .checkin, .checkout{
+                float: left;
+                width: 50%;
+                padding:0 12px;
+                position: relative;
+            }
+            > i{
+                position: absolute;
+                left: 51%;
+                top: 50%;
+                transform: translate(-50%, -50%) rotate(45deg);
 
-			}
-			&:after{
-				content: "";
-				right: 1px;
-				bottom: 1px;
-				position: absolute;
-				width: 0;
-			    height: 0;
-			    border: 5px solid transparent;
-			    border-top: 5px solid #ffd25d;
-			    border-right: 5px solid #ffd25d;
-			        transform: rotate(90deg);
-			}
-		}
-	}
+            }
+            &:after{
+                content: "";
+                right: 1px;
+                bottom: 1px;
+                position: absolute;
+                width: 0;
+                height: 0;
+                border: 5px solid transparent;
+                border-top: 5px solid #ffd25d;
+                border-right: 5px solid #ffd25d;
+                    transform: rotate(90deg);
+            }
+        }
+    }
 
-	.guests{
-		width: 50%;
-		position: relative;
-		float: left;
-		@include sm {
-			width: 75px;
-			float: none;
-		}
-		.booking-box-wrap{
-			&:after{
-				content: "";
-				right: 1px;
-				bottom: 1px;
-				position: absolute;
-				width: 0;
-			    height: 0;
-			    border: 5px solid transparent;
-			    border-top: 5px solid #ffd25d;
-			    border-right: 5px solid #ffd25d;
-			        transform: rotate(90deg);
-			}
-		}
-	}
+    .guests{
+        width: 50%;
+        position: relative;
+        float: left;
+        @include sm {
+            width: 75px;
+            float: none;
+        }
+        .booking-box-wrap{
+            &:after{
+                content: "";
+                right: 1px;
+                bottom: 1px;
+                position: absolute;
+                width: 0;
+                height: 0;
+                border: 5px solid transparent;
+                border-top: 5px solid #ffd25d;
+                border-right: 5px solid #ffd25d;
+                    transform: rotate(90deg);
+            }
+        }
+    }
 
-	.promocode{
-		width: 50%;
-		position: relative;
-		text-align: center;
-		float: right;
-		@include sm {
-			width: 110px;
-			float: none;
-		}
-		input[type='text']{
-			text-align: center;
-		}
-	}
+    .promocode{
+        width: 50%;
+        position: relative;
+        text-align: center;
+        float: right;
+        @include sm {
+            width: 110px;
+            float: none;
+        }
+        input[type='text']{
+            text-align: center;
+        }
+    }
 
-	.input-top-wrap{
-		position: absolute;
-		width: 100%;
-		left: 0;
-		top: 50%;
-		text-align: center;
-		transform: translateY(-50%);
-		font-family: $lato;
-		cursor: pointer;
-		padding: 10px 0;
-		.title{
-			line-height: 1.38;
-			color: #232e48;			
-		    font-size: 20px;
-		    font-weight: 900;
-		    cursor: pointer;
-		    display: inline-block;
-		    margin-right: 10px;
-		    @include sm {
-				display: block;
-				font-size: 16px;
-				margin-right: 0;
-		    }
-		}
-		.desc{
-			font-size: 15px;
-			opacity: 0.75;
-			color: #7b7b85;
-			display: inline-block;
-			@include sm {
-				display: block;
-				font-size: 12px;
-			}
-		}
-	}
+    .input-top-wrap{
+        position: absolute;
+        width: 100%;
+        left: 0;
+        top: 50%;
+        text-align: center;
+        transform: translateY(-50%);
+        font-family: 'Lato';
+        cursor: pointer;
+        padding: 10px 0;
+        .title{
+            line-height: 1.38;
+            color: #232e48;         
+            font-size: 20px;
+            font-family: 'Lato-Black';
+            cursor: pointer;
+            display: inline-block;
+            margin-right: 10px;
+            @include sm {
+                display: block;
+                font-size: 16px;
+                margin-right: 0;
+            }
+        }
+        .desc{
+            font-size: 15px;
+            opacity: 0.75;
+            color: #7b7b85;
+            display: inline-block;
+            @include sm {
+                display: block;
+                font-size: 12px;
+            }
+        }
+    }
 
-	.search-button{
-		clear: both;
-		@include sm {			
-			width: 110px;
-		}
-		>p {
-			color: #232e48;
-			font-weight: 300;
-			margin-left: -8px;
-		}
-	}
+    .search-button{
+        clear: both;
+        @include sm {           
+            width: 110px;
+        }
+        >p {
+            color: #232e48;
+            font-weight: 300;
+            margin-left: -8px;
+        }
+    }
 
-	.btn{
-		display: inline-block;
-	    margin-bottom: 0;
-	    text-align: center;
-	    vertical-align: middle;
-	    -ms-touch-action: manipulation;
-	    touch-action: manipulation;
-	    cursor: pointer;
-	    border: 1px solid transparent;
-	    white-space: nowrap;
-	    padding: 0 12px;
-	    font-size: 15px;
-	    line-height: 58px;
-	    border-radius: 3px;
-	    -webkit-user-select: none;
-	    -moz-user-select: none;
-	    -ms-user-select: none;
-	    user-select: none;
-	    text-align: center;
-	    width: 100%;
-	    overflow: hidden;
-	    text-overflow: ellipsis;
-	    background:#ffd25d;
-	    font-weight: 900;
-	    font-family: $lato;
-	    height: 60px;
-	}	
+    .btn{
+        display: inline-block;
+        margin-bottom: 0;
+        text-align: center;
+        vertical-align: middle;
+        -ms-touch-action: manipulation;
+        touch-action: manipulation;
+        cursor: pointer;
+        border: 1px solid transparent;
+        white-space: nowrap;
+        padding: 0 12px;
+        font-size: 15px;
+        line-height: 58px;
+        border-radius: 3px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        text-align: center;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis; 
+        background:#ffd25d;
+        font-family: 'Lato-Black';
+        height: 60px;
+    }   
 }
 
 
 [class*="icono-arrow1"]{
-	width: 8px;
-	height: 8px;
-	border-width: 1px 1px 0 0;
-	border-style: solid;
-	vertical-align: middle;
-	color: #7b7b85;
-	box-sizing: border-box;
-	&:after, &:before {
-		content: "";
-		box-sizing: border-box;
-	}
-	&:before{
-		right: 0;
-		top: -1px;
-		position: absolute;
-		height: 1px;
-		box-shadow: inset 0 0 0 32px;
-		transform: rotate(-45deg);
-		width: 17px;
-		transform-origin: right top;
-	}		
+    width: 8px;
+    height: 8px;
+    border-width: 1px 1px 0 0;
+    border-style: solid;
+    vertical-align: middle;
+    color: #7b7b85;
+    box-sizing: border-box;
+    &:after, &:before {
+        content: "";
+        box-sizing: border-box;
+    }
+    &:before{
+        right: 0;
+        top: -1px;
+        position: absolute;
+        height: 1px;
+        box-shadow: inset 0 0 0 32px;
+        transform: rotate(-45deg);
+        width: 17px;
+        transform-origin: right top;
+    }       
 }
 
 .booking-guestselect-wrap{
-	background: #ffffff;
-	@include device {
-		position: fixed;
-	    top: 0;
-	    left: 0;
-	    right: 0;
-	    bottom: 0;
-	    margin: 0;
-	    width: 100%;
-	    z-index: 9;
-	    -webkit-transform: scale(1);
-		-webkit-animation-duration: 500ms;
-		transform: scale(1);
-		animation-duration: 500ms;
-		-webkit-animation-name: mbsc-anim-sh-out;			
-			animation-name: mbsc-anim-sh-out;
-		transition: 0.5s all ease-in;
-	    &.show{
-			-webkit-animation-name: mbsc-anim-sh-in;			
-			animation-name: mbsc-anim-sh-in;
-			display: block;
-	    }
-	    &.hide{
-			-webkit-animation-name: mbsc-anim-sh-out;			
-			animation-name: mbsc-anim-sh-out;
-			display: none;
-	    }
-	}
-	@include sm {
-		position: absolute;			
-		left: 50%;
-		margin-left: -282px;
-		box-shadow: 0 15px 15px 0 rgba(35, 46, 72, 0.25);
-		border-bottom: 5px solid #ffd25d;
-		top: 120%;
-		width: 564px;
-		opacity: 0;
-		-webkit-animation-name: mbsc-anim-p-out;
-		-webkit-animation-duration: 150ms;
-		animation-name: mbsc-anim-p-out;
-		animation-duration: 150ms; 
-		-webkit-transform-origin: 50% 50%;
-	  	transform-origin: 50% 50%;
-		&.show{
-			opacity: 1;
-			-webkit-animation-name: mbsc-anim-p-in;
-			-webkit-animation-duration: 1s;
-			-webkit-transform: scale(1);
-			animation-name: mbsc-anim-p-in;
-			animation-duration: 1s;
-			transform: scale(1);
-		}
-	}
+    background: #ffffff;
+    @include device {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: 0;
+        width: 100%;
+        z-index: 9;
+        -webkit-transform: scale(1);
+        -webkit-animation-duration: 500ms;
+        transform: scale(1);
+        animation-duration: 500ms;
+        -webkit-animation-name: mbsc-anim-sh-out;           
+            animation-name: mbsc-anim-sh-out;
+        transition: 0.5s all ease-in;
+        &.show{
+            -webkit-animation-name: mbsc-anim-sh-in;            
+            animation-name: mbsc-anim-sh-in;
+            display: block;
+        }
+        &.hide{
+            -webkit-animation-name: mbsc-anim-sh-out;           
+            animation-name: mbsc-anim-sh-out;
+            display: none;
+        }
+    }
+    @include sm {
+        position: absolute;         
+        left: 50%;
+        margin-left: -282px;
+        box-shadow: 0 15px 15px 0 rgba(35, 46, 72, 0.25);
+        border-bottom: 5px solid #ffd25d;
+        top: 120%;
+        width: 564px;
+        opacity: 0;
+        -webkit-animation-name: mbsc-anim-p-out;
+        -webkit-animation-duration: 150ms;
+        animation-name: mbsc-anim-p-out;
+        animation-duration: 150ms; 
+        -webkit-transform-origin: 50% 50%;
+        transform-origin: 50% 50%;
+        &.show{
+            opacity: 1;
+            -webkit-animation-name: mbsc-anim-p-in;
+            -webkit-animation-duration: 1s;
+            -webkit-transform: scale(1);
+            animation-name: mbsc-anim-p-in;
+            animation-duration: 1s;
+            transform: scale(1);
+        }
+    }
+    &:before{
+        content:"";
+        width: 0;
+        height: 0;
+        border-width: 9px 9px;
+        border-style: solid;
+        margin-left: -9px;
+        border-color: transparent transparent $cal-primary-bg transparent;
+        left: 50%;
+        top: -17px;
+        position: absolute;
+    }
+
+    .booking-guestselect-heading{
+        padding: 15px 20px 20px;
+        text-align: center;
+        position: relative;
+        span {
+            font-size: 20px;
+            font-family: "Lato", sans-serif;
+            color: #232e48;
+            font-weight: 700;
+        }
+        .mbsc-ic{
+            position: absolute;
+            left: 20px;
+            z-index: 2;
+        }
+        @include sm {
+            display: none;
+        }
+    }
+    .booking-guestselect{
+        @include sm {
+            display: flex;
+            justify-content:space-between;
+        }
+    }
+    .left, .right{      
+        padding: 20px 20px 5px; 
+        @include sm {
+            width: 50%;
+        }   
+    }
+
+    .child-age-info{
+        margin:0 0 10px;
+        color: #666666;
+        font-size: 14px;
+        font-family: 'Lato';
+        &.show{
+            + .chidren-ages-dropndown{
+                margin-bottom: 20px;
+                @include sm {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+
+    .mystays-bookingengine-child-age{
+        float: left;
+        margin: 0 20px 10px 0;
+        -webkit-animation-name: mys-anim-child-in;
+        -webkit-animation-duration: 500ms;
+        -webkit-transform: scale(1);
+        animation-name: mys-anim-child-in;
+        animation-duration: 500ms;
+        transform: scale(1);        
+        > div{
+            position: relative;
+            text-align: justify;
+            text-align-last: center;
+        }
+        select{
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border: 1px solid #e4e4e7;
+            width: 60px;
+            height: 40px;
+            cursor: pointer;
+            padding: 5px;
+            padding-right: 20px;
+            line-height: 21.4286px;
+            font-size: 20px;
+            font-family: 'Lato-Bold';
+            margin: 0;
+            &::-ms-expand {
+                display: none
+            }                   
+            option{
+                white-space: pre;
+                min-height: 2em;
+                padding: 0 2px 1px;
+                text-align: center;
+            }
+        }
+        i{
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-width: 1px 1px 0 0;
+            border-style: solid;
+            border-color:$cal-color;
+            right: 10px;
+            top: 13px;
+            transform:rotate(135deg);
+        }
+    }
+
+    .chidren-ages-dropndown{
+        margin: 0 0;
+        padding: 0;
+        list-style: none;
+        width: 100%;
+        float: left;
+    }
+
+    .guest-row{
+        border-bottom: 1px solid #dddee0;
+        padding: 15px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        &:first-child{
+            padding-top: 0;
+        }
+        &:nth-child(3n){            
+            border-bottom: 0;       
+            
+        }
+        >p {
+            display: flex;
+            align-items:center;
+            width: 50%;
+            font-size:16px;
+            font-family: 'Lato-Bold';
+            margin: 0;
+            color: $cal-color;
+            .number{
+                font-size: 30px;
+                margin-right: 15px;
+            }
+        }
+
+    }
+
+    .right{
+        border-top:1px solid #dddee0;
+        clear: both;
+        @include sm {
+            clear: none;
+            border-top: 0;
+        }
+        ul{
+            margin: 0; 
+            padding: 0;
+            list-style:disc;
+            li{
+                font-size: 12px;
+                font-family: 'Lato';
+                margin: 20px 0 0 20px;
+                line-height: 1.75;
+            }
+        }
+    }
+
+    h3{
+        font-size: 16px;
+        margin: 0;
+        font-family: 'Lato-Bold';
+    }
+
+    .plus,.minus{
+        &.disabled{
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    }
+
+
+    .plus{
+        position: relative;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: 1px solid #7b8291;
+        display: inline-block;
+        cursor: pointer;
+        &:before, 
+        &:after{
+            content: "";
+            position: absolute;
+            background-color: #7b8291;
+            transition: transform 0.25s ease-out;
+            transform: translate(-50%, -50%) ;
+        }
+        &:before{
+            top: 50%;
+            left: 50%;
+            width: 2px;
+            height: 10px;
+        }
+        &:after{
+            top: 50%;
+            left: 50%;
+            width: 10px;
+            height: 2px;            
+        }
+    }
+    .minus{
+        position: relative;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: 1px solid #7b8291;  
+        display: inline-block;
+        cursor: pointer;
+        &:after{
+            content: "";
+            position: absolute;
+            background-color: #7b8291;
+            transition: transform 0.25s ease-out;
+            transform: translate(-50%, -50%) ;
+            top: 50%;
+            left: 50%;
+            width: 10px;
+            height: 2px;
+        }  
+    }
+
+    .booking-guestselect-close{
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        text-align: center;
+        padding: 10px 0;
+        box-shadow: 0px -2px 16px -2px rgba(0, 0, 0, 0.2);
+        -webkit-animation-name: mys-anim-nights-in;
+        -webkit-animation-duration: 1s;
+        animation-name: mys-anim-nights-in;
+        animation-duration: 1s;
+        span{
+            border-radius: 3px;
+            background-color: #ffd25d;
+            min-width: 162px;
+            color: #232e48;
+            font-family: 'Lato-Black';
+            font-size: 14px;
+            padding: 10px 20px;
+            line-height: 1;
+            display: inline-block;
+            height: auto;
+        }
+        @include sm {
+            display: none;
+        }
+    }
+}
+
+
+#booking-widget-overlay{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #232e48;
+    opacity: 0.9;
+    z-index: 2; 
+}
+
+
+
+.hide{
+    display: none;
+}
+
+.show{
+    display: block;
+}
+
+.mys-be-inner-page{
+    .mystays-booking-widget{        
+        @include sm {
+            padding: 10px 0;
+            box-shadow: none;
+        }
+        
+        .booking-box {
+            z-index: 9; 
+            > p {
+                @include sm {
+                    display: none;
+                }
+            }
+        }
+
+        .autocomplete{
+            @include sm {
+                width: 315px;
+            }
+        }
+
+        .date-picker .booking-checkin-checkout{
+            @include sm {
+                width: 244px;
+            }
+        }
+
+        .guests{
+            @include sm {
+                width: 86px;
+            }
+        }
+
+        .promocode{
+            @include sm {
+                width: 96px;
+            }
+        }
+
+        .search-button{
+            @include sm {
+                width: 157px;
+                .btn{
+                    line-height:38px;
+                }
+            }
+             
+        }
+
+        .input-top-wrap{
+            @include sm {
+                .title{
+                    display: inline-block;
+                    margin-right: 5px;
+                }
+                .desc{
+                    display: inline-block;
+                }
+            }
+        }
+    }
+    .booking-box-wrap{
+        @include sm {
+            height: 40px;
+        }
+        input[type='text']{
+            @include sm {
+                height: 36px;
+                padding: 10px 22px;
+            }
+        }
+    }
+}
+
+#hotel-search-list-wrap{
+	background: #fff;	
+	
+	position: absolute;
+	left: 0;
+	top: 120%;
 	&:before{
-		content:"";
-		width: 0;
+		content: "";
+	    width: 0;
 	    height: 0;
 	    border-width: 9px 9px;
 	    border-style: solid;
@@ -423,357 +793,50 @@ body{
 	    top: -17px;
 	    position: absolute;
 	}
-
-	.booking-guestselect-heading{
-		padding: 15px 20px 20px;
-	    text-align: center;
-	    position: relative;
-	    span {
-		    font-size: 20px;
-		    font-family: "Lato", sans-serif;
-		    color: #232e48;
-		    font-weight: 700;
-		}
-	    .mbsc-ic{
-	    	position: absolute;
-		    left: 20px;
-		    z-index: 2;
-	    }
-		@include sm {
-			display: none;
-		}
-	}
-	.booking-guestselect{
-		@include sm {
-			display: flex;
-			justify-content:space-between;
-		}
-	}
-	.left, .right{		
-		padding: 20px 20px 5px;	
-		@include sm {
-			width: 50%;
-		}	
-	}
-
-	.child-age-info{
-		margin:0 0 10px;
-		color: #666666;
-		font-size: 14px;
-		font-family: $lato;
-		&.show{
-			+ .chidren-ages-dropndown{
-				margin-bottom: 20px;
-				@include sm {
-					margin-bottom: 0;
-				}
-			}
-		}
-	}
-
-	.mystays-bookingengine-child-age{
-	    float: left;
-	    margin: 0 20px 10px 0;
-		-webkit-animation-name: mys-anim-child-in;
-		-webkit-animation-duration: 500ms;
-		-webkit-transform: scale(1);
-		animation-name: mys-anim-child-in;
-		animation-duration: 500ms;
-		transform: scale(1);		
-	    > div{
-	    	position: relative;
-	    	text-align: justify;
-	    	text-align-last: center;
-	    }
-	    select{
-	    	-webkit-appearance: none;
-		    -moz-appearance: none;
-		    appearance: none;
-	    	border: 1px solid #e4e4e7;
-		    width: 60px;
-		    height: 40px;
-		    cursor: pointer;
-		    padding: 5px;
-		    padding-right: 20px;
-		    line-height: 21.4286px;
-		    font-size: 20px;
-		    font-weight: 700;
-		    font-family: $lato;
-		    margin: 0;
-		    &::-ms-expand {
-			    display: none
-			}				    
-			option{
-		    	white-space: pre;
-			    min-height: 2em;
-			    padding: 0 2px 1px;
-			    text-align: center;
-		    }
-	    }
-	    i{
-	    	position: absolute;
-	    	width: 8px;
-		    height: 8px;
-		    border-width: 1px 1px 0 0;
-		    border-style: solid;
-		    border-color:$cal-color;
-		    right: 10px;
-		    top: 13px;
-		    transform:rotate(135deg);
-	    }
-	}
-
-	.chidren-ages-dropndown{
-		margin: 0 0;
-		padding: 0;
-		list-style: none;
-		width: 100%;
-		float: left;
-	}
-
-	.guest-row{
-		border-bottom: 1px solid #dddee0;
-		padding: 15px 0;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		&:first-child{
-			padding-top: 0;
-		}
-		&:nth-child(3n){			
-			border-bottom: 0;		
-			
-		}
-		>p {
-			display: flex;
-			align-items:center;
-			width: 50%;
-			font-weight: 700;
-			font-size:16px;
-			font-family: $lato;
-			margin: 0;
-			color: $cal-color;
-			.number{
-				font-size: 30px;
-				margin-right: 15px;
-			}
-		}
-
-	}
-
-	.right{
-		border-top:1px solid #dddee0;
-		clear: both;
-		@include sm {
-			clear: none;
-			border-top: 0;
-		}
-		ul{
-			margin: 0;
-			padding: 0;
-			list-style:disc;
-			li{
-				font-size: 12px;
-				font-family: $lato;
-				margin: 20px 0 0 20px;
-				line-height: 1.75;
-			}
-		}
-	}
-
-	h3{
-		font-size: 16px;
-		font-weight: 700;
+	ul{
 		margin: 0;
-		font-family: $lato;
+		padding: 20px 0;
+		list-style: none;
+		overflow: auto;
+		max-height: 350px;	
 	}
-
-	.plus,.minus{
-		&.disabled{
-			opacity: 0.5;
-			cursor: not-allowed;
-		}
-	}
-
-
-	.plus{
-		position: relative;
-		width: 30px;
-		height: 30px;
-		border-radius: 50%;
-		border: 1px solid #7b8291;
-		display: inline-block;
+	li{
+		font-size: 16px;
+		padding: 8px 20px;
+		letter-spacing: 0.6px;
+		color: $cal-secondar-color;
+		font-family: 'Lato-Bold';
 		cursor: pointer;
-		&:before, 
-		&:after{
-	        content: "";
-	        position: absolute;
-	        background-color: #7b8291;
-	        transition: transform 0.25s ease-out;
-	        transform: translate(-50%, -50%) ;
-	    }
-	    &:before{
-	        top: 50%;
-	        left: 50%;
-	        width: 2px;
-	        height: 10px;
-	    }
-	    &:after{
-	        top: 50%;
-	        left: 50%;
-	        width: 10px;
-	        height: 2px;	        
-	    }
-	}
-	.minus{
-		position: relative;
-		width: 30px;
-		height: 30px;
-		border-radius: 50%;
-		border: 1px solid #7b8291;	
-		display: inline-block;
-		cursor: pointer;
-		&:after{
-	        content: "";
-	        position: absolute;
-	        background-color: #7b8291;
-	        transition: transform 0.25s ease-out;
-	        transform: translate(-50%, -50%) ;
-	        top: 50%;
-	        left: 50%;
-	        width: 10px;
-	        height: 2px;
-	    }  
-	}
-
-	.booking-guestselect-close{
-	    position: fixed;
-	    bottom: 0;
-	    left: 0;
-	    right: 0;
-	    text-align: center;
-	    padding: 10px 0;
-	    box-shadow: 0px -2px 16px -2px rgba(0, 0, 0, 0.2);
-	    -webkit-animation-name: mys-anim-nights-in;
-	    -webkit-animation-duration: 1s;
-	    animation-name: mys-anim-nights-in;
-	    animation-duration: 1s;
-	    span{
-    	    border-radius: 3px;
-		    background-color: #ffd25d;
-		    min-width: 162px;
-		    color: #232e48;
-		    font-family: "Lato", sans-serif;
-		    font-size: 14px;
-		    font-weight: 900;
-		    padding: 10px 20px;
-		    line-height: 1;
-		    display: inline-block;
-		    height: auto;
-	    }
-	    @include sm {
-	    	display: none;
-	    }
+		&:hover{
+			background-color: rgba( $cal-primaray-color, .3 )
+		}
+		&.mystyas-hotellist-heading{
+			padding-top: 0;
+			color: $cal-color;
+			padding-bottom: 15px;
+			cursor: default;
+			&:hover{
+				background: none;
+			}
+		}
 	}
 }
 
 
-#booking-widget-overlay{
-	position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: #232e48;
-    opacity: 0.9;
+#booking-widget-container{ 
+	z-index: 13;
+	position: relative;
 }
 
 
-
-.hide{
-	display: none;
-}
-
-.show{
-	display: block;
-}
-
-
-
-
-
-.mys-be-inner-page{
-	.mystays-booking-widget{
-		@include sm {
-			padding: 10px 0;
-			box-shadow: none;
-		}
-		
-		.booking-box {
-			> p {
-				@include sm {
-					display: none;
-				}
-			}
-		}
-
-		.autocomplete{
-			@include sm {
-				width: 315px;
-			}
-		}
-
-		.date-picker .booking-checkin-checkout{
-			@include sm {
-				width: 244px;
-			}
-		}
-
-		.guests{
-			@include sm {
-				width: 86px;
-			}
-		}
-
-		.promocode{
-			@include sm {
-				width: 96px;
-			}
-		}
-
-		.search-button{
-			@include sm {
-				width: 157px;
-				.btn{
-				 	line-height:38px;
-				}
-			}
-			 
-		}
-
-		.input-top-wrap{
-			@include sm {
-				.title{
-					display: inline-block;
-					margin-right: 5px;
-				}
-				.desc{
-					display: inline-block;
-				}
-			}
-		}
-	}
-	.booking-box-wrap{
-		@include sm {
-			height: 40px;
-		}
-		input[type='text']{
-			@include sm {
-				height: 36px;
-				padding: 10px 22px;
-			}
-		}
-	}
+.home-container{     
+    #booking-widget-container{ 
+        padding: 0;  
+        @include sm {            
+            top: -80px;     
+                   
+        }
+    } 
 }
 
 @keyframes mbsc-anim-p-in {
@@ -865,4 +928,3 @@ body{
 @-webkit-keyframes mbsc-anim-sh-out {
   from {opacity: 1;-webkit-transform: translateX(0);  }
   to {opacity: 0;-webkit-transform: translateX(100%); } }
-

@@ -214,6 +214,10 @@ $lato: 'Lato', sans-serif;
 			}
 		}
 
+		.mbsc-disabled{
+            opacity: 0.3;
+        }
+
 		.mbsc-cal-cell:focus,  .mbsc-cal-cell:not(.mbsc-disabled):hover
 		{
 			.mbsc-cal-cell-txt{background:$cal-primary-bg;}

@@ -897,7 +897,10 @@ var MystaysBookingWidget = {
             ChildAgeInfo: function () {
                 return MystaysBookingWidget.Common.BookingWidgetContainer + ' .child-age-info';
             },
-            MaximumChildAge: 12
+            MaximumChildAge: 12,
+            GuestWidgetBackButton: function () {
+                return MystaysBookingWidget.Common.BookingWidgetContainer + ' .booking-guestselect-heading span';
+            }
             //ChildAgeSection='<li><select class="mystays-bookingengine-age"></select></li>'
 
         },
@@ -1143,6 +1146,12 @@ var MystaysBookingWidget = {
                     removebuttons[i].addEventListener('click', MystaysBookingWidget.GuestsWidget.ChildButtonRemove);
                 }
             }
+
+            var backButton = document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.GuestWidgetBackButton());
+
+            backButton.addEventListener('click', function () {
+                MystaysBookingWidget.GuestsWidget.DisplayGuestSection(false);
+            })
         },
 
 

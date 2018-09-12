@@ -34,6 +34,35 @@ var MystaysBookingWidget = {
 
         Loaded: function Loaded() {
             MystaysBookingWidget.Helper.LoadExtensions();
+            MystaysBookingWidget.Helper.ClickOutside();
+        },
+
+        //Function to close the calendar when the user clicks outside
+        ClickOutside: function ClickOutside() {
+            if (!MystaysBookingWidget.Helper.IsMobile()) {
+                document.addEventListener('click', function (e) {
+                    var container = document.querySelector(MystaysBookingWidget.Common.BookingWidgetContainer);
+                    var promocontainer = document.querySelector(MystaysBookingWidget.Common.BookingWidgetContainer +' .booking-box.promocode');
+                    var booknowbuttoncontainer = document.querySelector(MystaysBookingWidget.Common.BookingWidgetContainer + ' .booking-box.search-button');
+
+                    var IsPromoCodeBookNowContainer = ((((promocontainer === e.target) || MystaysBookingWidget.Helper.IsDescendant(promocontainer, e.target))) || (((booknowbuttoncontainer === e.target) || MystaysBookingWidget.Helper.IsDescendant(booknowbuttoncontainer, e.target))));
+
+                    if ((!(container === e.target) && !MystaysBookingWidget.Helper.IsDescendant(container, e.target)) || IsPromoCodeBookNowContainer) {
+
+                        if (MystaysRangeObject) {
+                            MystaysRangeObject.hide();
+                        }
+
+                        MystaysBookingWidget.GuestsWidget.ShowGuestSection(false);
+                        MystaysBookingWidget.HotelSearch.ShowHotelList(false);
+
+                        if (!IsPromoCodeBookNowContainer) {
+                            MystaysBookingWidget.Common.HideOverlayLogic();
+                        }
+                        
+                    }
+                })
+            }
         },
         //Method to add extension methods
         LoadExtensions: function LoadExtensions() {
@@ -618,21 +647,7 @@ var MystaysBookingWidget = {
 
         },
         CustomHTMLEvents: {
-            //Function to close the calendar when the user clicks outside
-            ClickOutside: function ClickOutside() {
-                if (!MystaysBookingWidget.Helper.IsMobile()) {
-                    document.addEventListener('click', function (e) {
-                        var container = document.querySelector(MystaysBookingWidget.Common.BookingWidgetContainer)
-
-                        if ((!(container === e.target) && !MystaysBookingWidget.Helper.IsDescendant(container, e.target))) {
-
-                            if (MystaysRangeObject) {
-                                MystaysRangeObject.hide();
-                            }
-                        }
-                    })
-                }
-            },
+            
             CalendarCustomFunctions: function CalendarCustomFunctions(inst) {
                 document.querySelector(MystaysBookingWidget.Common.BookingWidgetContainer + MystaysBookingWidget.BookingCalendar.Constants.CalendarBody()).addEventListener('mouseout', function () {
                     MystaysBookingWidget.BookingCalendar.CustomHTML.RemoveIntermediateHoverLogic();
@@ -799,7 +814,7 @@ var MystaysBookingWidget = {
                 onMarkupReady: function (event, inst) {
                     MystaysBookingWidget.BookingCalendar.CustomHTML.SetCustomerCalendarHeader(event.target);
                     MystaysBookingWidget.BookingCalendar.CustomHTML.SetCustomSelector(event.target, inst.startVal, inst.endVal);
-                    MystaysBookingWidget.BookingCalendar.CustomHTMLEvents.ClickOutside();
+                    
                     MystaysBookingWidget.BookingCalendar.CustomHTML.SetFooterText(inst.startVal, inst.endVal, event.target);
                     MystaysBookingWidget.BookingCalendar.CustomHTML.SetCustomMonthHeader(event.target);
                 },
@@ -932,21 +947,7 @@ var MystaysBookingWidget = {
         },
 
 
-        //Hide guest section when user clicks outside the widget
-        ClickOutside: function ClickOutside() {
-
-            if (!MystaysBookingWidget.Helper.IsMobile()) {
-                document.addEventListener('click', function (e) {
-
-                    var container = document.querySelector(MystaysBookingWidget.Common.BookingWidgetContainer);
-                    if ((!(container === e.target) && !MystaysBookingWidget.Helper.IsDescendant(container, e.target))) {
-                        MystaysBookingWidget.GuestsWidget.ShowGuestSection(false);
-                        MystaysBookingWidget.Common.HideOverlayLogic();
-
-                    }
-                })
-            }
-        },
+        
 
         //Add new room
         RoomsButtonAdd: function RoomsButtonAdd(event) {
@@ -1191,7 +1192,7 @@ var MystaysBookingWidget = {
         //Method called on document ready to invoke guest wigdget functionality
         Loaded: function Loaded() {
             MystaysBookingWidget.GuestsWidget.CustomHTMLEvents();
-            MystaysBookingWidget.GuestsWidget.ClickOutside();
+            
             MystaysBookingWidget.GuestsWidget.ButtonClick();
         }
     },
@@ -1237,18 +1238,7 @@ var MystaysBookingWidget = {
 
         },
         CustomHTMLEvents: {
-            ClickOutside: function ClickOutside() {
-                if (!MystaysBookingWidget.Helper.IsMobile()) {
-                    document.addEventListener('click', function (e) {
-                        var container = document.querySelector(MystaysBookingWidget.Common.BookingWidgetContainer)
-
-                        if ((!(container === e.target) && !MystaysBookingWidget.Helper.IsDescendant(container, e.target))) {
-
-                            MystaysBookingWidget.HotelSearch.ShowHotelList(false);
-                        }
-                    })
-                }
-            },
+           
             HotelSearchFocus: function HotelSearchFocus() {
                 document.querySelector(MystaysBookingWidget.HotelSearch.Constants.SearchInputClass()).addEventListener('focus', function (e, args) {
                     //Resetting the selected value to blank
@@ -1646,7 +1636,7 @@ var MystaysBookingWidget = {
         Loaded: function () {
 
             MystaysBookingWidget.HotelSearch.InitializeAutocomplete();
-            MystaysBookingWidget.HotelSearch.CustomHTMLEvents.ClickOutside();
+            
 
         }
     },

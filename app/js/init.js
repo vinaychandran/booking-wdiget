@@ -1270,6 +1270,25 @@ var MystaysBookingWidget = {
             FooterHotelItemSelector: function () {
                 return '.hotel-search-item span';
             },
+
+            APITargetLanguage: function APITargetLanguage() {
+                if (MystaysBookingWidget.Common.SelectedLanguage==='en') {
+                    return 'en';
+                }
+                else if (MystaysBookingWidget.Common.SelectedLanguage === 'en') {
+                    return 'en';
+                } else if (MystaysBookingWidget.Common.SelectedLanguage === 'ja') {
+                    return 'ja-jp';
+                } else if (MystaysBookingWidget.Common.SelectedLanguage === 'ko') {
+                    return 'ko-kr';
+                } else if (MystaysBookingWidget.Common.SelectedLanguage === 'zh') {
+                    return 'zh-cn';
+                } else if (MystaysBookingWidget.Common.SelectedLanguage === 'tw') {
+                    return 'zh-tw';
+                }
+
+
+            },
             //Footer section ends
 
             CityLabel: 'Cities',
@@ -1603,7 +1622,7 @@ var MystaysBookingWidget = {
             var HotelCityList = [];
 
             var jsonData = {
-                "Target-Language": "en",
+                "Target-Language": MystaysBookingWidget.HotelSearch.Constants.APITargetLanguage(),
                 "Authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1bmlxdWVfbmFtZSI6InNpdGVjb3JlXFxhZG1pbiIsImlzcyI6Ik15c3RheXMiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjMwMDAiLCJleHAiOjE4NTIwNzkzMDgsIm5iZiI6MTUzNjcxOTMwOH0.qRTZrIP4l-gkWdLraTr3mfarWSdJ8CKKkBK7hufsNqU"
             }
 
@@ -1793,5 +1812,5 @@ var MystaysBookingWidget = {
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    MystaysBookingWidget.Loaded('en', false, '#booking-widget-container');
+    MystaysBookingWidget.Loaded('ko', false, '#booking-widget-container');
 });

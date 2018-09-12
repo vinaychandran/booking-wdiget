@@ -38,38 +38,39 @@ var MystaysBookingWidget = {
             MystaysBookingWidget.Helper.ClickOutside();
         },
 
-        //Function to show overlay conatiner
+        //Function to show overlay conatiner when selecting each of the booking boxes
         ShowOverlayConatiner: function ShowOverlayConatiner() {
-            var bookingwidgetcontainer = document.querySelector(MystaysBookingWidget.Common.BookingWidgetContainer);
+            var bookingBoxes = document.querySelectorAll(MystaysBookingWidget.Common.BookingWidgetContainer +' .booking-box');
 
-            bookingwidgetcontainer.addEventListener('click', function () {
-                MystaysBookingWidget.Common.ShowOverlayLogic();
-            })
+            for (var i = 0; i < bookingBoxes.length; i++) {
+                bookingBoxes[i].addEventListener('click', function () {
+                    MystaysBookingWidget.Common.ShowOverlayLogic();
+                })
+            }
+
+            
         },
         //Function to close the calendar when the user clicks outside
         ClickOutside: function ClickOutside() {
             if (!MystaysBookingWidget.Helper.IsMobile()) {
                 document.addEventListener('click', function (e) {
                     var container = document.querySelector(MystaysBookingWidget.Common.BookingWidgetContainer);
+                    //var bookingBoxes = document.querySelectorAll(MystaysBookingWidget.Common.BookingWidgetContainer + ' .booking-box');
                     var promocontainer = document.querySelector(MystaysBookingWidget.Common.BookingWidgetContainer +' .booking-box.promocode');
                     var booknowbuttoncontainer = document.querySelector(MystaysBookingWidget.Common.BookingWidgetContainer + ' .booking-box.search-button');
 
+                    //Check if user selected promobox or button click
                     var IsPromoCodeBookNowContainer = ((((promocontainer === e.target) || MystaysBookingWidget.Helper.IsDescendant(promocontainer, e.target))) || (((booknowbuttoncontainer === e.target) || MystaysBookingWidget.Helper.IsDescendant(booknowbuttoncontainer, e.target))));
-
                     if ((!(container === e.target) && !MystaysBookingWidget.Helper.IsDescendant(container, e.target)) || IsPromoCodeBookNowContainer) {
-
-                        if (MystaysRangeObject) {
-                            MystaysRangeObject.hide();
+                            if (MystaysRangeObject) {
+                                MystaysRangeObject.hide();
+                            }
+                            MystaysBookingWidget.GuestsWidget.ShowGuestSection(false);
+                            MystaysBookingWidget.HotelSearch.ShowHotelList(false);
+                            if (!IsPromoCodeBookNowContainer) {
+                                MystaysBookingWidget.Common.HideOverlayLogic();
+                            }
                         }
-
-                        MystaysBookingWidget.GuestsWidget.ShowGuestSection(false);
-                        MystaysBookingWidget.HotelSearch.ShowHotelList(false);
-
-                        if (!IsPromoCodeBookNowContainer) {
-                            MystaysBookingWidget.Common.HideOverlayLogic();
-                        }
-                        
-                    }
                 })
             }
         },

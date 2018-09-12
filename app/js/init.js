@@ -34,9 +34,18 @@ var MystaysBookingWidget = {
 
         Loaded: function Loaded() {
             MystaysBookingWidget.Helper.LoadExtensions();
+            MystaysBookingWidget.Helper.ShowOverlayConatiner();
             MystaysBookingWidget.Helper.ClickOutside();
         },
 
+        //Function to show overlay conatiner
+        ShowOverlayConatiner: function ShowOverlayConatiner() {
+            var bookingwidgetcontainer = document.querySelector(MystaysBookingWidget.Common.BookingWidgetContainer);
+
+            bookingwidgetcontainer.addEventListener('click', function () {
+                MystaysBookingWidget.Common.ShowOverlayLogic();
+            })
+        },
         //Function to close the calendar when the user clicks outside
         ClickOutside: function ClickOutside() {
             if (!MystaysBookingWidget.Helper.IsMobile()) {
@@ -794,7 +803,7 @@ var MystaysBookingWidget = {
                         if (!MystaysBookingWidget.Helper.IsMobile()) {
                             inst.hide();
                             MystaysBookingWidget.GuestsWidget.ShowGuestSection(true);
-                            MystaysBookingWidget.Common.ShowOverlayLogic();
+                            //MystaysBookingWidget.Common.ShowOverlayLogic();
                         } else {
                             MystaysBookingWidget.BookingCalendar.CustomHTML.UpdateSetButton(inst.startVal.split('|')[4], event.date);
                         }
@@ -826,7 +835,7 @@ var MystaysBookingWidget = {
                 onBeforeShow: function () {
                     MystaysBookingWidget.GuestsWidget.ShowGuestSection(false);
                     MystaysBookingWidget.HotelSearch.ShowHotelList(false);
-                    MystaysBookingWidget.Common.ShowOverlayLogic();
+                    //MystaysBookingWidget.Common.ShowOverlayLogic();
                 },
                 onShow: function (event, inst) {
                     MystaysBookingWidget.BookingCalendar.CalendarShown = true;
@@ -844,7 +853,7 @@ var MystaysBookingWidget = {
                     MystaysBookingWidget.BookingCalendar.CalendarShown = false;
                     MystaysBookingWidget.BookingCalendar.ValidateStartEndDate(event, inst);
 
-                    MystaysBookingWidget.Common.HideOverlayLogic();
+                    //MystaysBookingWidget.Common.HideOverlayLogic();
                 },
                 onPageChange: function (event, inst) {
                     MystaysBookingWidget.BookingCalendar.CustomHTMLEvents.AddIntermediateHoverLogic(inst);
@@ -1162,7 +1171,7 @@ var MystaysBookingWidget = {
 
             backButton.addEventListener('click', function () {
                 MystaysBookingWidget.GuestsWidget.ShowGuestSection(false);
-                MystaysBookingWidget.Common.HideOverlayLogic();
+                //MystaysBookingWidget.Common.HideOverlayLogic();
             })
         },
 
@@ -1177,7 +1186,7 @@ var MystaysBookingWidget = {
                     MystaysBookingWidget.HotelSearch.ShowHotelList(false);
                 }
                 MystaysBookingWidget.GuestsWidget.ShowGuestSection(true);
-                MystaysBookingWidget.Common.ShowOverlayLogic();
+                //MystaysBookingWidget.Common.ShowOverlayLogic();
             })
         },
 
@@ -1257,7 +1266,7 @@ var MystaysBookingWidget = {
                     MystaysBookingWidget.HotelSearch.BindHotelsCityData(filteredHotelsList);
 
                     //Showing overlay(Dont change position)
-                    MystaysBookingWidget.Common.ShowOverlayLogic();
+                    //MystaysBookingWidget.Common.ShowOverlayLogic();
                 })
 
 

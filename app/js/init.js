@@ -1459,6 +1459,7 @@ var MystaysBookingWidget = {
             selectedHotel.HasMeetingRoom = listItem.getAttribute('data-HasMeetingRoom');
             selectedHotel.StartDateForBooking = listItem.getAttribute('data-StartDateForBooking');
             selectedHotel.GroupNames = listItem.getAttribute('data-GroupNames');
+            selectedHotel.FastBookingAreaName = listItem.getAttribute('data-FastBookingAreaName');
 
 
             MystaysBookingWidget.HotelSearch.UpdateSerachField(selectedHotel);
@@ -1483,6 +1484,7 @@ var MystaysBookingWidget = {
             inputElement.setAttribute('data-HasMeetingRoom', selectedHotel.HasMeetingRoom);
             inputElement.setAttribute('data-StartDateForBooking', selectedHotel.StartDateForBooking);
             inputElement.setAttribute('data-GroupNames', selectedHotel.GroupNames);
+            inputElement.setAttribute('data-FastBookingAreaName', selectedHotel.FastBookingAreaName);
             inputElement.value = selectedHotel.HotelName;
         },
 
@@ -1510,7 +1512,7 @@ var MystaysBookingWidget = {
             if (userInputText && userInputText != '') {
                 var filteredHotelList = [];
                 for (var i = 0; i < masterHotelList.length; i++) {
-                    if ((masterHotelList[i].HotelSearchNames.toLowerCase().indexOf(userInputText.toLowerCase()) > -1) || (MystaysBookingWidget.HotelSearch.Constants.FilterCities ? masterHotelList[i].HotelCity.toLowerCase().indexOf(userInputText) > -1 : false)) {
+                    if ((masterHotelList[i].HotelSearchNames.toLowerCase().indexOf(userInputText.toLowerCase()) > -1) || (MystaysBookingWidget.HotelSearch.Constants.FilterCities ? masterHotelList[i].HotelCity.toLowerCase().indexOf(userInputText.toLowerCase()) > -1 : false)) {
                         filteredHotelList.push(masterHotelList[i]);
                     }
                 }
@@ -1566,6 +1568,7 @@ var MystaysBookingWidget = {
                     bindListItem.setAttribute('data-HasMeetingRoom', cityList[i].HasMeetingRoom);
                     bindListItem.setAttribute('data-StartDateForBooking', cityList[i].StartDateForBooking);
                     bindListItem.setAttribute('data-ListHotelGroupNameAllLang', cityList[i].ListHotelGroupNameAllLang);
+                    bindListItem.setAttribute('data-FastBookingAreaName', cityList[i].FastBookingAreaName);
 
                     bindListItem.classList.add(MystaysBookingWidget.HotelSearch.Constants.HotelSelectItem());
 
@@ -1660,9 +1663,10 @@ var MystaysBookingWidget = {
                             Type: 'City',
                             HotelName: cityList[i].name,
                             IsBookable: cityList[i].isBookable,
-                            HotelSearchNames: cityList[i].listHotelNameAllLang,
+                            HotelSearchNames: '',
                             HasMeetingRoom: cityList[i].hasMeetingRoom,
-                            HotelLink: cityList[i].publicHotelUrl,
+                            HotelLink: cityList[i].hotelUrl,
+                            FastBookingAreaName: cityList[i].fastBookingAreaName,
                             UseTravelClick: cityList[i].useTravelClick,
                             TravelClickBookingID: cityList[i].travelClickBookingId,
                             RWIthCode: cityList[i].rWithBookingId,
@@ -1812,5 +1816,5 @@ var MystaysBookingWidget = {
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    MystaysBookingWidget.Loaded('ko', false, '#booking-widget-container');
+    MystaysBookingWidget.Loaded('ko', true, '#booking-widget-container');
 });

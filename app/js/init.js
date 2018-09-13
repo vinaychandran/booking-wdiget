@@ -1272,7 +1272,7 @@ var MystaysBookingWidget = {
             },
 
             APITargetLanguage: function APITargetLanguage() {
-                if (MystaysBookingWidget.Common.SelectedLanguage==='en') {
+                if (MystaysBookingWidget.Common.SelectedLanguage === 'en') {
                     return 'en';
                 }
                 else if (MystaysBookingWidget.Common.SelectedLanguage === 'en') {
@@ -1448,7 +1448,7 @@ var MystaysBookingWidget = {
                 document.querySelector(MystaysBookingWidget.HotelSearch.Constants.SearchMessageContainer()).ShowElement();
             }
         },
-        
+
         ////Selection Start
         //Method fired when used selects a hotel or city
         TriggerHotelCitySelect: function TriggerHotelCitySelect(e) {
@@ -1460,7 +1460,7 @@ var MystaysBookingWidget = {
         },
 
 
-        
+
         //Method to create hotel/city object from LI item
         GetSelectedHotelCity: function GetSelectedHotelCity(listItem) {
 
@@ -1491,28 +1491,29 @@ var MystaysBookingWidget = {
 
         //Used to bind hotel data to input element
         UpdateSerachField: function UpdateSerachField(selectedHotelCity) {
-            var inputElement = MystaysBookingWidget.Common.BookingWidgetContainerElement().querySelector(MystaysBookingWidget.HotelSearch.Constants.SearchInputClass());
-            inputElement.setAttribute('data-Type', selectedHotelCity.Type);
-            inputElement.setAttribute('data-TargetCities', selectedHotelCity.Target);
-            inputElement.setAttribute('data-Name', selectedHotelCity.Name);
-            inputElement.setAttribute('data-Link', selectedHotelCity.Link);
-            inputElement.setAttribute('data-HotelSearchNames', selectedHotelCity.HotelSearchNames);
-            inputElement.setAttribute('data-UseTravelClick', selectedHotelCity.UseTravelClick);
-            inputElement.setAttribute('data-TravelClickBookingID', selectedHotelCity.TravelClickBookingID);
-            inputElement.setAttribute('data-RWIthCode', selectedHotelCity.RWIthCode);
-            inputElement.setAttribute('data-HotelCity', selectedHotelCity.HotelCity);
+            var inputElement = document.querySelector(MystaysBookingWidget.HotelSearch.Constants.SearchInputClass());
+            //inputElement.setAttribute('data-Type', selectedHotelCity.Type);
+            //inputElement.setAttribute('data-TargetCities', selectedHotelCity.Target);
+            //inputElement.setAttribute('data-Name', selectedHotelCity.Name);
+            //inputElement.setAttribute('data-Link', selectedHotelCity.Link);
+            //inputElement.setAttribute('data-HotelSearchNames', selectedHotelCity.HotelSearchNames);
+            //inputElement.setAttribute('data-UseTravelClick', selectedHotelCity.UseTravelClick);
+            //inputElement.setAttribute('data-TravelClickBookingID', selectedHotelCity.TravelClickBookingID);
+            //inputElement.setAttribute('data-RWIthCode', selectedHotelCity.RWIthCode);
+            //inputElement.setAttribute('data-HotelCity', selectedHotelCity.HotelCity);
 
-            inputElement.setAttribute('data-IsBookable', selectedHotelCity.IsBookable);
-            inputElement.setAttribute('data-HasMeetingRoom', selectedHotelCity.HasMeetingRoom);
-            inputElement.setAttribute('data-StartDateForBooking', selectedHotelCity.StartDateForBooking);
-            inputElement.setAttribute('data-GroupNames', selectedHotelCity.GroupNames);
-            inputElement.setAttribute('data-FastBookingAreaName', selectedHotelCity.FastBookingAreaName);
+            //inputElement.setAttribute('data-IsBookable', selectedHotelCity.IsBookable);
+            //inputElement.setAttribute('data-HasMeetingRoom', selectedHotelCity.HasMeetingRoom);
+            //inputElement.setAttribute('data-StartDateForBooking', selectedHotelCity.StartDateForBooking);
+            //inputElement.setAttribute('data-GroupNames', selectedHotelCity.GroupNames);
+            //inputElement.setAttribute('data-FastBookingAreaName', selectedHotelCity.FastBookingAreaName);
+            inputElement.setAttribute('data-HotelCity', JSON.stringify(selectedHotelCity));
             inputElement.value = selectedHotelCity.Name;
 
             MystaysBookingWidget.HotelSearch.ShowSearchMessage(true, selectedHotelCity);
         },
 
-        
+
         ////Selection End
 
 
@@ -1659,7 +1660,7 @@ var MystaysBookingWidget = {
 
                 for (var i = 0; i < hotelList.length; i++) {
                     var hotel = {
-                        Type:'Hotel',
+                        Type: 'Hotel',
                         Name: hotelList[i].name,
                         IsBookable: hotelList[i].isBookable,
                         HotelSearchNames: hotelList[i].listHotelNameAllLang,
@@ -1772,7 +1773,7 @@ var MystaysBookingWidget = {
                 } else {
                     //Call API
 
-                    searchList=MystaysBookingWidget.HotelSearch.GetHotelDetailsAPI();
+                    searchList = MystaysBookingWidget.HotelSearch.GetHotelDetailsAPI();
 
 
                 }
@@ -1784,7 +1785,7 @@ var MystaysBookingWidget = {
             }
         },
         ////Binding End
-       
+
         Loaded: function () {
             MystaysBookingWidget.HotelSearch.InitializeAutocomplete();
         }
@@ -1793,13 +1794,32 @@ var MystaysBookingWidget = {
     BookNowButton: {
         Constants: {
             BooknowButton: function BooknowButton() {
-                return MystaysBookingWidget.Common.BookingWidgetContainer+'.search-button button';
+                return MystaysBookingWidget.Common.BookingWidgetContainer + '.search-button button';
+            },
+            RWithURL: 'https://mystays.rwiths.net/r-withs/tfs0020a.do?&hotelNo={rwithbookingid}&ciDateY={checkinyear}&ciDateM={checkinmonth}&ciDateD={checkinday}&coDateY={checkoutyear}&coDateM={checkoutmonth}&coDateD={checkoutday}&otona={adults}&s1={children}&room={rooms}',
+            TravelClickHotelURL: 'https://reservations.mystays.com/{travelclickbookingid}?hotelid={travelclickbookingid}&rooms={rooms}&datein={checkindate}&dateout={checkoutdate}&currency=JPY&adults={adults}&children={children}&languageid={language}#/accommodation/package',
+            TravelClickAreaURL: 'https://search.mystays.com/MYS?destination={areas}&rooms={rooms}&datein={checkindate}&dateout={checkoutdate}&currency=JPY&adults={adults}&children={children}&languageid={language}',
+            TravelClickLanguage: function () {
+                if (MystaysBookingWidget.Common.SelectedLanguage === 'en') {
+                    return 1;
+                }
+                else if (MystaysBookingWidget.Common.SelectedLanguage === 'zh') {
+                    return 5;
+                }
+                else if (MystaysBookingWidget.Common.SelectedLanguage === 'tw') {
+                    return 12;
+                }
+                else if (MystaysBookingWidget.Common.SelectedLanguage === 'kr') {
+                    return 26;
+                }
             }
+
+
         },
         CustomHTMLEvents: {
             //Event fired when user clicks the book now button
             BooknowButtonClick: function BooknowButtonClick() {
-                MystaysBookingWidget.BookNowButton.Constants.BooknowButton().addEventListener('click', function () {
+                document.querySelector(MystaysBookingWidget.BookNowButton.Constants.BooknowButton()).addEventListener('click', function () {
                     if (MystaysBookingWidget.BookNowButton.ValidateBooknowForm()) {
                         MystaysBookingWidget.BookNowButton.BookNow();
                     }
@@ -1812,13 +1832,72 @@ var MystaysBookingWidget = {
             return true;
         },
 
-        //Load booking engine page
-        BookNow: function BookNow() {
+        GenerateBookingEngineURL: function GenerateBookingEngineURL() {
+            var inputElement = document.querySelector(MystaysBookingWidget.HotelSearch.Constants.SearchInputClass());
+
+            var adultElement = document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.AdultElement()).children[0];
+            var childrenElement = document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.ChildElement()).children[0];
+            var roomsElement = document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.RoomElement()).children[0];
+
+
+            var hotelcity = JSON.parse(inputElement.getAttribute('data-HotelCity'));
+
+
+            //RWith
+            if (hotelcity.UseTravelClick === 'false' || !hotelcity.UseTravelClick) {
+                var bookingengineurl = MystaysBookingWidget.BookNowButton.Constants.RWithURL;
+
+                bookingengineurl=bookingengineurl.replace('{rwithbookingid}', hotelcity.RWIthCode);
+                bookingengineurl=bookingengineurl.replace('{checkinyear}', MystaysRangeObject._startDate.getFullYear());
+                bookingengineurl=bookingengineurl.replace('{checkinmonth}', MystaysRangeObject._startDate.getMonth() + 1);
+                bookingengineurl=bookingengineurl.replace('{checkinday}', MystaysRangeObject._startDate.getDate());
+                bookingengineurl=bookingengineurl.replace('{checkoutyear}', MystaysRangeObject._endDate.getFullYear());
+                bookingengineurl=bookingengineurl.replace('{checkoutmonth}', MystaysRangeObject._endDate.getMonth() + 1);
+                bookingengineurl=bookingengineurl.replace('{checkoutday}', MystaysRangeObject._endDate.getDate());
+                bookingengineurl=bookingengineurl.replace('{adults}', adultElement.getAttribute('data-count'));
+                bookingengineurl=bookingengineurl.replace('{children}', childrenElement.getAttribute('data-count'));
+                bookingengineurl=bookingengineurl.replace('{rooms}', roomsElement.getAttribute('data-count'));
+                
+            } else {
+                if (hotelcity.Type === 'Hotel') {
+                    var bookingengineurl = MystaysBookingWidget.BookNowButton.Constants.TravelClickHotelURL;
+
+                    bookingengineurl=bookingengineurl.replace('{travelclickbookingid}', hotelcity.TravelClickBookingID);
+                    bookingengineurl=bookingengineurl.replace('{travelclickbookingid}', hotelcity.TravelClickBookingID);
+                    bookingengineurl=bookingengineurl.replace('{checkindate}', MystaysRangeObject.startVal.split('|')[3]);
+                    bookingengineurl=bookingengineurl.replace('{checkoutdate}', MystaysRangeObject.endVal.split('|')[3]);
+                    bookingengineurl=bookingengineurl.replace('{adults}', adultElement.getAttribute('data-count'));
+                    bookingengineurl=bookingengineurl.replace('{children}', childrenElement.getAttribute('data-count'));
+                    bookingengineurl=bookingengineurl.replace('{rooms}', roomsElement.getAttribute('data-count'));
+                } else if (hotelcity.Type === 'City') {
+                    var bookingengineurl = MystaysBookingWidget.BookNowButton.Constants.TravelClickAreaURL;
+                    bookingengineurl=bookingengineurl.replace('{areas}', hotelcity.TargetCities);
+                    bookingengineurl=bookingengineurl.replace('{checkindate}', MystaysRangeObject.startVal.split('|')[3]);
+                    bookingengineurl=bookingengineurl.replace('{checkoutdate}', MystaysRangeObject.endVal.split('|')[3]);
+                    bookingengineurl=bookingengineurl.replace('{adults}', adultElement.getAttribute('data-count'));
+                    bookingengineurl=bookingengineurl.replace('{children}', childrenElement.getAttribute('data-count'));
+                    bookingengineurl=bookingengineurl.replace('{rooms}', roomsElement.getAttribute('data-count'));
+                }
+
+                bookingengineurl = bookingengineurl.replace('{language}', MystaysBookingWidget.BookNowButton.Constants.TravelClickLanguage());
+            }
+
+            return bookingengineurl;
+        },
+
+        GenerateTravelClickURL: function GenerateTravelClickURL() {
 
         },
 
-        Loaded: function Loaded() {
+        //Load booking engine page
+        BookNow: function BookNow() {
+            
+                window.open(MystaysBookingWidget.BookNowButton.GenerateBookingEngineURL(), '_blank');
+            
+        },
 
+        Loaded: function Loaded() {
+            MystaysBookingWidget.BookNowButton.CustomHTMLEvents.BooknowButtonClick();
         }
     },
 
@@ -1834,11 +1913,12 @@ var MystaysBookingWidget = {
         MystaysRangeObject = MystaysBookingWidget.BookingCalendar.Loaded();
         MystaysBookingWidget.GuestsWidget.Loaded();
         MystaysBookingWidget.HotelSearch.Loaded();
+        MystaysBookingWidget.BookNowButton.Loaded();
     }
 };
 
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    MystaysBookingWidget.Loaded('en', true, '#booking-widget-container');
+    MystaysBookingWidget.Loaded('ja', false, '#booking-widget-container');
 });

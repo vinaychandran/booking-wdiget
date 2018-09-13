@@ -1289,8 +1289,17 @@ var MystaysBookingWidget = {
 
 
             },
-            //Footer section ends
 
+            //Footer section ends
+            SearchMessageContainer: function SearchMessageContainer() {
+                return MystaysBookingWidget.Common.BookingWidgetContainer + ' .booking-search-msg-wrap';
+            },
+            SearchMessageAnchor: function SearchMessageAnchor() {
+                return MystaysBookingWidget.Common.BookingWidgetContainer + ' .booking-search-msg-wrap a';
+            },
+            SearchMessagePlaceholder: function SearchMessagePlaceholder() {
+                return 'View hotels in {hotelcity}';
+            },
             CityLabel: 'Cities',
             HotelLabel: 'Hotels',
 
@@ -1321,7 +1330,7 @@ var MystaysBookingWidget = {
             HotelSearchFocus: function HotelSearchFocus() {
                 document.querySelector(MystaysBookingWidget.HotelSearch.Constants.SearchInputClass()).addEventListener('focus', function (e, args) {
                     //Resetting the selected value to blank
-
+                    MystaysBookingWidget.HotelSearch.ShowSearchMessage(false);
 
                     MystaysBookingWidget.HotelSearch.ShowHotelList(true);
 
@@ -1425,7 +1434,20 @@ var MystaysBookingWidget = {
 
         },
 
-        
+        //Method used to show or hide search message and also populate link and text
+        ShowSearchMessage: function ShowSearchMessage(showsearchMessage, hotelCity) {
+            if (!showsearchMessage) {
+                document.querySelector(MystaysBookingWidget.HotelSearch.Constants.SearchMessageContainer()).HideElement();
+            } else {
+                var msgPlaceholder = MystaysBookingWidget.HotelSearch.Constants.SearchMessagePlaceholder();
+                var showAnchorTag = document.querySelector(MystaysBookingWidget.HotelSearch.Constants.SearchMessageAnchor());
+                msgPlaceholder = msgPlaceholder.replace('{hotelcity}', hotelCity.Name);
+                showAnchorTag.href = hotelCity.Link;
+                showAnchorTag.innerHTML = msgPlaceholder;
+
+                document.querySelector(MystaysBookingWidget.HotelSearch.Constants.SearchMessageContainer()).ShowElement();
+            }
+        },
         
         ////Selection Start
         //Method fired when used selects a hotel or city
@@ -1446,9 +1468,9 @@ var MystaysBookingWidget = {
             var selectedHotel = {};
             selectedHotel.Type = listItem.getAttribute('data-Type');
             selectedHotel.TargetCities = listItem.getAttribute('data-TargetCities');
-            selectedHotel.HotelName = listItem.getAttribute('data-HotelName');
+            selectedHotel.Name = listItem.getAttribute('data-Name');
             selectedHotel.HotelSearchNames = listItem.getAttribute('data-HotelSearchNames');
-            selectedHotel.HotelLink = listItem.getAttribute('data-HotelLink');
+            selectedHotel.Link = listItem.getAttribute('data-Link');
             selectedHotel.UseTravelClick = listItem.getAttribute('data-UseTravelClick');;
             selectedHotel.TravelClickBookingID = listItem.getAttribute('data-TravelClickBookingID');
             selectedHotel.RWIthCode = listItem.getAttribute('data-RWIthCode');
@@ -1468,24 +1490,26 @@ var MystaysBookingWidget = {
 
 
         //Used to bind hotel data to input element
-        UpdateSerachField: function UpdateSerachField(selectedHotel) {
+        UpdateSerachField: function UpdateSerachField(selectedHotelCity) {
             var inputElement = MystaysBookingWidget.Common.BookingWidgetContainerElement().querySelector(MystaysBookingWidget.HotelSearch.Constants.SearchInputClass());
-            inputElement.setAttribute('data-Type', selectedHotel.Type);
-            inputElement.setAttribute('data-TargetCities', selectedHotel.Target);
-            inputElement.setAttribute('data-HotelName', selectedHotel.HotelName);
-            inputElement.setAttribute('data-HotelLink', selectedHotel.HotelLink);
-            inputElement.setAttribute('data-HotelSearchNames', selectedHotel.HotelSearchNames);
-            inputElement.setAttribute('data-UseTravelClick', selectedHotel.UseTravelClick);
-            inputElement.setAttribute('data-TravelClickBookingID', selectedHotel.TravelClickBookingID);
-            inputElement.setAttribute('data-RWIthCode', selectedHotel.RWIthCode);
-            inputElement.setAttribute('data-HotelCity', selectedHotel.HotelCity);
+            inputElement.setAttribute('data-Type', selectedHotelCity.Type);
+            inputElement.setAttribute('data-TargetCities', selectedHotelCity.Target);
+            inputElement.setAttribute('data-Name', selectedHotelCity.Name);
+            inputElement.setAttribute('data-Link', selectedHotelCity.Link);
+            inputElement.setAttribute('data-HotelSearchNames', selectedHotelCity.HotelSearchNames);
+            inputElement.setAttribute('data-UseTravelClick', selectedHotelCity.UseTravelClick);
+            inputElement.setAttribute('data-TravelClickBookingID', selectedHotelCity.TravelClickBookingID);
+            inputElement.setAttribute('data-RWIthCode', selectedHotelCity.RWIthCode);
+            inputElement.setAttribute('data-HotelCity', selectedHotelCity.HotelCity);
 
-            inputElement.setAttribute('data-IsBookable', selectedHotel.IsBookable);
-            inputElement.setAttribute('data-HasMeetingRoom', selectedHotel.HasMeetingRoom);
-            inputElement.setAttribute('data-StartDateForBooking', selectedHotel.StartDateForBooking);
-            inputElement.setAttribute('data-GroupNames', selectedHotel.GroupNames);
-            inputElement.setAttribute('data-FastBookingAreaName', selectedHotel.FastBookingAreaName);
-            inputElement.value = selectedHotel.HotelName;
+            inputElement.setAttribute('data-IsBookable', selectedHotelCity.IsBookable);
+            inputElement.setAttribute('data-HasMeetingRoom', selectedHotelCity.HasMeetingRoom);
+            inputElement.setAttribute('data-StartDateForBooking', selectedHotelCity.StartDateForBooking);
+            inputElement.setAttribute('data-GroupNames', selectedHotelCity.GroupNames);
+            inputElement.setAttribute('data-FastBookingAreaName', selectedHotelCity.FastBookingAreaName);
+            inputElement.value = selectedHotelCity.Name;
+
+            MystaysBookingWidget.HotelSearch.ShowSearchMessage(true, selectedHotelCity);
         },
 
         
@@ -1554,9 +1578,9 @@ var MystaysBookingWidget = {
                     bindListItem.setAttribute('tabindex', i);
 
                     bindListItem.setAttribute('data-Type', cityList[i].Type);
-                    bindListItem.setAttribute('data-HotelName', cityList[i].HotelName);
+                    bindListItem.setAttribute('data-Name', cityList[i].Name);
                     bindListItem.setAttribute('data-TargetCities', cityList[i].Target);
-                    bindListItem.setAttribute('data-HotelLink', cityList[i].HotelLink);
+                    bindListItem.setAttribute('data-Link', cityList[i].Link);
                     bindListItem.setAttribute('data-HotelSearchNames', cityList[i].HotelSearchNames);
                     bindListItem.setAttribute('data-UseTravelClick', cityList[i].UseTravelClick);
                     bindListItem.setAttribute('data-TravelClickBookingID', cityList[i].TravelClickBookingID);
@@ -1573,7 +1597,7 @@ var MystaysBookingWidget = {
                     bindListItem.classList.add(MystaysBookingWidget.HotelSearch.Constants.HotelSelectItem());
 
 
-                    bindListItem.innerHTML = cityList[i].HotelName;
+                    bindListItem.innerHTML = cityList[i].Name;
 
                     bindList.appendChild(bindListItem);
                 }
@@ -1591,8 +1615,8 @@ var MystaysBookingWidget = {
                     var bindListItem = document.createElement('li');
                     bindListItem.setAttribute('tabindex', i);
                     bindListItem.setAttribute('data-Type', hotelList[i].Type);
-                    bindListItem.setAttribute('data-HotelName', hotelList[i].HotelName);
-                    bindListItem.setAttribute('data-HotelLink', hotelList[i].HotelLink);
+                    bindListItem.setAttribute('data-Name', hotelList[i].Name);
+                    bindListItem.setAttribute('data-Link', hotelList[i].Link);
                     bindListItem.setAttribute('data-HotelSearchNames', hotelList[i].HotelSearchNames);
                     bindListItem.setAttribute('data-UseTravelClick', hotelList[i].UseTravelClick);
                     bindListItem.setAttribute('data-TravelClickBookingID', hotelList[i].TravelClickBookingID);
@@ -1607,7 +1631,7 @@ var MystaysBookingWidget = {
                     bindListItem.setAttribute('data-StartDateForBooking', hotelList[i].StartDateForBooking);
                     bindListItem.setAttribute('data-ListHotelGroupNameAllLang', hotelList[i].ListHotelGroupNameAllLang);
 
-                    bindListItem.innerHTML = hotelList[i].HotelName;
+                    bindListItem.innerHTML = hotelList[i].Name;
 
                     bindList.appendChild(bindListItem);
                 }
@@ -1636,11 +1660,11 @@ var MystaysBookingWidget = {
                 for (var i = 0; i < hotelList.length; i++) {
                     var hotel = {
                         Type:'Hotel',
-                        HotelName: hotelList[i].name,
+                        Name: hotelList[i].name,
                         IsBookable: hotelList[i].isBookable,
                         HotelSearchNames: hotelList[i].listHotelNameAllLang,
                         HasMeetingRoom: hotelList[i].hasMeetingRoom,
-                        HotelLink: hotelList[i].publicHotelUrl,
+                        Link: hotelList[i].publicHotelUrl,
                         UseTravelClick: hotelList[i].useTravelClick,
                         TravelClickBookingID: hotelList[i].travelClickBookingId,
                         RWIthCode: hotelList[i].rWithBookingId,
@@ -1661,11 +1685,11 @@ var MystaysBookingWidget = {
                     for (var i = 0; i < cityList.length; i++) {
                         var city = {
                             Type: 'City',
-                            HotelName: cityList[i].name,
+                            Name: cityList[i].name,
                             IsBookable: cityList[i].isBookable,
                             HotelSearchNames: '',
                             HasMeetingRoom: cityList[i].hasMeetingRoom,
-                            HotelLink: cityList[i].hotelUrl,
+                            Link: cityList[i].hotelUrl,
                             FastBookingAreaName: cityList[i].fastBookingAreaName,
                             UseTravelClick: cityList[i].useTravelClick,
                             TravelClickBookingID: cityList[i].travelClickBookingId,
@@ -1816,5 +1840,5 @@ var MystaysBookingWidget = {
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    MystaysBookingWidget.Loaded('ko', true, '#booking-widget-container');
+    MystaysBookingWidget.Loaded('en', true, '#booking-widget-container');
 });

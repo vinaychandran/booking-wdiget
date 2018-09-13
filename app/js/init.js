@@ -246,10 +246,10 @@ var MystaysBookingWidget = {
                 return MystaysBookingWidget.Common.BookingWidgetContainer + ' .mystays-bookingengine-disabled';
             },
             CheckinContainer: function () {
-                return MystaysBookingWidget.Common.BookingWidgetContainer + ' #calendar-checkindate';
+                return MystaysBookingWidget.Common.BookingWidgetContainer + ' .calendar-checkindate';
             },
             CheckoutContainer: function () {
-                return MystaysBookingWidget.Common.BookingWidgetContainer + ' #calendar-checkoutdate';
+                return MystaysBookingWidget.Common.BookingWidgetContainer + ' .calendar-checkoutdate';
             },
             CalendarFooter: function () {
                 return ' .mystays-calendar-footer';
@@ -259,25 +259,25 @@ var MystaysBookingWidget = {
             },
 
             CheckinButton: function () {
-                return MystaysBookingWidget.Common.BookingWidgetContainer + ' #bookingwidget-checkin';
+                return MystaysBookingWidget.Common.BookingWidgetContainer + ' .bookingwidget-checkin';
             },
 
 
             CheckinButtonTitle: function () {
-                return MystaysBookingWidget.Common.BookingWidgetContainer + ' #bookingwidget-checkin .title';
+                return MystaysBookingWidget.Common.BookingWidgetContainer + ' .bookingwidget-checkin .title';
             },
             CheckinButtonDesc: function () {
-                return MystaysBookingWidget.Common.BookingWidgetContainer + ' #bookingwidget-checkin .desc';
+                return MystaysBookingWidget.Common.BookingWidgetContainer + ' .bookingwidget-checkin .desc';
             },
 
             CheckoutButton: function () {
-                return MystaysBookingWidget.Common.BookingWidgetContainer + ' #bookingwidget-checkout';
+                return MystaysBookingWidget.Common.BookingWidgetContainer + ' .bookingwidget-checkout';
             },
             CheckoutButtonTitle: function () {
-                return MystaysBookingWidget.Common.BookingWidgetContainer + ' #bookingwidget-checkout .title';
+                return MystaysBookingWidget.Common.BookingWidgetContainer + ' .bookingwidget-checkout .title';
             },
             CheckoutButtonDesc: function () {
-                return MystaysBookingWidget.Common.BookingWidgetContainer + ' #bookingwidget-checkout .desc';
+                return MystaysBookingWidget.Common.BookingWidgetContainer + ' .bookingwidget-checkout .desc';
             },
 
 
@@ -613,7 +613,7 @@ var MystaysBookingWidget = {
                     var calendarHeader = document.createElement('div');
 
                     var clearButton = document.createElement('span');
-                    clearButton.id = 'mystays-bookingwidget-clr-btn';
+                    clearButton.className = 'mystays-bookingwidget-clr-btn';
                     clearButton.classList.add('mbsc-ic-arrow-left5');
                     clearButton.classList.add('mbsc-ic');
                     calendarHeader.appendChild(clearButton);
@@ -630,7 +630,7 @@ var MystaysBookingWidget = {
 
                     calendarheadersection.insertAdjacentHTML('beforebegin', calendarHeader.outerHTML);
 
-                    var backbutton = updateContainer.querySelector(calendarContainer + ' #mystays-bookingwidget-clr-btn');
+                    var backbutton = updateContainer.querySelector(calendarContainer + ' .mystays-bookingwidget-clr-btn');
 
                     backbutton.addEventListener('click', function () {
                         MystaysBookingWidget.BookingCalendar.CustomHTMLEvents.AddHideEvent();
@@ -782,8 +782,8 @@ var MystaysBookingWidget = {
                 context: MystaysBookingWidget.Common.BookingWidgetContainer + ' .calender-render-container',
                 dateFormat: 'dd|M|yy|mm/dd/yy|yy/m/d|D',
                 controls: ['calendar'],
-                startInput: MystaysBookingWidget.Common.BookingWidgetContainer + " #bookingwidget-checkin",
-                endInput: MystaysBookingWidget.Common.BookingWidgetContainer + ' #bookingwidget-checkout',
+                startInput: MystaysBookingWidget.Common.BookingWidgetContainer + " .bookingwidget-checkin",
+                endInput: MystaysBookingWidget.Common.BookingWidgetContainer + ' .bookingwidget-checkout',
                 buttons: [
                     'set'
                 ],
@@ -1972,5 +1972,10 @@ var MystaysBookingWidget = {
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    MystaysBookingWidget.Loaded('en', false, '#booking-widget-container');
+    //var calendarOne = new MystaysBookingWidget;
+    //var calendarTwo = new MystaysBookingWidget;
+
+    //calendarOne.Loaded('en', false, '#booking-widget-container');
+    //calendarTwo.Loaded('ja', true, '#booking-widget-containertwo');
+    MystaysBookingWidget.Loaded('en', true, '#booking-widget-container');
 });

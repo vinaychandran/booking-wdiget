@@ -33,7 +33,7 @@
 
     <div id="booking-widget-overlay" class="hide"></div>
     <div class="container booking-widget-container" id="booking-widget-container">
-        <div id="booking-widget-module" class="mystays-booking-widget">
+        <div  class="mystays-booking-widget">
             <div class="booking-box autocomplete">
                 <p>Where in Japan?</p>
                 <div class="booking-box-wrap">
@@ -42,15 +42,15 @@
                 <div class="booking-search-msg-wrap hide">
                     <a href="" target="_blank" data-text="Open {0} Hotel List"></a>
                 </div>
-                <div class="hide" id="hotel-search-list-wrap">
+                <div class="hide hotel-search-list-wrap" >
                     <ul class="hotel-search-list"></ul>
                 </div>
             </div>
             <div class="booking-box date-picker">
                 <p><span>checkin</span><span>checkout</span></p>
-                <div class="booking-box-wrap range-container" id="range-container">
+                <div class="booking-box-wrap range-container" >
                     <div class="booking-checkin-checkout">
-                        <div class="checkin bookingwidget-checkin" id="bookingwidget-checkin">
+                        <div class="checkin bookingwidget-checkin" >
                             <input type="text" class="calendar-checkindate" value="">
                             <div class="input-top-wrap">
                                 <div class="title"></div>
@@ -58,7 +58,7 @@
                             </div>
                         </div>
                         <i class="icono-arrow1-left"></i>
-                        <div class="checkout bookingwidget-checkout" id="bookingwidget-checkout">
+                        <div class="checkout bookingwidget-checkout" >
                             <input type="text" class="calendar-checkoutdate" value="">
                             <div class="input-top-wrap">
                                 <div class="title"></div>
@@ -78,7 +78,7 @@
                             <!-- <span class="guests hidden">guests</span> -->
                         </div>
                     </div>
-                    <input type="hidden" id="booking-totalguests">
+                    <input type="hidden" >
                 </div>
                 <div class="booking-guestselect-wrap hide">
                     <div class="booking-guestselect-heading">
@@ -136,351 +136,12 @@
                 <button class="btn">Search</button>
             </div>
         </div>
-        <div id="calender-render-container" class="calender-render-container"></div>
-        <div>
-            <ul class="hide" id="hotel-list1">
-
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-art-hotel-asahikawa-hokkaido/" name-data="Art Hotel Asahikawa" show-in-meeting="true">
-                    <span tabindex="0" target="jphok28822" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103500" city="hokkaido|北海道|홋카이도" names="art hotel asahikawa|アートホテル旭川|art 旭川酒店" item-id="{BFF0CC63-0624-4BD2-89D8-75C8C7340CFC}" hotel-url="https://www.mystays.com/en-us/hotel-art-hotel-asahikawa-hokkaido/">Art Hotel Asahikawa</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-art-hotel-hirosaki-city-aomori/" name-data="Art Hotel Hirosaki City" show-in-meeting="true">
-                    <span tabindex="1" target="jpaom28827" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103308" city="aomori|青森|아오모리" names="art hotel hirosaki city|アートホテル弘前シティ|art 弘前城市酒店" item-id="{96E114FF-DDCB-4992-B848-63850809726B}" hotel-url="https://www.mystays.com/en-us/hotel-art-hotel-hirosaki-city-aomori/">Art Hotel Hirosaki City</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-art-hotel-ishigakijima-okinawa/" name-data="Art Hotel Ishigakijima" show-in-meeting="true">
-                    <span tabindex="2" target="jpoki29665" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103306" city="okinawa|沖縄|오키나와|冲绳|沖繩" names="art hotel ishigakijima|アートホテル石垣島|art  石垣岛酒店|art 石垣島酒店" item-id="{7E0F395C-600B-4701-9E11-BE691BA0F330}" hotel-url="https://www.mystays.com/en-us/hotel-art-hotel-ishigakijima-okinawa/">Art Hotel Ishigakijima</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-art-hotel-joetsu-niigata/" name-data="Art Hotel Joetsu" show-in-meeting="true">
-                    <span tabindex="3" target="jpjoe29825" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103471" city="niigata|新潟|니가타" names="art hotel joetsu|アートホテル上越|art 上越酒店" item-id="{052AA213-A2AD-4720-B3FF-D1BA6530C460}" hotel-url="https://www.mystays.com/en-us/hotel-art-hotel-joetsu-niigata/">Art Hotel Joetsu</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-art-hotel-niigata-station-niigata/" name-data="Art Hotel Niigata Station" show-in-meeting="true">
-                    <span tabindex="4" target="jpchu29824" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103312" city="niigata|新潟|니가타" names="art hotel niigata station|アートホテル新潟駅前|art  新泻站前酒店|art 新潟站前酒店" item-id="{FE0FB6B6-350A-4DFE-A828-7F1D9AC1222F}" hotel-url="https://www.mystays.com/en-us/hotel-art-hotel-niigata-station-niigata/">Art Hotel Niigata Station</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-art-hotel-osaka-bay-tower-osaka/" name-data="Art Hotel Osaka Bay Tower" show-in-meeting="true">
-                    <span tabindex="5" target="" target-type="Hotel" start-date="2018-03-29" use-travel-click="true" travel-click_booking_id="103340" city="osaka|大阪|오사카" names="art hotel osaka bay tower|アートホテル大阪ベイタワー|art 大阪湾酒店|art 大阪灣酒店" item-id="{D797F8BE-F3FB-4364-9821-C1001A6A84BE}" hotel-url="https://www.mystays.com/en-us/hotel-art-hotel-osaka-bay-tower-osaka/">Art Hotel Osaka Bay Tower</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-beppu-kamenoi-hotel-oita/" name-data="Beppu Kamenoi Hotel" show-in-meeting="true">
-                    <span tabindex="6" target="jpbep27802" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103387" city="oita|大分|오이타" names="beppu kamenoi hotel|別府亀の井ホテル|别府龟之井温泉酒店|別府龜之井温泉酒店" item-id="{5DFA41AE-C9CE-4CBD-9E32-1E4378C0F1B8}" hotel-url="https://www.mystays.com/en-us/hotel-beppu-kamenoi-hotel-oita/">Beppu Kamenoi Hotel</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-flexstay-inn-ekoda-tokyo/" name-data="FLEXSTAY INN Ekoda" show-in-meeting="false">
-                    <span tabindex="7" target="jptok26345" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103456" city="tokyo|東京|도쿄|东京" names="flexstay inn ekoda|フレックステイイン江古田|flexstay 江古田旅馆|flexstay 江古田旅館" item-id="{4A02C805-6E2F-4B5C-8B24-660F4E7E26FF}" hotel-url="https://www.mystays.com/en-us/hotel-flexstay-inn-ekoda-tokyo/">FLEXSTAY INN Ekoda</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-flexstay-inn-higashi-jujo-tokyo/" name-data="FLEXSTAY INN Higashi Jujo" show-in-meeting="false">
-                    <span tabindex="8" target="jptok26339" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103485" city="tokyo|東京|도쿄|东京" names="flexstay inn higashi jujo|フレックステイイン東十条|flexstay 东十条旅馆|flexstay  東十條旅館" item-id="{23EAEC66-569F-4967-A80F-D1FA5C1755E9}" hotel-url="https://www.mystays.com/en-us/hotel-flexstay-inn-higashi-jujo-tokyo/">FLEXSTAY INN Higashi Jujo</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-flexstay-inn-iidabashi-tokyo/" name-data="FLEXSTAY INN Iidabashi" show-in-meeting="false">
-                    <span tabindex="9" target="jptok26340" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103412" city="tokyo|東京|도쿄|东京" names="flexstay inn iidabashi|フレックステイイン飯田橋|flexstay 饭田桥旅馆|flexstay  飯田橋旅館" item-id="{076F121B-A063-497D-B57B-390689C4943D}" hotel-url="https://www.mystays.com/en-us/hotel-flexstay-inn-iidabashi-tokyo/">FLEXSTAY INN Iidabashi</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-flexstay-inn-kawasaki-kaizuka-kanagawa/" name-data="FLEXSTAY INN Kawasaki Kaizuka" show-in-meeting="false">
-                    <span tabindex="10" target="jpkaw26347" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103476" city="kanagawa|神奈川|카나가와" names="flexstay inn kawasaki kaizuka|フレックステイイン川崎貝塚|flexstay 川崎贝塚旅馆|flexstay 川崎貝塚旅館" item-id="{548DB6B5-84AC-4C66-8E9E-8318CE45DA49}" hotel-url="https://www.mystays.com/en-us/hotel-flexstay-inn-kawasaki-kaizuka-kanagawa/">FLEXSTAY INN Kawasaki Kaizuka</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-flexstay-inn-kawasaki-ogawacho-kanagawa/" name-data="FLEXSTAY INN Kawasaki Ogawacho" show-in-meeting="false">
-                    <span tabindex="11" target="jpkaw26337" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103393" city="kanagawa|神奈川|카나가와" names="flexstay inn kawasaki ogawacho|フレックステイイン川崎小川町|flexstay 川崎小川町旅馆|flexstay 川崎小川町旅館" item-id="{3285570C-44EB-4306-B67D-A5F2A25D04B3}" hotel-url="https://www.mystays.com/en-us/hotel-flexstay-inn-kawasaki-ogawacho-kanagawa/">FLEXSTAY INN Kawasaki Ogawacho</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-flexstay-inn-kiyosumi-shirakawa-tokyo/" name-data="FLEXSTAY INN Kiyosumi Shirakawa" show-in-meeting="false">
-                    <span tabindex="12" target="jptok26348" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103452" city="tokyo|東京|도쿄|东京" names="flexstay inn kiyosumi shirakawa|フレックステイイン清澄白河|flexstay 清澄白河旅馆|flexstay 清澄白河旅館" item-id="{EC257EDE-5C86-49BA-977A-6015412932FE}" hotel-url="https://www.mystays.com/en-us/hotel-flexstay-inn-kiyosumi-shirakawa-tokyo/">FLEXSTAY INN Kiyosumi Shirakawa</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-flexstay-inn-nakanobu-tokyo/" name-data="FLEXSTAY INN Nakanobu" show-in-meeting="false">
-                    <span tabindex="13" target="jptok26346" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103418" city="tokyo|東京|도쿄|东京" names="flexstay inn nakanobu|フレックステイイン中延|flexstay 中延旅馆|flexstay 中延旅館" item-id="{ECAA596B-09E1-4E74-8B6B-EC31CEBEBAE7}" hotel-url="https://www.mystays.com/en-us/hotel-flexstay-inn-nakanobu-tokyo/">FLEXSTAY INN Nakanobu</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-flexstay-inn-sakuragicho-kanagawa/" name-data="FLEXSTAY INN Sakuragicho" show-in-meeting="false">
-                    <span tabindex="14" target="jpyok26343" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103391" city="kanagawa|神奈川|카나가와" names="flexstay inn sakuragicho|フレックステイイン桜木町|flexstay 樱木町旅馆|flexstay  櫻木町旅館" item-id="{7308FBF1-61BB-442B-9F94-78DFFB10C069}" hotel-url="https://www.mystays.com/en-us/hotel-flexstay-inn-sakuragicho-kanagawa/">FLEXSTAY INN Sakuragicho</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-flexstay-inn-shin-urayasu-chiba/" name-data="FLEXSTAY INN Shin Urayasu" show-in-meeting="false">
-                    <span tabindex="15" target="jpura26342" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103447" city="chiba|千葉|치바|千叶" names="flexstay inn shin urayasu|フレックステイイン新浦安|flexstay  新浦安旅馆|flexstay  新浦安旅館" item-id="{BFA31385-8497-44CC-9972-CD106E1C50FE}" hotel-url="https://www.mystays.com/en-us/hotel-flexstay-inn-shin-urayasu-chiba/">FLEXSTAY INN Shin Urayasu</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-flexstay-inn-shinagawa-tokyo/" name-data="FLEXSTAY INN Shinagawa" show-in-meeting="false">
-                    <span tabindex="16" target="jptok26341" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103414" city="tokyo|東京|도쿄|东京" names="flexstay inn shinagawa|フレックステイイン品川|flexstay 品川旅馆|flexstay  品川旅館" item-id="{BB5D33EB-03FB-4C17-A171-A350E908AF55}" hotel-url="https://www.mystays.com/en-us/hotel-flexstay-inn-shinagawa-tokyo/">FLEXSTAY INN Shinagawa</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-flexstay-inn-shirogane-tokyo/" name-data="FLEXSTAY INN Shirogane" show-in-meeting="false">
-                    <span tabindex="17" target="jptok26336" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103416" city="tokyo|東京|도쿄|东京" names="flexstay inn shirogane|フレックステイイン白金|flexstay 白金旅馆|flexstay 白金旅館" item-id="{0B99610F-6F61-43B6-9ACA-E2CFB844FA61}" hotel-url="https://www.mystays.com/en-us/hotel-flexstay-inn-shirogane-tokyo/">FLEXSTAY INN Shirogane</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-flexstay-inn-sugamo-tokyo/" name-data="FLEXSTAY INN Sugamo" show-in-meeting="false">
-                    <span tabindex="18" target="jptok26333" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103421" city="tokyo|東京|도쿄|东京" names="flexstay inn sugamo|フレックステイイン巣鴨|flexstay 巢鸭旅馆|flexstay 巢鴨旅館" item-id="{E82268E6-C763-49FC-9C90-9F23A561214B}" hotel-url="https://www.mystays.com/en-us/hotel-flexstay-inn-sugamo-tokyo/">FLEXSTAY INN Sugamo</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-flexstay-inn-tamagawa-kanagawa/" name-data="FLEXSTAY INN Tamagawa" show-in-meeting="false">
-                    <span tabindex="19" target="jpkaw26335" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103478" city="kanagawa|神奈川|카나가와" names="flexstay inn tamagawa|フレックステイイン多摩川|flexstay 多摩川旅馆|flexstay  多摩川旅館" item-id="{A9401FB8-E00D-4107-B535-4F93A855D261}" hotel-url="https://www.mystays.com/en-us/hotel-flexstay-inn-tamagawa-kanagawa/">FLEXSTAY INN Tamagawa</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-flexstay-inn-tokiwadai-tokyo/" name-data="FLEXSTAY INN Tokiwadai" show-in-meeting="false">
-                    <span tabindex="20" target="jptok26344" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103480" city="tokyo|東京|도쿄|东京" names="flexstay inn tokiwadai|フレックステイイン常盤台|flexstay 常盤台旅馆|flexstay 常盤台旅館" item-id="{A99BE85A-68E2-4AAD-A646-7804D06FE4AF}" hotel-url="https://www.mystays.com/en-us/hotel-flexstay-inn-tokiwadai-tokyo/">FLEXSTAY INN Tokiwadai</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-fusaki-resort-village-okinawa/" name-data="Fusaki Resort Village" show-in-meeting="true">
-                    <span tabindex="21" target="jpoki28825" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103396" city="okinawa|沖縄|오키나와|冲绳|沖繩" names="fusaki resort village|フサキリゾートヴィレッジ（石垣島）|富崎度假村酒店|富崎渡假村酒店" item-id="{CF4F8927-130C-49C8-8103-3134DEFC1D04}" hotel-url="https://www.mystays.com/en-us/hotel-fusaki-resort-village-okinawa/">Fusaki Resort Village</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-asakusa-tokyo/" name-data="HOTEL MYSTAYS Asakusa" show-in-meeting="false">
-                    <span tabindex="22" target="jptok26318" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103425" city="tokyo|東京|도쿄|东京" names="hotel mystays asakusa|ホテルマイステイズ浅草|mystays 浅草酒店|mystays 淺草酒店" item-id="{2FC9BBBA-CAB5-40B9-88FB-8681C33D1078}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-asakusa-tokyo/">HOTEL MYSTAYS Asakusa</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-asakusabashi-tokyo/" name-data="HOTEL MYSTAYS Asakusabashi" show-in-meeting="false">
-                    <span tabindex="23" target="jptok26316" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103429" city="tokyo|東京|도쿄|东京" names="hotel mystays asakusabashi|ホテルマイステイズ浅草橋|mystays 浅草桥酒店|mystays 淺草橋酒店" item-id="{A8906E82-7A54-4DA2-9DA1-C740ABDA217A}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-asakusabashi-tokyo/">HOTEL MYSTAYS Asakusabashi</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-fuji-onsen-resort-yamanashi/" name-data="HOTEL MYSTAYS Fuji Onsen Resort" show-in-meeting="false">
-                    <span tabindex="24" target="jpyam29701" target-type="Hotel" start-date="2017-11-10" use-travel-click="true" travel-click_booking_id="103469" city="yamanashi|山梨|야마나시" names="hotel mystays fuji onsen resort|ホテルマイステイズ富士山　展望温泉|mystays 富士山展望温泉酒店" item-id="{08BE12DA-0B2D-47C7-A01D-D8452BFB8F7E}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-fuji-onsen-resort-yamanashi/">HOTEL MYSTAYS Fuji Onsen Resort</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-fukuoka-tenjin-fukuoka/" name-data="HOTEL MYSTAYS Fukuoka Tenjin" show-in-meeting="false">
-                    <span tabindex="25" target="jpfuk26326" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103409" city="fukuoka|福岡|후쿠오카|福冈" names="hotel mystays fukuoka tenjin|ホテルマイステイズ福岡天神|mystays 福冈天神酒店|mystays 福岡天神酒店" item-id="{67FDDCE0-CB2C-4B83-9E21-C1DD51ED956C}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-fukuoka-tenjin-fukuoka/">HOTEL MYSTAYS Fukuoka Tenjin</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-fukuoka-tenjin-minami-fukuoka/" name-data="HOTEL MYSTAYS Fukuoka Tenjin Minami" show-in-meeting="false">
-                    <span tabindex="26" target="jpfuk26314" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103385" city="fukuoka|福岡|후쿠오카|福冈" names="hotel mystays fukuoka tenjin minami|ホテルマイステイズ福岡天神南|mystays 福冈天神南酒店|mystays 福岡天神南酒店" item-id="{68EE90BE-4623-4009-90FD-62A857215938}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-fukuoka-tenjin-minami-fukuoka/">HOTEL MYSTAYS Fukuoka Tenjin Minami</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-gotanda-tokyo/" name-data="HOTEL MYSTAYS Gotanda" show-in-meeting="false">
-                    <span tabindex="27" target="jptok26323" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103400" city="tokyo|東京|도쿄|东京" names="hotel mystays gotanda|ホテルマイステイズ五反田|mystays 五反田酒店" item-id="{627A512E-AE8E-4D5A-8F1E-7079750E783A}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-gotanda-tokyo/">HOTEL MYSTAYS Gotanda</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-gotanda-station-tokyo/" name-data="HOTEL MYSTAYS Gotanda Station" show-in-meeting="true">
-                    <span tabindex="28" target="jptok26951" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103402" city="tokyo|東京|도쿄|东京" names="hotel mystays gotanda station|ホテルマイステイズ五反田駅前|mystays 五反田站前酒店" item-id="{0AE5CB0F-C37C-4F44-BBD5-1925912E308C}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-gotanda-station-tokyo/">HOTEL MYSTAYS Gotanda Station</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-hakodate-goryokaku-hokkaido/" name-data="HOTEL MYSTAYS Hakodate Goryokaku (Former：Hotel Nets Hakodate)" show-in-meeting="true">
-                    <span tabindex="29" target="" target-type="Hotel" start-date="2018-05-01" use-travel-click="true" travel-click_booking_id="106519" city="hokkaido|北海道|홋카이도" names="hotel mystays hakodate goryokaku (former：hotel nets hakodate)|ホテルマイステイズ函館五稜郭（旧：ホテルネッツ函館）|mystays函馆五稜郭酒店 (前 : nets 函馆酒店 )|mystays函館五稜郭酒店 (前 : nets 函館酒店 )" item-id="{9BA788BC-C4F0-4664-91E7-25744D5EE61D}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-hakodate-goryokaku-hokkaido/">HOTEL MYSTAYS Hakodate Goryokaku (Former：Hotel Nets Hakodate)</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-hamamatsucho-tokyo/" name-data="HOTEL MYSTAYS Hamamatsucho" show-in-meeting="false">
-                    <span tabindex="30" target="jptok26322" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103398" city="tokyo|東京|도쿄|东京" names="hotel mystays hamamatsucho|ホテルマイステイズ浜松町|mystays 滨松町酒店|mystays 濱松町酒店" item-id="{671DA00C-27A1-4068-B37B-A26DA8964CB1}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-hamamatsucho-tokyo/">HOTEL MYSTAYS Hamamatsucho</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-haneda-tokyo/" name-data="HOTEL MYSTAYS Haneda" show-in-meeting="true">
-                    <span tabindex="31" target="jptok26798" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103454" city="tokyo|東京|도쿄|东京" names="hotel mystays haneda|ホテルマイステイズ羽田|mystays 羽田酒店" item-id="{0F45956C-D3E4-42F2-A5ED-9B7533AE9485}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-haneda-tokyo/">HOTEL MYSTAYS Haneda</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-higashi-ikebukuro-tokyo/" name-data="HOTEL MYSTAYS Higashi Ikebukuro" show-in-meeting="false">
-                    <span tabindex="32" target="jptok26319" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103420" city="tokyo|東京|도쿄|东京" names="hotel mystays higashi ikebukuro|ホテルマイステイズ東池袋|mystays 东池袋酒店|mystays 東池袋酒店" item-id="{9D2DFA39-248B-4BD9-889D-53EDECD07B7F}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-higashi-ikebukuro-tokyo/">HOTEL MYSTAYS Higashi Ikebukuro</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-kagoshima-tenmonkan-kagoshima/" name-data="HOTEL MYSTAYS Kagoshima Tenmonkan" show-in-meeting="true">
-                    <span tabindex="33" target="" target-type="Hotel" start-date="2018-01-16" use-travel-click="true" travel-click_booking_id="104155" city="kagoshima|鹿児島|가고시마|鹿儿岛|鹿兒島" names="hotel mystays kagoshima tenmonkan|ホテルマイステイズ鹿児島天文館|hotel mystays&nbsp;kagoshima&nbsp;tenmonkan|mystays 鹿儿岛天文馆酒店|mystays 鹿兒島天文館酒店" item-id="{5BB90645-4AB4-4AA7-BBAC-D43A53DF9986}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-kagoshima-tenmonkan-kagoshima/">HOTEL MYSTAYS Kagoshima Tenmonkan</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-kamata-tokyo/" name-data="HOTEL MYSTAYS Kamata" show-in-meeting="false">
-                    <span tabindex="34" target="jptok26325" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103441" city="tokyo|東京|도쿄|东京" names="hotel mystays kamata|ホテルマイステイズ蒲田|mystays 蒲田酒店" item-id="{3AD13490-2BBA-420F-9BB1-DBA6C95EC050}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-kamata-tokyo/">HOTEL MYSTAYS Kamata</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-kameido-tokyo/" name-data="HOTEL MYSTAYS Kameido" show-in-meeting="false">
-                    <span tabindex="35" target="jptok26311" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103450" city="tokyo|東京|도쿄|东京" names="hotel mystays kameido|ホテルマイステイズ亀戸|mystays 龟户酒店|mystays 龜戶酒店" item-id="{D88F4973-5583-47E3-8796-D27750568D93}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-kameido-tokyo/">HOTEL MYSTAYS Kameido</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-kanazawa-castle-ishikawa/" name-data="HOTEL MYSTAYS Kanazawa Castle" show-in-meeting="false">
-                    <span tabindex="36" target="jpkan27429" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103448" city="ishikawa|石川|이시카와" names="hotel mystays kanazawa castle|ホテルマイステイズ金沢キャッスル|mystays 金泽城堡酒店|mystays 金澤城堡酒店" item-id="{66549EDE-6B62-4125-85D5-4DED729960C9}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-kanazawa-castle-ishikawa/">HOTEL MYSTAYS Kanazawa Castle</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-kanda-tokyo/" name-data="HOTEL MYSTAYS Kanda" show-in-meeting="false">
-                    <span tabindex="37" target="jptok26313" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103475" city="tokyo|東京|도쿄|东京" names="hotel mystays kanda|ホテルマイステイズ神田|mystays 神田酒店" item-id="{CC53A150-6F6F-43B6-8482-E1AB8439F3A8}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-kanda-tokyo/">HOTEL MYSTAYS Kanda</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-kyoto-shijo-kyoto/" name-data="HOTEL MYSTAYS Kyoto Shijo" show-in-meeting="false">
-                    <span tabindex="38" target="jpkyo26330" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103496" city="kyoto|京都|교토" names="hotel mystays kyoto shijo|ホテルマイステイズ京都四条|mystays 京都四条酒店|mystays 京都四條酒店" item-id="{382F6D2E-7B6D-4627-9421-5C62A47304DB}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-kyoto-shijo-kyoto/">HOTEL MYSTAYS Kyoto Shijo</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-maihama-chiba/" name-data="HOTEL MYSTAYS Maihama" show-in-meeting="false">
-                    <span tabindex="39" target="jpura26317" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103443" city="chiba|千葉|치바|千叶" names="hotel mystays maihama|ホテルマイステイズ舞浜|mystays 舞滨酒店|mystays 舞濱酒店" item-id="{BDCE7D48-32E9-43D5-8C1E-250C098A89D7}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-maihama-chiba/">HOTEL MYSTAYS Maihama</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-matsuyama-ehime/" name-data="HOTEL MYSTAYS Matsuyama" show-in-meeting="true">
-                    <span tabindex="40" target="jpehi31183" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103304" city="ehime|愛媛|에히메|爱媛" names="hotel mystays matsuyama|ホテルマイステイズ松山|mystays 松山酒店" item-id="{FCF8B212-2466-40C7-A94C-3BE4D7CCF058}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-matsuyama-ehime/">HOTEL MYSTAYS Matsuyama</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-midosuji-honmachi-osaka/" name-data="HOTEL MYSTAYS Midosuji Honmachi" show-in-meeting="false">
-                    <span tabindex="41" target="jposa31260" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103439" city="osaka|大阪|오사카" names="hotel mystays midosuji honmachi|ホテルマイステイズ御堂筋本町|mystays 御堂筋本町酒店" item-id="{0D135094-236E-4A5B-8332-C2C72769203A}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-midosuji-honmachi-osaka/">HOTEL MYSTAYS Midosuji Honmachi</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-nagoya-nishiki-nagoya/" name-data="HOTEL MYSTAYS Nagoya Nishiki" show-in-meeting="false">
-                    <span tabindex="42" target="" target-type="Hotel" start-date="2018-07-05" use-travel-click="true" travel-click_booking_id="106517" city="nagoya|名古屋|나고야" names="hotel mystays nagoya nishiki|ホテルマイステイズ名古屋錦|mystays 名古屋锦酒店|mystays 名古屋錦酒店" item-id="{05A5DF45-C96B-45DC-A692-63E14AC895F5}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-nagoya-nishiki-nagoya/">HOTEL MYSTAYS Nagoya Nishiki</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-nagoya-sakae-nagoya/" name-data="HOTEL MYSTAYS Nagoya Sakae" show-in-meeting="true">
-                    <span tabindex="43" target="jpnag26321" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103310" city="nagoya|名古屋|나고야" names="hotel mystays nagoya sakae|ホテルマイステイズ名古屋栄|mystays 名古屋荣酒店|mystays 名古屋榮酒店" item-id="{65CBB63B-08D7-441B-9DF5-2DC89B8B69E3}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-nagoya-sakae-nagoya/">HOTEL MYSTAYS Nagoya Sakae</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-nayoro-hokkaido/" name-data="HOTEL MYSTAYS Nayoro" show-in-meeting="false">
-                    <span tabindex="44" target="jphok31518" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103458" city="hokkaido|北海道|홋카이도" names="hotel mystays nayoro|ホテルマイステイズ名寄|mystays 名寄酒店" item-id="{C4017AFD-72BC-4F2B-BEBE-D422ED65712D}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-nayoro-hokkaido/">HOTEL MYSTAYS Nayoro</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-nippori-tokyo/" name-data="HOTEL MYSTAYS Nippori" show-in-meeting="false">
-                    <span tabindex="45" target="jptok26329" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103427" city="tokyo|東京|도쿄|东京" names="hotel mystays nippori|ホテルマイステイズ日暮里|mystays 日暮里酒店" item-id="{9A118CCF-3346-40CD-8290-519BDC605B91}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-nippori-tokyo/">HOTEL MYSTAYS Nippori</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-nishi-shinjuku-tokyo/" name-data="HOTEL MYSTAYS Nishi Shinjuku" show-in-meeting="false">
-                    <span tabindex="46" target="jptok26320" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103411" city="tokyo|東京|도쿄|东京" names="hotel mystays nishi shinjuku|ホテルマイステイズ西新宿|mystays 西新宿酒店" item-id="{569F505F-4A01-45CB-9BD7-BBB1032FBEBA}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-nishi-shinjuku-tokyo/">HOTEL MYSTAYS Nishi Shinjuku</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-ochanomizu-conference-center-tokyo/" name-data="HOTEL MYSTAYS Ochanomizu CC" show-in-meeting="true">
-                    <span tabindex="47" target="jptok26310" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103487" city="tokyo|東京|도쿄|东京" names="hotel mystays ochanomizu cc|ホテルマイステイズ御茶ノ水コンファレンスセンター|mystays 御茶之水 (会议中心)酒店|mystays 御茶之水 (會議中心)酒店" item-id="{651DA360-DD05-49D7-B6D2-2CDCD96064E6}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-ochanomizu-conference-center-tokyo/">HOTEL MYSTAYS Ochanomizu CC</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-oita-oita/" name-data="HOTEL MYSTAYS Oita" show-in-meeting="false">
-                    <span tabindex="48" target="jpoit29773" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103473" city="oita|大分|오이타" names="hotel mystays oita|ホテルマイステイズ大分|mystays 大分酒店" item-id="{21F971CE-B0CE-48DA-AFB4-D73004996D1A}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-oita-oita/">HOTEL MYSTAYS Oita</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-otemae-osaka/" name-data="HOTEL MYSTAYS Otemae" show-in-meeting="false">
-                    <span tabindex="49" target="jposa26328" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103299" city="osaka|大阪|오사카" names="hotel mystays otemae|ホテルマイステイズ大手前|mystays 大手前酒店" item-id="{340C5DF1-803F-40E4-BA6B-C333436773F9}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-otemae-osaka/">HOTEL MYSTAYS Otemae</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-premier-akasaka-tokyo/" name-data="HOTEL MYSTAYS PREMIER Akasaka" show-in-meeting="false">
-                    <span tabindex="50" target="jptok26324" target-type="Hotel" start-date="2017-11-09" use-travel-click="true" travel-click_booking_id="103394" city="tokyo|東京|도쿄|东京" names="hotel mystays premier akasaka|ホテルマイステイズプレミア赤坂|mystays 赤坂精品酒店|mystays  赤坂精品酒店" item-id="{D3E838CF-710C-4055-8041-D109358FBD56}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-premier-akasaka-tokyo/">HOTEL MYSTAYS PREMIER Akasaka</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-premier-dojima-osaka/" name-data="HOTEL MYSTAYS PREMIER Dojima " show-in-meeting="false">
-                    <span tabindex="51" target="jposa31259" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103436" city="osaka|大阪|오사카" names="hotel mystays premier dojima|ホテルマイステイズプレミア堂島|mystays 堂岛精品酒店|mystays 堂島精品酒店" item-id="{D9A45DBB-63AB-42AC-BB9C-A55B26524867}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-premier-dojima-osaka/">HOTEL MYSTAYS PREMIER Dojima </span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-premier-hamamatsucho-tokyo/" name-data="HOTEL MYSTAYS PREMIER Hamamatsucho" show-in-meeting="false">
-                    <span tabindex="52" target="jptok28530" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103466" city="tokyo|東京|도쿄|东京" names="hotel mystays premier hamamatsucho|ホテルマイステイズプレミア浜松町|mystays 滨松町精品酒店|mystays  濱松町精品酒店" item-id="{E4B0954E-2DE4-4284-9D9E-42B3335D2FB0}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-premier-hamamatsucho-tokyo/">HOTEL MYSTAYS PREMIER Hamamatsucho</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-premier-kanazawa-ishikawa/" name-data="HOTEL MYSTAYS PREMIER Kanazawa" show-in-meeting="false">
-                    <span tabindex="53" target="jpkan26799" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103403" city="ishikawa|石川|이시카와" names="hotel mystays premier kanazawa|ホテルマイステイズプレミア金沢|mystays 金泽精品酒店|mystays  金澤精品酒店" item-id="{87A057D2-AC55-4655-A018-ED16C48F4427}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-premier-kanazawa-ishikawa/">HOTEL MYSTAYS PREMIER Kanazawa</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-premier-narita-chiba/" name-data="HOTEL MYSTAYS PREMIER Narita" show-in-meeting="true">
-                    <span tabindex="54" target="" target-type="Hotel" start-date="2018-02-01" use-travel-click="true" travel-click_booking_id="103334" city="chiba|千葉|치바|千叶" names="hotel mystays premier narita|ホテルマイステイズプレミア成田|mystays 成田精品酒店" item-id="{05724464-1EC0-46D1-B129-BDFBD7A8EA49}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-premier-narita-chiba/">HOTEL MYSTAYS PREMIER Narita</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-premier-omori-tokyo/" name-data="HOTEL MYSTAYS PREMIER Omori" show-in-meeting="false">
-                    <span tabindex="55" target="jptok28531" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103467" city="tokyo|東京|도쿄|东京" names="hotel mystays premier omori|ホテルマイステイズプレミア大森|mystays 大森精品酒店|mystays  大森精品酒店" item-id="{BDC2F468-C7FB-4760-A719-6810047EBF50}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-premier-omori-tokyo/">HOTEL MYSTAYS PREMIER Omori</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-premier-sapporo-park-hokkaido/" name-data="HOTEL MYSTAYS PREMIER Sapporo Park" show-in-meeting="true">
-                    <span tabindex="56" target="jphok28823" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103498" city="hokkaido|北海道|홋카이도" names="hotel mystays premier sapporo park|ホテルマイステイズプレミア札幌パーク|mystays 札幌公园精品酒店|mystays  札幌公園精品酒店" item-id="{A6416747-1ED6-4EC7-9BC6-C272A8090204}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-premier-sapporo-park-hokkaido/">HOTEL MYSTAYS PREMIER Sapporo Park</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-sakaisuji-honmachi-osaka/" name-data="HOTEL MYSTAYS Sakaisuji Honmachi" show-in-meeting="false">
-                    <span tabindex="57" target="jposa26315" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103494" city="osaka|大阪|오사카" names="hotel mystays sakaisuji honmachi|ホテルマイステイズ堺筋本町|mystays 堺筋本町酒店" item-id="{49080FE2-A8D1-469A-A5D1-6F92D9ED4BC4}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-sakaisuji-honmachi-osaka/">HOTEL MYSTAYS Sakaisuji Honmachi</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-sapporo-aspen-hokkaido/" name-data="HOTEL MYSTAYS Sapporo Aspen" show-in-meeting="true">
-                    <span tabindex="58" target="jpsap29702" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103303" city="hokkaido|北海道|홋카이도" names="hotel mystays sapporo aspen|ホテルマイステイズ札幌アスペン|mystays 札幌 aspen酒店" item-id="{4AF65BF3-ED73-4FA5-87F8-3AB9ECB0750F}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-sapporo-aspen-hokkaido/">HOTEL MYSTAYS Sapporo Aspen</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-sapporo-nakajima-park-hokkaido/" name-data="HOTEL MYSTAYS Sapporo Nakajima Park" show-in-meeting="true">
-                    <span tabindex="59" target="jpsap27590" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103342" city="hokkaido|北海道|홋카이도" names="hotel mystays sapporo nakajima park|ホテルマイステイズ札幌中島公園|mystays 札幌中岛公园酒店|mystays 札幌中島公園酒店" item-id="{52488A57-13AC-4452-9E29-1E4DE3AC1763}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-sapporo-nakajima-park-hokkaido/">HOTEL MYSTAYS Sapporo Nakajima Park</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-sapporo-nakajima-park-annex-hokkaido/" name-data="HOTEL MYSTAYS Sapporo Nakajima Park Annex" show-in-meeting="false">
-                    <span tabindex="60" target="jphok30695" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103438" city="hokkaido|北海道|홋카이도" names="hotel mystays sapporo nakajima park annex|ホテルマイステイズ札幌中島公園別館|mystays 札幌中岛公园别馆酒店|mystays 札幌中島公園別館酒店" item-id="{9E25069D-0108-455C-B3E3-14D6C23546EF}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-sapporo-nakajima-park-annex-hokkaido/">HOTEL MYSTAYS Sapporo Nakajima Park Annex</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-sapporo-station-hokkaido/" name-data="HOTEL MYSTAYS Sapporo Station" show-in-meeting="false">
-                    <span tabindex="61" target="jpsap29772" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103301" city="hokkaido|北海道|홋카이도" names="hotel mystays sapporo station|ホテルマイステイズ札幌駅北口|mystays 札幌站北口酒店" item-id="{210E3216-2FD6-4B10-A66A-A39FD30D159F}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-sapporo-station-hokkaido/">HOTEL MYSTAYS Sapporo Station</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-sapporo-susukino-hokkaido/" name-data="HOTEL MYSTAYS Sapporo Susukino (Former：Hotel Kaiko Sapporo)" show-in-meeting="false">
-                    <span tabindex="62" target="jphok31340" target-type="Hotel" start-date="2018-07-02" use-travel-click="true" travel-click_booking_id="103493" city="hokkaido|北海道|홋카이도" names="hotel mystays sapporo susukino (former：hotel kaiko sapporo)|ホテルマイステイズ札幌すすきの（旧：ホテルカイコー札幌）|mystays 札幌薄野酒店  (前 kaiko 札幌酒店 )|mystays 札幌薄野酒店 (前 kaiko 札幌酒店 )" item-id="{60BED0FA-3234-4EC6-AF29-918C551F9E58}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-sapporo-susukino-hokkaido/">HOTEL MYSTAYS Sapporo Susukino (Former：Hotel Kaiko Sapporo)</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-shin-osaka-cc-osaka/" name-data="HOTEL MYSTAYS Shin Osaka Conference Center" show-in-meeting="true">
-                    <span tabindex="63" target="jposa28304" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103295" city="osaka|大阪|오사카" names="hotel mystays shin osaka conference center|ホテルマイステイズ新大阪コンファレンスセンター|hotel mystays shin osaka cc|mystays 新大阪 (会议中心)酒店|mystays 新大阪 (會議中心)酒店" item-id="{EAD70871-A450-4BD6-B4B4-2B8C6CA64641}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-shin-osaka-cc-osaka/">HOTEL MYSTAYS Shin Osaka Conference Center</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-shinsaibashi-osaka/" name-data="HOTEL MYSTAYS Shinsaibashi" show-in-meeting="false">
-                    <span tabindex="64" target="jposa26338" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103407" city="osaka|大阪|오사카" names="hotel mystays shinsaibashi|ホテルマイステイズ心斎橋|mystays 心斋桥酒店|mystays 心齋橋酒店" item-id="{0B10319F-EC64-4801-96AF-DE278F9494E1}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-shinsaibashi-osaka/">HOTEL MYSTAYS Shinsaibashi</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-shinsaibashi-east-osaka/" name-data="HOTEL MYSTAYS Shinsaibashi East" show-in-meeting="false">
-                    <span tabindex="65" target="jposa28306" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103482" city="osaka|大阪|오사카" names="hotel mystays shinsaibashi east|ホテルマイステイズ心斎橋イースト|mystays 心斋桥东酒店|mystays 心齋橋東酒店" item-id="{212700F2-0F23-42EB-BC53-FDF27533EA9A}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-shinsaibashi-east-osaka/">HOTEL MYSTAYS Shinsaibashi East</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-tachikawa-tachikawa/" name-data="HOTEL MYSTAYS Tachikawa" show-in-meeting="false">
-                    <span tabindex="66" target="jptok27899" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103405" city="tachikawa|立川|타치카와" names="hotel mystays tachikawa|ホテルマイステイズ立川|mystays 立川酒店" item-id="{F53FF36D-050A-438A-92F0-68DF92C7BB65}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-tachikawa-tachikawa/">HOTEL MYSTAYS Tachikawa</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-ueno-east-tokyo/" name-data="HOTEL MYSTAYS Ueno East" show-in-meeting="false">
-                    <span tabindex="67" target="jptok28305" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103336" city="tokyo|東京|도쿄|东京" names="hotel mystays ueno east|ホテルマイステイズ上野イースト|mystays 上野东酒店|mystays 上野東酒店" item-id="{E8D7C49A-280E-4226-B498-64A154887085}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-ueno-east-tokyo/">HOTEL MYSTAYS Ueno East</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-ueno-inaricho-tokyo/" name-data="HOTEL MYSTAYS Ueno Inaricho" show-in-meeting="false">
-                    <span tabindex="68" target="jptok26312" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103489" city="tokyo|東京|도쿄|东京" names="hotel mystays ueno inaricho|ホテルマイステイズ上野稲荷町|mystays 上野稻荷町酒店" item-id="{C54D987D-7367-4463-B63B-340B7D662934}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-ueno-inaricho-tokyo/">HOTEL MYSTAYS Ueno Inaricho</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-ueno-iriyaguchi-tokyo/" name-data="HOTEL MYSTAYS Ueno Iriyaguchi" show-in-meeting="false">
-                    <span tabindex="69" target="jptok26350" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103423" city="tokyo|東京|도쿄|东京" names="hotel mystays ueno iriyaguchi|ホテルマイステイズ上野入谷口|mystays 上野入谷口酒店" item-id="{569DEB89-BC27-42AE-B519-C83583C38A7A}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-ueno-iriyaguchi-tokyo/">HOTEL MYSTAYS Ueno Iriyaguchi</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-utsunomiya-tochigi/" name-data="HOTEL MYSTAYS Utsunomiya" show-in-meeting="true">
-                    <span tabindex="70" target="jputs26331" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103338" city="tochigi|栃木|토치기|櫪木" names="hotel mystays utsunomiya|ホテルマイステイズ宇都宮|mystays 宇都宫酒店|mystays 宇都宮酒店" item-id="{3D3CD02E-D341-427A-B428-C0FB636A0148}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-utsunomiya-tochigi/">HOTEL MYSTAYS Utsunomiya</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-yokohama-kanagawa/" name-data="HOTEL MYSTAYS Yokohama" show-in-meeting="true">
-                    <span tabindex="71" target="jpyok26332" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103389" city="kanagawa|神奈川|카나가와" names="hotel mystays yokohama|ホテルマイステイズ横浜|mystays 横滨酒店|mystays 橫濱酒店" item-id="{B0655603-CDE6-4CFD-A818-F48C756B4A1A}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-yokohama-kanagawa/">HOTEL MYSTAYS Yokohama</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-yokohama-kannai-kanagawa/" name-data="HOTEL MYSTAYS Yokohama Kannai" show-in-meeting="false">
-                    <span tabindex="72" target="jpyok29010" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103491" city="kanagawa|神奈川|카나가와" names="hotel mystays yokohama kannai|ホテルマイステイズ横浜関内|mystays 横滨关内酒店|mystays 橫濱關內酒店" item-id="{247B4A82-6397-48A8-982A-70A596E0C566}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-yokohama-kannai-kanagawa/">HOTEL MYSTAYS Yokohama Kannai</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-hakodate-kokusai-hotel-hokkaido/" name-data="Hakodate Kokusai Hotel" show-in-meeting="true">
-                    <span tabindex="73" target="jphok29664" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103432" city="hokkaido|北海道|홋카이도" names="hakodate kokusai hotel|函館国際ホテル|函馆国际酒店|函館國際酒店" item-id="{476D1008-BB4E-4B6B-A3F3-3C2BDCE0D262}" hotel-url="https://www.mystays.com/en-us/hotel-hakodate-kokusai-hotel-hokkaido/">Hakodate Kokusai Hotel</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-higashinihon-morioka-tohoku/" name-data="Hotel Higashinihon Morioka" show-in-meeting="true">
-                    <span tabindex="74" target="" target-type="Hotel" start-date="2018-07-30" use-travel-click="true" travel-click_booking_id="107198" city="tohoku|東北|도호쿠|东北" names="hotel higashinihon morioka|ホテル東日本盛岡|盛冈东日本酒店|盛岡東日本酒店" item-id="{FDA5559C-7AF9-4BE3-8268-FAC5FC0090CC}" hotel-url="https://www.mystays.com/en-us/hotel-higashinihon-morioka-tohoku/">Hotel Higashinihon Morioka</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mori-no-kaze-tazawako-tohoku/" name-data="Hotel Mori no Kaze Tazawako" show-in-meeting="false">
-                    <span tabindex="75" target="" target-type="Hotel" start-date="2018-07-30" use-travel-click="true" travel-click_booking_id="107200" city="tohoku|東北|도호쿠|东北" names="hotel mori no kaze tazawako|ホテル森の風 田沢湖|호텔 모리노카제 다자와코|森之风田泽湖酒店|森之風田澤湖酒店" item-id="{FA2A03ED-FF1B-4F4E-B661-B94F247BA888}" hotel-url="https://www.mystays.com/en-us/hotel-mori-no-kaze-tazawako-tohoku/">Hotel Mori no Kaze Tazawako</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-nord-otaru-hokkaido/" name-data="Hotel Nord Otaru" show-in-meeting="true">
-                    <span tabindex="76" target="jpota28373" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103484" city="hokkaido|北海道|홋카이도" names="hotel nord otaru|ホテルノルド小樽|nord小樽 酒店" item-id="{6C9B1195-E551-4B1E-9D61-C5860E81062F}" hotel-url="https://www.mystays.com/en-us/hotel-nord-otaru-hokkaido/">Hotel Nord Otaru</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-sonia-otaru-hokkaido/" name-data="Hotel Sonia Otaru" show-in-meeting="false">
-                    <span tabindex="77" target="jpota29771" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103434" city="hokkaido|北海道|홋카이도" names="hotel sonia otaru|ホテルソニア小樽|sonia小樽酒店|sonia小樽 酒店" item-id="{D4513D83-8FEA-4EBF-AA8C-310A64418943}" hotel-url="https://www.mystays.com/en-us/hotel-sonia-otaru-hokkaido/">Hotel Sonia Otaru</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-epinard-nasu-tochigi/" name-data="Hotel Épinard Nasu" show-in-meeting="true">
-                    <span tabindex="78" target="jpnas28830" target-type="Hotel" start-date="2017-11-16" use-travel-click="true" travel-click_booking_id="103430" city="tochigi|栃木|토치기|櫪木" names="hotel épinard nasu|ホテルエピナール那須|epinard那须温泉酒店|epinard那須温泉酒店" item-id="{E44E430A-6802-4580-A585-A96C51E3ECE3}" hotel-url="https://www.mystays.com/en-us/hotel-epinard-nasu-tochigi/">Hotel Épinard Nasu</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-shin-urayasu-cc-chiba/" name-data="MYSTAYS Shin Urayasu Conference Center" show-in-meeting="true">
-                    <span tabindex="79" target="jpura26309" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103445" city="chiba|千葉|치바|千叶" names="mystays shin urayasu conference center|マイステイズ新浦安コンファレンスセンター|mystays 新浦安 (会议中心)酒店|mystays 新浦安 (會議中心) 酒店" item-id="{C5722EAF-152A-42C2-B3A6-DA77F9C800C5}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-shin-urayasu-cc-chiba/">MYSTAYS Shin Urayasu Conference Center</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mycube-by-mystays-asakusa-kuramae-tokyo/" name-data="MyCube by MYSTAYS Asakusa Kuramae" show-in-meeting="false">
-                    <span tabindex="80" target="jptok28108" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103460" city="tokyo|東京|도쿄|东京" names="mycube by mystays asakusa kuramae|mycube by mystays浅草蔵前|mycube by mystays 浅草藏前精品旅舍|mycube by mystays 淺草藏前精品旅舍" item-id="{31FA52F4-A9AE-4926-8845-1783E9A2FB27}" hotel-url="https://www.mystays.com/en-us/hotel-mycube-by-mystays-asakusa-kuramae-tokyo/">MyCube by MYSTAYS Asakusa Kuramae</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-nara-royal-hotel-nara/" name-data="NARA ROYAL HOTEL" show-in-meeting="true">
-                    <span tabindex="81" target="" target-type="Hotel" start-date="2018-03-01" use-travel-click="true" travel-click_booking_id="104220" city="nara|奈良|나라" names="nara royal hotel|奈良ロイヤルホテル|奈良皇家酒店" item-id="{DDB870F7-E351-4EB2-B366-31D9D9F22B1F}" hotel-url="https://www.mystays.com/en-us/hotel-nara-royal-hotel-nara/">NARA ROYAL HOTEL</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-resort-hotel-olivean-shodoshima-kagawa/" name-data="Resort Hotel Olivean Shodoshima" show-in-meeting="true">
-                    <span tabindex="82" target="jpton28829" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103464" city="kagawa|香川|카가와" names="resort hotel olivean shodoshima|リゾートホテル オリビアン小豆島|olivean小豆岛 温泉度假酒店|olivean小豆島 温泉渡假酒店" item-id="{424EE356-91DA-4908-9058-38223229ADD9}" hotel-url="https://www.mystays.com/en-us/hotel-resort-hotel-olivean-shodoshima-kagawa/">Resort Hotel Olivean Shodoshima</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-shirahama-ocean-resort-chiba/" name-data="Shirahama Ocean Resort" show-in-meeting="true">
-                    <span tabindex="83" target="jpchi28828" target-type="Hotel" start-date="0001-01-01" use-travel-click="true" travel-click_booking_id="103462" city="chiba|千葉|치바|千叶" names="shirahama ocean resort|白浜オーシャンリゾート|白滨海洋温泉度假酒店|白濱海洋温泉渡假酒店" item-id="{BC0D88A6-97F7-42DA-9F7B-B46D2E4E35EA}" hotel-url="https://www.mystays.com/en-us/hotel-shirahama-ocean-resort-chiba/">Shirahama Ocean Resort</span>
-                </li>
-                <li hotel-residence="false" class="hotel-search-item" data-link="https://www.mystays.com/en-us/hotel-mystays-kagoshima-tenmonkan-annex-kagoshima/" name-data="​HOTEL MYSTAYS Kagoshima Tenmonkan Annex" show-in-meeting="false">
-                    <span tabindex="84" target="" target-type="Hotel" start-date="2018-01-16" use-travel-click="true" travel-click_booking_id="104157" city="kagoshima|鹿児島|가고시마|鹿儿岛|鹿兒島" names="​hotel mystays kagoshima tenmonkan annex|ホテルマイステイズ鹿児島天文館2番館|​hotel mystays&nbsp;kagoshima&nbsp;tenmonkan&nbsp;annex|mystays 鹿儿岛天文馆别馆酒店|mystays 鹿兒島天文館別館酒店" item-id="{99643FBA-2426-4881-93A7-1650A42CE220}" hotel-url="https://www.mystays.com/en-us/hotel-mystays-kagoshima-tenmonkan-annex-kagoshima/">​HOTEL MYSTAYS Kagoshima Tenmonkan Annex</span>
-                </li>
-            </ul>
-
-            <ul class="hide" id="city-list">
-
-                <li show-in-meeting="false">
-                    <span item-id="{4B956FC6-07E5-4D4C-8C86-7CAF26F0B9E1}" use-travel-click="true" tabindex="0" target-city="Aichi" target="Japan,Chubu,Chubu,Nagoya" target-type="City" names="aichi|愛知|마이하마/우라야스|舞濱/浦安|舞滨/浦安" hotelid="{4B956FC6-07E5-4D4C-8C86-7CAF26F0B9E1}" hotel-url="https://www.mystays.com/en-us/hotels-aichi/">Aichi</span>
-                </li>
-                <li show-in-meeting="true">
-                    <span item-id="{469A1784-E6CC-41BC-B7B9-307688748B8B}" use-travel-click="true" tabindex="1" target-city="Aomori" target="Japan,Tohoku,Tohoku,Hirosaki" target-type="City" names="aomori|青森|아오모리" hotelid="{469A1784-E6CC-41BC-B7B9-307688748B8B}" hotel-url="https://www.mystays.com/en-us/hotels-aomori/">Aomori</span>
-                </li>
-                <li show-in-meeting="true">
-                    <span item-id="{5FAE1A43-C832-48EA-AEF3-F7DB505A99B9}" use-travel-click="true" tabindex="2" target-city="Chiba" target="Japan,Kanto,Kanto" target-type="City" names="chiba|千葉|치바|千叶" hotelid="{5FAE1A43-C832-48EA-AEF3-F7DB505A99B9}" hotel-url="https://www.mystays.com/en-us/hotels-chiba/">Chiba</span>
-                </li>
-                <li show-in-meeting="true">
-                    <span item-id="{80C3FB49-74CD-4B20-9672-85030193DDBE}" use-travel-click="true" tabindex="3" target-city="Ehime" target="Japan,Shikoku,Shikoku,Matsuyama" target-type="City" names="ehime|愛媛|에히메|爱媛" hotelid="{80C3FB49-74CD-4B20-9672-85030193DDBE}" hotel-url="https://www.mystays.com/en-us/hotels-ehime/">Ehime</span>
-                </li>
-                <li show-in-meeting="false">
-                    <span item-id="{68183EF0-60A5-4A7B-8E0D-A71771D9017F}" use-travel-click="true" tabindex="4" target-city="Fukuoka" target="Japan,Kyushu,Kyushu,Fukuoka" target-type="City" names="fukuoka|福岡|후쿠오카|福冈" hotelid="{68183EF0-60A5-4A7B-8E0D-A71771D9017F}" hotel-url="https://www.mystays.com/en-us/hotels-fukuoka/">Fukuoka</span>
-                </li>
-                <li show-in-meeting="true">
-                    <span item-id="{415CF9E2-0EC4-4DCC-9A5E-B404D7B55DBB}" use-travel-click="true" tabindex="5" target-city="Hokkaido" target="Japan,Hokkaido" target-type="City" names="hokkaido|北海道|홋카이도" hotelid="{415CF9E2-0EC4-4DCC-9A5E-B404D7B55DBB}" hotel-url="https://www.mystays.com/en-us/hotels-hokkaido/">Hokkaido</span>
-                </li>
-                <li show-in-meeting="false">
-                    <span item-id="{864CEB4A-AAD7-4542-94C7-482D5DCA1ED2}" use-travel-click="true" tabindex="6" target-city="Ishikawa" target="Japan,Hokuriku,Hokuriku,Kanazawa" target-type="City" names="ishikawa|石川|이시카와" hotelid="{864CEB4A-AAD7-4542-94C7-482D5DCA1ED2}" hotel-url="https://www.mystays.com/en-us/hotels-ishikawa/">Ishikawa</span>
-                </li>
-                <li show-in-meeting="true">
-                    <span item-id="{93E2B579-2467-4314-B0DF-A10E8045FA0F}" use-travel-click="true" tabindex="7" target-city="Kagawa" target="Japan,Shikoku,Shikoku,Shodoshima" target-type="City" names="kagawa|香川|카가와" hotelid="{93E2B579-2467-4314-B0DF-A10E8045FA0F}" hotel-url="https://www.mystays.com/en-us/hotels-kagawa/">Kagawa</span>
-                </li>
-                <li show-in-meeting="true">
-                    <span item-id="{CAAAE861-CA24-480E-8652-96125CC9663A}" use-travel-click="true" tabindex="8" target-city="Kagoshima" target="Japan,Kyushu,Kyushu,Kagoshima" target-type="City" names="kagoshima|鹿児島|가고시마|鹿儿岛|鹿兒島" hotelid="{CAAAE861-CA24-480E-8652-96125CC9663A}" hotel-url="https://www.mystays.com/en-us/hotels-kagoshima/">Kagoshima</span>
-                </li>
-                <li show-in-meeting="true">
-                    <span item-id="{2DC43839-4955-4BB7-BCA4-D21AB5F07131}" use-travel-click="true" tabindex="9" target-city="Kanagawa" target="Japan,Kanto,Kanto,Kawasaki" target-type="City" names="kanagawa|神奈川|카나가와" hotelid="{2DC43839-4955-4BB7-BCA4-D21AB5F07131}" hotel-url="https://www.mystays.com/en-us/hotels-kanagawa/">Kanagawa</span>
-                </li>
-                <li show-in-meeting="false">
-                    <span item-id="{D73D2E6F-7CFB-48FF-8FBF-4302B4B4B813}" use-travel-click="true" tabindex="10" target-city="Kanazawa" target="Japan,Hokuriku,Hokuriku,Kanazawa" target-type="City" names="kanazawa|金沢|카나자와|金泽|金澤" hotelid="{D73D2E6F-7CFB-48FF-8FBF-4302B4B4B813}" hotel-url="https://www.mystays.com/en-us/hotels-kanazawa/">Kanazawa</span>
-                </li>
-                <li show-in-meeting="false">
-                    <span item-id="{2DBFC8CB-23A7-41EA-BF48-ADC8DCE19B23}" use-travel-click="true" tabindex="11" target-city="Kawasaki" target="Japan,Kanto,Kanto,Kawasaki" target-type="City" names="kawasaki|川崎|카와사키" hotelid="{2DBFC8CB-23A7-41EA-BF48-ADC8DCE19B23}" hotel-url="https://www.mystays.com/en-us/hotels-kawasaki/">Kawasaki</span>
-                </li>
-                <li show-in-meeting="false">
-                    <span item-id="{1887CD20-8D52-4BEE-83A2-A89637C646DD}" use-travel-click="true" tabindex="12" target-city="Kyoto" target="Japan,Kansai,Kansai,Kyoto" target-type="City" names="kyoto|京都|교토" hotelid="{1887CD20-8D52-4BEE-83A2-A89637C646DD}" hotel-url="https://www.mystays.com/en-us/hotels-kyoto/">Kyoto</span>
-                </li>
-                <li show-in-meeting="true">
-                    <span item-id="{E5179581-4141-4E25-B93B-5DA3558853C8}" use-travel-click="true" tabindex="13" target-city="Nagoya" target="Japan,Chubu,Chubu,Nagoya" target-type="City" names="nagoya|名古屋|나고야" hotelid="{E5179581-4141-4E25-B93B-5DA3558853C8}" hotel-url="https://www.mystays.com/en-us/hotels-nagoya/">Nagoya</span>
-                </li>
-                <li show-in-meeting="true">
-                    <span item-id="{5EC2C82F-2F87-489F-B4D3-9D0141428BD8}" use-travel-click="true" tabindex="14" target-city="Nara" target="Japan,Kansai,Kansai" target-type="City" names="nara|奈良|나라" hotelid="{5EC2C82F-2F87-489F-B4D3-9D0141428BD8}" hotel-url="https://www.mystays.com/en-us/hotels-nara/">Nara</span>
-                </li>
-                <li show-in-meeting="true">
-                    <span item-id="{677BC08F-67C7-4A37-9EBC-1A0CA1577E2D}" use-travel-click="true" tabindex="15" target-city="Niigata" target="Japan,Shinetsu,Shinetsu,Niigata" target-type="City" names="niigata|新潟|니가타" hotelid="{677BC08F-67C7-4A37-9EBC-1A0CA1577E2D}" hotel-url="https://www.mystays.com/en-us/hotels-niigata/">Niigata</span>
-                </li>
-                <li show-in-meeting="true">
-                    <span item-id="{79A7EAB2-3696-463B-B105-D30A547C2D64}" use-travel-click="true" tabindex="16" target-city="Oita" target="Japan,Kyushu,Kyushu,Oita" target-type="City" names="oita|大分|오이타" hotelid="{79A7EAB2-3696-463B-B105-D30A547C2D64}" hotel-url="https://www.mystays.com/en-us/hotels-oita/">Oita</span>
-                </li>
-                <li show-in-meeting="true">
-                    <span item-id="{C5269A11-5FC5-46FA-B147-5923E4DD227F}" use-travel-click="true" tabindex="17" target-city="Okinawa" target="Japan,Okinawa,Okinawa" target-type="City" names="okinawa|沖縄|오키나와|冲绳|沖繩" hotelid="{C5269A11-5FC5-46FA-B147-5923E4DD227F}" hotel-url="https://www.mystays.com/en-us/hotels-okinawa/">Okinawa</span>
-                </li>
-                <li show-in-meeting="true">
-                    <span item-id="{CF1C40F7-19FE-4EFC-8B99-2E49D67566B6}" use-travel-click="true" tabindex="18" target-city="Osaka" target="Japan,Kansai,Kansai,Osaka" target-type="City" names="osaka|大阪|오사카" hotelid="{CF1C40F7-19FE-4EFC-8B99-2E49D67566B6}" hotel-url="https://www.mystays.com/en-us/hotels-osaka/">Osaka</span>
-                </li>
-                <li show-in-meeting="false">
-                    <span item-id="{52482F26-7CA5-4B41-A9BF-196951FF2755}" use-travel-click="true" tabindex="19" target-city="Tachikawa" target="Japan,Tokyo,Tokyo,Tachikawa" target-type="City" names="tachikawa|立川|타치카와" hotelid="{52482F26-7CA5-4B41-A9BF-196951FF2755}" hotel-url="https://www.mystays.com/en-us/hotels-tachikawa/">Tachikawa</span>
-                </li>
-                <li show-in-meeting="true">
-                    <span item-id="{7C90B66E-1642-475F-B41B-0402F087FFE3}" use-travel-click="true" tabindex="20" target-city="Tochigi" target="Japan,Kanto,Kanto" target-type="City" names="tochigi|栃木|토치기|櫪木" hotelid="{7C90B66E-1642-475F-B41B-0402F087FFE3}" hotel-url="https://www.mystays.com/en-us/hotels-tochigi/">Tochigi</span>
-                </li>
-                <li show-in-meeting="true">
-                    <span item-id="{0AA2DD6C-1529-4E58-9D94-99810591434B}" use-travel-click="true" tabindex="21" target-city="Tohoku" target="Japan,Tohoku,Tohoku" target-type="City" names="tohoku|東北|도호쿠|东北" hotelid="{0AA2DD6C-1529-4E58-9D94-99810591434B}" hotel-url="https://www.mystays.com/en-us/hotels-tohoku/">Tohoku</span>
-                </li>
-                <li show-in-meeting="true">
-                    <span item-id="{56C9D216-ED31-44B6-B5DD-FA98271AD04E}" use-travel-click="true" tabindex="22" target-city="Tokyo" target="Japan,Tokyo,Tokyo" target-type="City" names="tokyo|東京|도쿄|东京" hotelid="{56C9D216-ED31-44B6-B5DD-FA98271AD04E}" hotel-url="https://www.mystays.com/en-us/hotels-tokyo/">Tokyo</span>
-                </li>
-                <li show-in-meeting="false">
-                    <span item-id="{56037765-E826-49DA-94B0-DDCFCF015373}" use-travel-click="true" tabindex="23" target-city="Yamanashi" target="Japan,Fuji,Fuji" target-type="City" names="yamanashi|山梨|야마나시" hotelid="{56037765-E826-49DA-94B0-DDCFCF015373}" hotel-url="https://www.mystays.com/en-us/hotels-yamanashi/">Yamanashi</span>
-                </li>
-                <li show-in-meeting="false">
-                    <span item-id="{AC90E637-EAF3-42F5-862B-DC931E696703}" use-travel-click="true" tabindex="24" target-city="Yokohama" target="Japan,Kanto,Kanto,Yokohama" target-type="City" names="yokohama|横浜|요코하마|横濱" hotelid="{AC90E637-EAF3-42F5-862B-DC931E696703}" hotel-url="https://www.mystays.com/en-us/hotels-yokohama/">Yokohama</span>
-                </li>
-            </ul>
-        </div>
+        <div  class="calender-render-container"></div>
+        
     </div>
 
 
 
-    //Divide
     <div class="container booking-widget-container" id="booking-widget-containertwo">
         <div id="booking-widget-module" class="mystays-booking-widget">
             <div class="booking-box autocomplete">
@@ -491,15 +152,15 @@
                 <div class="booking-search-msg-wrap hide">
                     <a href="" target="_blank" data-text="Open {0} Hotel List"></a>
                 </div>
-                <div class="hide" id="hotel-search-list-wrap">
+                <div class="hide hotel-search-list-wrap" >
                     <ul class="hotel-search-list"></ul>
                 </div>
             </div>
             <div class="booking-box date-picker">
                 <p><span>checkin</span><span>checkout</span></p>
-                <div class="booking-box-wrap range-container" id="range-container">
+                <div class="booking-box-wrap range-container" >
                     <div class="booking-checkin-checkout">
-                        <div class="checkin bookingwidget-checkin" id="bookingwidget-checkin">
+                        <div class="checkin bookingwidget-checkin" >
                             <input type="text" class="calendar-checkindate" value="">
                             <div class="input-top-wrap">
                                 <div class="title"></div>
@@ -507,7 +168,7 @@
                             </div>
                         </div>
                         <i class="icono-arrow1-left"></i>
-                        <div class="checkout bookingwidget-checkout" id="bookingwidget-checkout">
+                        <div class="checkout bookingwidget-checkout" >
                             <input type="text" class="calendar-checkoutdate" value="">
                             <div class="input-top-wrap">
                                 <div class="title"></div>
@@ -527,7 +188,7 @@
                             <!-- <span class="guests hidden">guests</span> -->
                         </div>
                     </div>
-                    <input type="hidden" id="booking-totalguests">
+                    <input type="hidden" >
                 </div>
                 <div class="booking-guestselect-wrap hide">
                     <div class="booking-guestselect-heading">
@@ -585,7 +246,10 @@
                 <button class="btn">Search</button>
             </div>
         </div>
-        <div id="calender-render-container" class="calender-render-container"></div>
+        <div  class="calender-render-container"></div>
+
+        </div>
+
         <div>
             <ul class="hide" id="hotel-list1">
 
@@ -925,11 +589,10 @@
                 </li>
             </ul>
         </div>
-    </div>
 
 
-    <script type="text/javascript" src="js/mobiscroll.javascript.min.js"></script>
-    <script type="text/javascript" src="js/init.js"></script>
+        <script type="text/javascript" src="js/mobiscroll.javascript.min.js"></script>
+        <script type="text/javascript" src="js/init.js"></script>
 
 </body>
 </html>

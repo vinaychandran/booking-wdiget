@@ -775,7 +775,7 @@ body{
     }
 }
 
-#hotel-search-list-wrap{
+.hotel-search-list-wrap{
 	background: #fff;		
 	position: absolute;
 	left: 0;
@@ -849,14 +849,14 @@ body{
 }
 
 
-#booking-widget-container{ 
+.booking-widget-container{ 
 	z-index: 13;
 	position: relative;
 }
 
 
 .home-container{     
-    #booking-widget-container{ 
+    .booking-widget-container{ 
         padding: 0;  
         @include sm {            
             top: -80px;     

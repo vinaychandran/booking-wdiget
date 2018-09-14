@@ -1,18 +1,29 @@
 ﻿//This javascript file contains methods used by the booking widget
 
-var MystaysRangeArray = [];
+
 
 
 var MystaysBookingWidget = {
-    CurrentEventTarget: null,
 
+    //Contains all the methods that are used throughout the module
     Common: {
-        //The language used 
-        SelectedLanguage: '',
-        BookingWidgetContainerID:'',
+        //Array to hold all the booking widgets
+        MystaysRangeArray: [],
+
+        //A variable used to hold the event target when user performs any event(This variable  is used to distingish if the event occured in the first or the second booking widget)
+        CurrentEventTarget: null,
+
+
+        //The language used in the widget
+        SelectedLanguage: null,
+
+        //Used to store the original ID of the container for the booking widget
+        BookingWidgetContainerID: null,
+
+        //**This method is used to identify the correct container or booking widget by using the value in the 'MystaysBookingWidget.Common.CurrentEventTarget
         BookingWidgetContainer: function () {
-            if (MystaysBookingWidget.CurrentEventTarget != null) {
-                var bookingWidget = MystaysBookingWidget.CurrentEventTarget.closest('.booking-widget-container');
+            if (MystaysBookingWidget.Common.CurrentEventTarget != null) {
+                var bookingWidget = MystaysBookingWidget.Common.CurrentEventTarget.closest('.booking-widget-container');
                 if (bookingWidget) {
                     return '#' + bookingWidget.id+' ';
                 } else {
@@ -22,7 +33,22 @@ var MystaysBookingWidget = {
                 return MystaysBookingWidget.Common.BookingWidgetContainerID;
             }
         },
-        BookingWidgetContainerElement: function () {
+
+        //Identifying the correct range object based on the MystaysBookingWidget.Common.BookingWidgetContainer()
+        CurrentRangeObject: function CurrentRangeObject() {
+            var container = MystaysBookingWidget.Common.BookingWidgetContainer();
+
+            if (container.indexOf('one') > -1) {
+                return MystaysBookingWidget.Common.MystaysRangeArray[0];
+            }
+
+            if (container.indexOf('two') > -1) {
+                return MystaysBookingWidget.Common.MystaysRangeArray[1];
+            }
+        },
+
+        //Method to identify the container element
+        BookingWidgetContainerElement: function BookingWidgetContainerElement() {
             if (MystaysBookingWidget.Common.BookingWidgetContainer() === '') {
                 return document;
             }
@@ -36,6 +62,8 @@ var MystaysBookingWidget = {
             //    document.getElementById('booking-widget-module').classList.add('mystays-bookingwidget-visible');
             //}
         },
+
+
         //Method to add custom logic when the calendar is hidden
         HideOverlayLogic: function HideOverlayLogic() {
             //if (!MystaysBookingWidget.Helper.IsMobile()) {
@@ -43,6 +71,8 @@ var MystaysBookingWidget = {
             //    document.getElementById('booking-widget-module').classList.remove('mystays-bookingwidget-visible');
             //}
         },
+
+
         //Function to make an ajax call
         AjaxCall: function AjaxCall(url, data, method, synchronous, successCallBack, failureCallBack) {
             if (window.XMLHttpRequest) {
@@ -73,6 +103,8 @@ var MystaysBookingWidget = {
 
         }
     },
+
+
     //All generic helper methods
     Helper: {
 
@@ -88,7 +120,7 @@ var MystaysBookingWidget = {
 
             for (var i = 0; i < bookingBoxes.length; i++) {
                 bookingBoxes[i].addEventListener('click', function (e) {
-                    MystaysBookingWidget.CurrentEventTarget = e.target;
+                    MystaysBookingWidget.Common.CurrentEventTarget = e.target;
                     MystaysBookingWidget.Common.ShowOverlayLogic();
                 })
             }
@@ -99,7 +131,7 @@ var MystaysBookingWidget = {
         ClickOutside: function ClickOutside() {
             if (!MystaysBookingWidget.Helper.IsMobile()) {
                 document.addEventListener('click', function (e) {
-                    MystaysBookingWidget.CurrentEventTarget = e.target;
+                    MystaysBookingWidget.Common.CurrentEventTarget = e.target;
                     var container = document.querySelector(MystaysBookingWidget.Common.BookingWidgetContainer());
                     //var bookingBoxes = document.querySelectorAll(MystaysBookingWidget.Common.BookingWidgetContainer() + ' .booking-box');
                     var promocontainer = document.querySelector(MystaysBookingWidget.Common.BookingWidgetContainer() + ' .booking-box.promocode');
@@ -108,8 +140,8 @@ var MystaysBookingWidget = {
                     //Check if user selected promobox or button click
                     var IsPromoCodeBookNowContainer = ((((promocontainer === e.target) || MystaysBookingWidget.Helper.IsDescendant(promocontainer, e.target))) || (((booknowbuttoncontainer === e.target) || MystaysBookingWidget.Helper.IsDescendant(booknowbuttoncontainer, e.target))));
                     if ((!(container === e.target) && !MystaysBookingWidget.Helper.IsDescendant(container, e.target)) || IsPromoCodeBookNowContainer) {
-                        if (MystaysRangeObject) {
-                            MystaysRangeObject.hide();
+                        if (MystaysBookingWidget.Common.CurrentRangeObject()) {
+                            MystaysBookingWidget.Common.CurrentRangeObject().hide();
                         }
                         MystaysBookingWidget.GuestsWidget.ShowGuestSection(false);
                         MystaysBookingWidget.HotelSearch.ShowHotelList(false);
@@ -223,7 +255,9 @@ var MystaysBookingWidget = {
         }
 
     },
-    //All functionalities related to the booking widget calendar
+
+
+    //All functionalities related to the booking widget calendar/range
     BookingCalendar: {
 
         Constants: {
@@ -650,7 +684,7 @@ var MystaysBookingWidget = {
                     var backbutton = updateContainer.querySelector(calendarContainer + ' .mystays-bookingwidget-clr-btn');
 
                     backbutton.addEventListener('click', function (e) {
-                        MystaysBookingWidget.CurrentEventTarget = e.target;
+                        MystaysBookingWidget.Common.CurrentEventTarget = e.target;
                         MystaysBookingWidget.BookingCalendar.CustomHTMLEvents.AddHideEvent();
                     });
                 }
@@ -707,14 +741,14 @@ var MystaysBookingWidget = {
 
             CalendarCustomFunctions: function CalendarCustomFunctions(inst) {
                 document.querySelector(MystaysBookingWidget.Common.BookingWidgetContainer() + MystaysBookingWidget.BookingCalendar.Constants.CalendarBody()).addEventListener('mouseout', function (e) {
-                    MystaysBookingWidget.CurrentEventTarget = e.target;
+                    MystaysBookingWidget.Common.CurrentEventTarget = e.target;
                     MystaysBookingWidget.BookingCalendar.CustomHTML.RemoveIntermediateHoverLogic();
                     MystaysBookingWidget.BookingCalendar.CustomHTML.SetFooterText(inst.startVal, inst.endVal, null, false);
                 });
             },
             //Hiding the calendar on back button press
             AddHideEvent: function () {
-                MystaysRangeObject.hide();
+                MystaysBookingWidget.Common.CurrentRangeObject().hide();
             },
             //Method to add a hover event to each date which will add an intermediate class('mystays-hover-intermediate') in the 'MystaysBookingWidget.BookingCalendar.CustomHTML.CheckHover' method
             AddIntermediateHoverLogic: function (inst) {
@@ -725,7 +759,7 @@ var MystaysBookingWidget = {
                     dateList[i].classList.add('mystays-selected-date');
                     if (!MystaysBookingWidget.Helper.IsMobile()) {
                         dateList[i].addEventListener('mouseover', function (e, args) {
-                            MystaysBookingWidget.CurrentEventTarget = e.target;
+                            MystaysBookingWidget.Common.CurrentEventTarget = e.target;
                             MystaysBookingWidget.BookingCalendar.CustomHTML.CheckHover(this, document.querySelectorAll(MystaysBookingWidget.BookingCalendar.Constants.MystaysSelectedDate()), inst);
                         });
                     }
@@ -769,7 +803,7 @@ var MystaysBookingWidget = {
             MystaysBookingWidget.BookingCalendar.CustomHTML.RepositionSelectorIndicator(false);
 
             //Disabling all dates previous to check in date when user selects checkout date
-            MystaysBookingWidget.BookingCalendar.CustomHTML.DisablePreviousDates(MystaysRangeObject.startVal.split('|')[4]);
+            MystaysBookingWidget.BookingCalendar.CustomHTML.DisablePreviousDates(MystaysBookingWidget.Common.CurrentRangeObject().startVal.split('|')[4]);
 
         },
         CheckInOutButtonHandlers: function () {
@@ -777,11 +811,11 @@ var MystaysBookingWidget = {
             var checkoutbtn = document.querySelector(MystaysBookingWidget.BookingCalendar.Constants.CheckoutButton());
 
             checkinbtn.addEventListener("click", function (e) {
-                MystaysBookingWidget.CurrentEventTarget = e.target;
+                MystaysBookingWidget.Common.CurrentEventTarget = e.target;
                 MystaysBookingWidget.BookingCalendar.CheckInButtonHandler();
             });
             checkoutbtn.addEventListener("click", function (e) {
-                MystaysBookingWidget.CurrentEventTarget = e.target;
+                MystaysBookingWidget.Common.CurrentEventTarget = e.target;
                 MystaysBookingWidget.BookingCalendar.CheckOutButtonHandler();
             });
 
@@ -866,11 +900,7 @@ var MystaysBookingWidget = {
                         MystaysBookingWidget.BookingCalendar.CustomHTML.RepositionSelectorIndicator(false);
                     }
 
-                    //if (event.active === 'end') {
-                    //    if (MystaysBookingWidget.Helper.IsMobile()) {
-                    //        MystaysBookingWidget.BookingCalendar.CustomHTML.DisablePreviousDates(inst.startVal.split('|')[4]);
-                    //    }
-                    //}
+                   
                 },
                 onMarkupReady: function (event, inst) {
                     MystaysBookingWidget.BookingCalendar.CustomHTML.SetCustomerCalendarHeader(event.target);
@@ -891,7 +921,7 @@ var MystaysBookingWidget = {
                 },
                 onShow: function (event, inst) {
                     //TODO set the currentEvent to the calendar that is selected
-                    MystaysBookingWidget.CurrentEventTarget = event.target;
+                    MystaysBookingWidget.Common.CurrentEventTarget = inst.element;
                     MystaysBookingWidget.BookingCalendar.CalendarShown = true;
 
 
@@ -916,7 +946,7 @@ var MystaysBookingWidget = {
                     MystaysBookingWidget.BookingCalendar.CustomHTML.SetCustomMonthHeader();
                 },
                 onSetDate: function (event, inst) {
-                    //A variable to check which date is currently active(start or end)
+                    MystaysBookingWidget.Common.CurrentEventTarget = inst.element;
 
                     MystaysBookingWidget.BookingCalendar.Constants.CurrentStatus = event.active;
 
@@ -945,6 +975,8 @@ var MystaysBookingWidget = {
         }
 
     },
+
+
     //Functionalities related to the guests section
     GuestsWidget: {
         Constants: {
@@ -1204,17 +1236,17 @@ var MystaysBookingWidget = {
 
                 if (addbuttons[i].parentElement.contains(roomsElement)) {
                     addbuttons[i].addEventListener('click', function (e) {
-                        MystaysBookingWidget.CurrentEventTarget = e.target;
+                        MystaysBookingWidget.Common.CurrentEventTarget = e.target;
                         MystaysBookingWidget.GuestsWidget.RoomsButtonAdd(e);
                     });
                 } else if (addbuttons[i].parentElement.contains(AdultElement)) {
                     addbuttons[i].addEventListener('click', function (e) {
-                        MystaysBookingWidget.CurrentEventTarget = e.target;
+                        MystaysBookingWidget.Common.CurrentEventTarget = e.target;
                         MystaysBookingWidget.GuestsWidget.AdultButtonAdd(e);
                     });
                 } else if (addbuttons[i].parentElement.contains(ChildElement)) {
                     addbuttons[i].addEventListener('click', function (e) {
-                        MystaysBookingWidget.CurrentEventTarget = e.target;
+                        MystaysBookingWidget.Common.CurrentEventTarget = e.target;
                         MystaysBookingWidget.GuestsWidget.ChildButtonAdd(e);
                     });
                 }
@@ -1223,17 +1255,17 @@ var MystaysBookingWidget = {
             for (var i = 0; i < removebuttons.length; i++) {
                 if (removebuttons[i].parentElement.contains(roomsElement)) {
                     removebuttons[i].addEventListener('click', function (e) {
-                        MystaysBookingWidget.CurrentEventTarget = e.target;
+                        MystaysBookingWidget.Common.CurrentEventTarget = e.target;
                         MystaysBookingWidget.GuestsWidget.RoomsButtonRemove(e);
                     });
                 } else if (removebuttons[i].parentElement.contains(AdultElement)) {
                     removebuttons[i].addEventListener('click', function (e) {
-                        MystaysBookingWidget.CurrentEventTarget = e.target;
+                        MystaysBookingWidget.Common.CurrentEventTarget = e.target;
                         MystaysBookingWidget.GuestsWidget.AdultButtonRemove(e);
                     });
                 } else if (removebuttons[i].parentElement.contains(ChildElement)) {
                     removebuttons[i].addEventListener('click', function (e) {
-                        MystaysBookingWidget.CurrentEventTarget = e.target;
+                        MystaysBookingWidget.Common.CurrentEventTarget = e.target;
                         MystaysBookingWidget.GuestsWidget.ChildButtonRemove(e)
                     });
                 }
@@ -1242,7 +1274,7 @@ var MystaysBookingWidget = {
             var backButton = document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.GuestWidgetBackButton());
 
             backButton.addEventListener('click', function (e) {
-                MystaysBookingWidget.CurrentEventTarget = e.target;
+                MystaysBookingWidget.Common.CurrentEventTarget = e.target;
                 MystaysBookingWidget.GuestsWidget.ShowGuestSection(false);
                 //MystaysBookingWidget.Common.HideOverlayLogic();
             })
@@ -1253,10 +1285,10 @@ var MystaysBookingWidget = {
         //Method invoked when user clicks on the guest button
         GuestButtonContainerClick: function GuestButtonContainerClick() {
             document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.GuestButtonContainer()).addEventListener('click', function (e) {
-                MystaysBookingWidget.CurrentEventTarget = e.target;
+                MystaysBookingWidget.Common.CurrentEventTarget = e.target;
                 //Hide calendar
-                if (MystaysRangeObject) {
-                    MystaysRangeObject.hide();
+                if (MystaysBookingWidget.Common.CurrentRangeObject()) {
+                    MystaysBookingWidget.Common.CurrentRangeObject().hide();
                     MystaysBookingWidget.HotelSearch.ShowHotelList(false);
                 }
                 MystaysBookingWidget.GuestsWidget.ShowGuestSection(true);
@@ -1267,7 +1299,7 @@ var MystaysBookingWidget = {
         //Close or back button to close the guest widget
         GuestButtonCloseClick: function () {
             document.querySelector(MystaysBookingWidget.GuestsWidget.Constants.GuestButtonClose()).addEventListener('click', function (e) {
-                MystaysBookingWidget.CurrentEventTarget = e.target;
+                MystaysBookingWidget.Common.CurrentEventTarget = e.target;
 
                 MystaysBookingWidget.GuestsWidget.ShowGuestSection(false);
                 MystaysBookingWidget.Common.HideOverlayLogic();
@@ -1280,6 +1312,8 @@ var MystaysBookingWidget = {
             MystaysBookingWidget.GuestsWidget.ButtonClick();
         }
     },
+
+
     //Hotel Search
     HotelSearch: {
         Constants: {
@@ -1378,7 +1412,7 @@ var MystaysBookingWidget = {
 
             HotelSearchFocus: function HotelSearchFocus() {
                 document.querySelector(MystaysBookingWidget.HotelSearch.Constants.SearchInputClass()).addEventListener('focus', function (e, args) {
-                    MystaysBookingWidget.CurrentEventTarget = e.target;
+                    MystaysBookingWidget.Common.CurrentEventTarget = e.target;
 
                     //Removing the error class
                     this.classList.remove(MystaysBookingWidget.HotelSearch.Constants.HotelSearchError());
@@ -1388,7 +1422,7 @@ var MystaysBookingWidget = {
                     MystaysBookingWidget.HotelSearch.ShowHotelList(true);
 
                     //Hiding calendar object if it is shown
-                    MystaysRangeObject.hide();
+                    MystaysBookingWidget.Common.CurrentRangeObject().hide();
 
                     //Hiding guests section if it is shown
                     MystaysBookingWidget.GuestsWidget.ShowGuestSection(false);
@@ -1405,7 +1439,7 @@ var MystaysBookingWidget = {
             },
             HotelSearchKeyUp: function HotelSearchKeyUp() {
                 document.querySelector(MystaysBookingWidget.HotelSearch.Constants.SearchInputClass()).addEventListener('keyup', function (e, args) {
-                    MystaysBookingWidget.CurrentEventTarget = e.target;
+                    MystaysBookingWidget.Common.CurrentEventTarget = e.target;
                     var filteredHotelsList = MystaysBookingWidget.HotelSearch.LoadSearchResults(e.target.value);
 
                     MystaysBookingWidget.HotelSearch.BindHotelsCityData(filteredHotelsList);
@@ -1414,7 +1448,7 @@ var MystaysBookingWidget = {
 
             HotelSearchKeyDown: function HotelSearchKeyDown() {
                 document.querySelector(MystaysBookingWidget.HotelSearch.Constants.SearchInputClass()).addEventListener('keydown', function (e, args) {
-                    MystaysBookingWidget.CurrentEventTarget = e.target;
+                    MystaysBookingWidget.Common.CurrentEventTarget = e.target;
                     if (e.which == 40) {
                         e.preventDefault();
                         MystaysBookingWidget.Common.BookingWidgetContainerElement().querySelector(MystaysBookingWidget.HotelSearch.Constants.HotelBindList() + ' .' + MystaysBookingWidget.HotelSearch.Constants.HotelSelectItem()).classList.add('active');
@@ -1433,7 +1467,7 @@ var MystaysBookingWidget = {
                     var listItem = MystaysBookingWidget.Common.BookingWidgetContainerElement().querySelectorAll(MystaysBookingWidget.HotelSearch.Constants.HotelBindList() + ' .' + MystaysBookingWidget.HotelSearch.Constants.HotelSelectItem())[i];
 
                     listItem.addEventListener('keydown', function (e, args) {
-                        MystaysBookingWidget.CurrentEventTarget = e.target;
+                        MystaysBookingWidget.Common.CurrentEventTarget = e.target;
 
                         e.preventDefault();
                         e.target.classList.remove('active');
@@ -1476,7 +1510,7 @@ var MystaysBookingWidget = {
                     var listItem = MystaysBookingWidget.Common.BookingWidgetContainerElement().querySelectorAll(MystaysBookingWidget.HotelSearch.Constants.HotelBindList() + ' .' + MystaysBookingWidget.HotelSearch.Constants.HotelSelectItem())[i];
 
                     listItem.addEventListener('click', function (e, args) {
-                        MystaysBookingWidget.CurrentEventTarget = e.target;
+                        MystaysBookingWidget.Common.CurrentEventTarget = e.target;
 
                         e.preventDefault();
                         e.target.classList.remove('active');
@@ -1698,7 +1732,7 @@ var MystaysBookingWidget = {
             MystaysBookingWidget.HotelSearch.CustomHTMLEvents.HotelItemClick();
             bindList.parentNode.ShowElement();
 
-            //MystaysRangeObject.show();
+            
         },
 
         //Fetch hotel and city details from API
@@ -1848,6 +1882,8 @@ var MystaysBookingWidget = {
         }
     },
 
+
+    //The functionality related to the book now buttons
     BookNowButton: {
         Constants: {
             BooknowButton: function BooknowButton() {
@@ -1883,7 +1919,7 @@ var MystaysBookingWidget = {
             //Event fired when user clicks the book now button
             BooknowButtonClick: function BooknowButtonClick() {
                 document.querySelector(MystaysBookingWidget.BookNowButton.Constants.BooknowButton()).addEventListener('click', function (e) {
-                    MystaysBookingWidget.CurrentEventTarget = e.target;
+                    MystaysBookingWidget.Common.CurrentEventTarget = e.target;
                     if (MystaysBookingWidget.BookNowButton.ValidateBooknowForm()) {
                         MystaysBookingWidget.BookNowButton.BookNow();
                     }
@@ -1901,7 +1937,7 @@ var MystaysBookingWidget = {
                 hotelSearchInput.classList.add(MystaysBookingWidget.HotelSearch.Constants.HotelSearchError());
                 formOk = false;
             }
-            if (MystaysRangeObject == null) {
+            if (MystaysBookingWidget.Common.CurrentRangeObject() == null) {
                 formOk = false;
             }
 
@@ -1926,12 +1962,12 @@ var MystaysBookingWidget = {
                 var bookingengineurl = MystaysBookingWidget.BookNowButton.Constants.RWithURL;
 
                 bookingengineurl = bookingengineurl.replace('{rwithbookingid}', hotelcity.RWIthCode);
-                bookingengineurl = bookingengineurl.replace('{checkinyear}', MystaysRangeObject._startDate.getFullYear());
-                bookingengineurl = bookingengineurl.replace('{checkinmonth}', MystaysRangeObject._startDate.getMonth() + 1);
-                bookingengineurl = bookingengineurl.replace('{checkinday}', MystaysRangeObject._startDate.getDate());
-                bookingengineurl = bookingengineurl.replace('{checkoutyear}', MystaysRangeObject._endDate.getFullYear());
-                bookingengineurl = bookingengineurl.replace('{checkoutmonth}', MystaysRangeObject._endDate.getMonth() + 1);
-                bookingengineurl = bookingengineurl.replace('{checkoutday}', MystaysRangeObject._endDate.getDate());
+                bookingengineurl = bookingengineurl.replace('{checkinyear}', MystaysBookingWidget.Common.CurrentRangeObject()._startDate.getFullYear());
+                bookingengineurl = bookingengineurl.replace('{checkinmonth}', MystaysBookingWidget.Common.CurrentRangeObject()._startDate.getMonth() + 1);
+                bookingengineurl = bookingengineurl.replace('{checkinday}', MystaysBookingWidget.Common.CurrentRangeObject()._startDate.getDate());
+                bookingengineurl = bookingengineurl.replace('{checkoutyear}', MystaysBookingWidget.Common.CurrentRangeObject()._endDate.getFullYear());
+                bookingengineurl = bookingengineurl.replace('{checkoutmonth}', MystaysBookingWidget.Common.CurrentRangeObject()._endDate.getMonth() + 1);
+                bookingengineurl = bookingengineurl.replace('{checkoutday}', MystaysBookingWidget.Common.CurrentRangeObject()._endDate.getDate());
                 bookingengineurl = bookingengineurl.replace('{adults}', adultElement.getAttribute('data-count'));
                 bookingengineurl = bookingengineurl.replace('{children}', childrenElement.getAttribute('data-count'));
                 bookingengineurl = bookingengineurl.replace('{rooms}', roomsElement.getAttribute('data-count'));
@@ -1946,16 +1982,16 @@ var MystaysBookingWidget = {
 
                     bookingengineurl = bookingengineurl.replace('{travelclickbookingid}', hotelcity.TravelClickBookingID);
                     bookingengineurl = bookingengineurl.replace('{travelclickbookingid}', hotelcity.TravelClickBookingID);
-                    bookingengineurl = bookingengineurl.replace('{checkindate}', MystaysRangeObject.startVal.split('|')[3]);
-                    bookingengineurl = bookingengineurl.replace('{checkoutdate}', MystaysRangeObject.endVal.split('|')[3]);
+                    bookingengineurl = bookingengineurl.replace('{checkindate}', MystaysBookingWidget.Common.CurrentRangeObject().startVal.split('|')[3]);
+                    bookingengineurl = bookingengineurl.replace('{checkoutdate}', MystaysBookingWidget.Common.CurrentRangeObject().endVal.split('|')[3]);
                     bookingengineurl = bookingengineurl.replace('{adults}', adultElement.getAttribute('data-count'));
                     bookingengineurl = bookingengineurl.replace('{children}', childrenElement.getAttribute('data-count'));
                     bookingengineurl = bookingengineurl.replace('{rooms}', roomsElement.getAttribute('data-count'));
                 } else if (hotelcity.Type === 'City') {
                     var bookingengineurl = MystaysBookingWidget.BookNowButton.Constants.TravelClickAreaURL;
                     bookingengineurl = bookingengineurl.replace('{areas}', hotelcity.TargetCities);
-                    bookingengineurl = bookingengineurl.replace('{checkindate}', MystaysRangeObject.startVal.split('|')[3]);
-                    bookingengineurl = bookingengineurl.replace('{checkoutdate}', MystaysRangeObject.endVal.split('|')[3]);
+                    bookingengineurl = bookingengineurl.replace('{checkindate}', MystaysBookingWidget.Common.CurrentRangeObject().startVal.split('|')[3]);
+                    bookingengineurl = bookingengineurl.replace('{checkoutdate}', MystaysBookingWidget.Common.CurrentRangeObject().endVal.split('|')[3]);
                     bookingengineurl = bookingengineurl.replace('{adults}', adultElement.getAttribute('data-count'));
                     bookingengineurl = bookingengineurl.replace('{children}', childrenElement.getAttribute('data-count'));
                     bookingengineurl = bookingengineurl.replace('{rooms}', roomsElement.getAttribute('data-count'));
@@ -2005,6 +2041,7 @@ var MystaysBookingWidget = {
         }
     },
 
+
     //Main initialization function
     Loaded: function Loaded(selectedLanguage, FilterCities, BookingWidgetContainer) {
         MystaysBookingWidget.Common.SelectedLanguage = selectedLanguage;
@@ -2014,8 +2051,8 @@ var MystaysBookingWidget = {
         MystaysBookingWidget.HotelSearch.Constants.FilterCities = FilterCities;
 
         MystaysBookingWidget.Helper.Loaded();
-        MystaysRangeObject = MystaysBookingWidget.BookingCalendar.Loaded(BookingWidgetContainer);
-        MystaysRangeArray.push(MystaysRangeObject);
+        MystaysRangeObj = MystaysBookingWidget.BookingCalendar.Loaded(BookingWidgetContainer);
+        MystaysBookingWidget.Common.MystaysRangeArray.push(MystaysRangeObj);
         MystaysBookingWidget.GuestsWidget.Loaded();
         MystaysBookingWidget.HotelSearch.Loaded();
         MystaysBookingWidget.BookNowButton.Loaded();
@@ -2024,13 +2061,7 @@ var MystaysBookingWidget = {
 
 
 
-document.addEventListener("DOMContentLoaded", function () {
-
-    var one = MystaysBookingWidget;
-    var two = MystaysBookingWidget;
-    one.Loaded('en', true, '#booking-widget-container');
-    two.Loaded('en', true, '#booking-widget-containertwo');
-
-
-    //MystaysBookingWidget.Loaded('en', true, '#booking-widget-containertwo');
+document.addEventListener("DOMContentLoaded", function () {    
+    MystaysBookingWidget.Loaded('en', true, '#booking-widget-container-one');
+    MystaysBookingWidget.Loaded('en', true, '#booking-widget-container-two');
 });

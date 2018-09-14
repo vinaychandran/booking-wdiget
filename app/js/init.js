@@ -11,8 +11,13 @@ var MystaysBookingWidget = {
         SelectedLanguage: '',
         BookingWidgetContainerID:'',
         BookingWidgetContainer: function () {
-            if (MystaysBookingWidget.CurrentEventTarget!=null) {
-                return '#' + MystaysBookingWidget.CurrentEventTarget.closest('.container').id;
+            if (MystaysBookingWidget.CurrentEventTarget != null) {
+                var bookingWidget = MystaysBookingWidget.CurrentEventTarget.closest('.booking-widget-container');
+                if (bookingWidget) {
+                    return '#' + bookingWidget.id+' ';
+                } else {
+                    return 'body';
+                }
             } else {
                 return MystaysBookingWidget.Common.BookingWidgetContainerID;
             }
@@ -74,7 +79,7 @@ var MystaysBookingWidget = {
         Loaded: function Loaded() {
             MystaysBookingWidget.Helper.LoadExtensions();
             MystaysBookingWidget.Helper.ShowOverlayConatiner();
-            //MystaysBookingWidget.Helper.ClickOutside();
+            MystaysBookingWidget.Helper.ClickOutside();
         },
 
         //Function to show overlay conatiner when selecting each of the booking boxes

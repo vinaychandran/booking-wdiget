@@ -1,8 +1,4 @@
 ﻿//This javascript file contains methods used by the booking widget
-
-
-
-
 var MystaysBookingWidget = {
 
     //Contains all the methods that are used throughout the module

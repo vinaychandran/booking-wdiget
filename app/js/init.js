@@ -37,10 +37,12 @@ var MystaysBookingWidget = {
             if (container.indexOf('one') > -1) {
                 return MystaysBookingWidget.Common.MystaysRangeArray[0];
             }
-
-            if (container.indexOf('two') > -1) {
+            else if (container.indexOf('two') > -1) {
                 return MystaysBookingWidget.Common.MystaysRangeArray[1];
             }
+            //else {
+            //    return MystaysBookingWidget.Common.MystaysRangeArray[0];
+            //}
         },
 
         //Method to identify the container element
@@ -53,19 +55,19 @@ var MystaysBookingWidget = {
 
         //Method to add custom logic when the calendar is shown
         ShowOverlayLogic: function ShowOverlayLogic() {
-            //if (!MystaysBookingWidget.Helper.IsMobile()) {
-            //    document.getElementById('booking-widget-overlay').ShowElement();
-            //    document.getElementById('booking-widget-module').classList.add('mystays-bookingwidget-visible');
-            //}
+            if (!MystaysBookingWidget.Helper.IsMobile()) {
+                document.getElementById('booking-widget-overlay').ShowElement();
+                document.getElementsByClassName('booking-widget-module')[0].classList.add('mystays-bookingwidget-visible');
+            }
         },
 
 
         //Method to add custom logic when the calendar is hidden
         HideOverlayLogic: function HideOverlayLogic() {
-            //if (!MystaysBookingWidget.Helper.IsMobile()) {
-            //    document.getElementById('booking-widget-overlay').HideElement();
-            //    document.getElementById('booking-widget-module').classList.remove('mystays-bookingwidget-visible');
-            //}
+            if (!MystaysBookingWidget.Helper.IsMobile()) {
+                document.getElementById('booking-widget-overlay').HideElement();
+                document.getElementsByClassName('booking-widget-module')[0].classList.remove('mystays-bookingwidget-visible');
+            }
         },
 
 
@@ -116,7 +118,6 @@ var MystaysBookingWidget = {
 
             for (var i = 0; i < bookingBoxes.length; i++) {
                 bookingBoxes[i].addEventListener('click', function (e) {
-                    MystaysBookingWidget.Common.CurrentEventTarget = e.target;
                     MystaysBookingWidget.Common.ShowOverlayLogic();
                 })
             }
@@ -127,8 +128,8 @@ var MystaysBookingWidget = {
         ClickOutside: function ClickOutside() {
             if (!MystaysBookingWidget.Helper.IsMobile()) {
                 document.addEventListener('click', function (e) {
-                    MystaysBookingWidget.Common.CurrentEventTarget = e.target;
-                    var container = document.querySelector(MystaysBookingWidget.Common.BookingWidgetContainer());
+                    
+                    var container = document.querySelector(MystaysBookingWidget.Common.BookingWidgetContainerID);
                     //var bookingBoxes = document.querySelectorAll(MystaysBookingWidget.Common.BookingWidgetContainer() + ' .booking-box');
                     var promocontainer = document.querySelector(MystaysBookingWidget.Common.BookingWidgetContainer() + ' .booking-box.promocode');
                     var booknowbuttoncontainer = document.querySelector(MystaysBookingWidget.Common.BookingWidgetContainer() + ' .booking-box.search-button');
@@ -1330,7 +1331,7 @@ var MystaysBookingWidget = {
             },
 
             HotelSearchError: function () {
-                return 'error';
+                return 'form-input-validation-error';
             },
 
             //Footer section
@@ -1928,7 +1929,7 @@ var MystaysBookingWidget = {
             var formOk = true;
             var hotelSearchInput = document.querySelector(MystaysBookingWidget.HotelSearch.Constants.SearchInputClass());
 
-            if (hotelSearchInput.getAttribute('data-HotelCity') == null) {
+            if (hotelSearchInput.getAttribute('data-HotelCity') == null || hotelSearchInput.value==='') {
 
                 hotelSearchInput.classList.add(MystaysBookingWidget.HotelSearch.Constants.HotelSearchError());
                 formOk = false;
@@ -2040,18 +2041,21 @@ var MystaysBookingWidget = {
 
     //Main initialization function
     Loaded: function Loaded(selectedLanguage, FilterCities, BookingWidgetContainer) {
-        MystaysBookingWidget.Common.SelectedLanguage = selectedLanguage;
+        if (document.querySelector(BookingWidgetContainer)) {
+            MystaysBookingWidget.Common.SelectedLanguage = selectedLanguage;
 
-        //Adding additional space(' ') just for safety
-        MystaysBookingWidget.Common.BookingWidgetContainerID = BookingWidgetContainer+' ';
-        MystaysBookingWidget.HotelSearch.Constants.FilterCities = FilterCities;
+            //Adding additional space(' ') just for safety
+            MystaysBookingWidget.Common.BookingWidgetContainerID = BookingWidgetContainer + ' ';
+            MystaysBookingWidget.HotelSearch.Constants.FilterCities = FilterCities;
 
-        MystaysBookingWidget.Helper.Loaded();
-        MystaysRangeObj = MystaysBookingWidget.BookingCalendar.Loaded(BookingWidgetContainer);
-        MystaysBookingWidget.Common.MystaysRangeArray.push(MystaysRangeObj);
-        MystaysBookingWidget.GuestsWidget.Loaded();
-        MystaysBookingWidget.HotelSearch.Loaded();
-        MystaysBookingWidget.BookNowButton.Loaded();
+            MystaysBookingWidget.Helper.Loaded();
+            MystaysRangeObj = MystaysBookingWidget.BookingCalendar.Loaded(BookingWidgetContainer);
+            MystaysBookingWidget.Common.MystaysRangeArray.push(MystaysRangeObj);
+            MystaysBookingWidget.GuestsWidget.Loaded();
+            MystaysBookingWidget.HotelSearch.Loaded();
+            MystaysBookingWidget.BookNowButton.Loaded();
+        }
+        
     }
 };
 

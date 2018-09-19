@@ -163,7 +163,18 @@ var MystaysBookingWidget = {
 
             };
             //Method to change the date format (IOS cannot read default format)
-            Object.prototype.ChangeDateFormat = function () {
+            String.prototype.ChangeDateFormat = function () {
+                //If it is already a date then ignore
+                if (!Date.parse(this)) {
+                    return this.replace(/-/g, '/');
+                }
+
+                return this;
+            };
+
+
+            //Method to change the date format (IOS cannot read default format)
+            Date.prototype.ChangeDateFormat = function () {
                 //If it is already a date then ignore
                 if (!Date.parse(this)) {
                     return this.replace(/-/g, '/');
@@ -2063,5 +2074,5 @@ var MystaysBookingWidget = {
 
 document.addEventListener("DOMContentLoaded", function () {    
     MystaysBookingWidget.Loaded('en', true, '#booking-widget-container-one');
-    MystaysBookingWidget.Loaded('en', true, '#booking-widget-container-two');
+    //MystaysBookingWidget.Loaded('en', true, '#booking-widget-container-two');
 });

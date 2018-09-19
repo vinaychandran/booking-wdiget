@@ -1678,7 +1678,7 @@ var MystaysBookingWidget = {
                     bindListItem.setAttribute('tabindex', i);
 
                     bindListItem.setAttribute('data-Type', cityList[i].Type);
-                    bindListItem.setAttribute('data-Name', cityList[i].Name);
+                    bindListItem.setAttribute('data-Name', (cityList[i].Name ? cityList[i].HotelName));
                     bindListItem.setAttribute('data-TargetCities', cityList[i].Target);
                     bindListItem.setAttribute('data-Link', cityList[i].Link);
                     bindListItem.setAttribute('data-HotelSearchNames', cityList[i].HotelSearchNames);
@@ -1831,11 +1831,11 @@ var MystaysBookingWidget = {
                         for (var i = 0; i < cityList.length; i++) {
                             selectedCity = {};
 
-                            selectedCity.Type = cityList[i].getAttribute('target-type');
-                            selectedCity.HotelName = cityList[i].innerHTML;
+                            selectedCity.Type = 'City';
+                            selectedCity.Name = cityList[i].innerHTML;
                             selectedCity.Target = cityList[i].getAttribute('target');
                             selectedCity.HotelSearchNames = cityList[i].getAttribute('names');
-                            selectedCity.HotelLink = cityList[i].getAttribute('hotel-url');
+                            selectedCity.Link = cityList[i].getAttribute('hotel-url');
                             selectedCity.HotelCity = cityList[i].getAttribute('target-city');
                             selectedCity.ItemID = cityList[i].getAttribute('item-id');
 
@@ -1852,10 +1852,10 @@ var MystaysBookingWidget = {
                     var hotelList = footerHotelListContainer.querySelectorAll(MystaysBookingWidget.HotelSearch.Constants.FooterHotelItemSelector())
                     for (var i = 0; i < hotelList.length; i++) {
                         selectedHotel = {};
-                        selectedHotel.HotelName = hotelList[i].innerHTML;
-                        selectedHotel.Type = hotelList[i].getAttribute('target-type');
+                        selectedHotel.Name = hotelList[i].innerHTML;
+                        selectedHotel.Type = 'Hotel';
                         selectedHotel.HotelSearchNames = hotelList[i].getAttribute('names');
-                        selectedHotel.HotelLink = hotelList[i].getAttribute('hotel-url');
+                        selectedHotel.Link = hotelList[i].getAttribute('hotel-url');
                         selectedHotel.UseTravelClick = hotelList[i].getAttribute('use-travel-click');;
                         selectedHotel.TravelClickBookingID = hotelList[i].getAttribute('travel-click_booking_id');
                         selectedHotel.RWIthCode = hotelList[i].getAttribute('target');

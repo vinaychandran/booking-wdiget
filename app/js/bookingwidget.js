@@ -1678,7 +1678,7 @@ var MystaysBookingWidget = {
                     bindListItem.setAttribute('tabindex', i);
 
                     bindListItem.setAttribute('data-Type', cityList[i].Type);
-                    bindListItem.setAttribute('data-Name', (cityList[i].Name ? cityList[i].HotelName));
+                    bindListItem.setAttribute('data-Name', cityList[i].Name);
                     bindListItem.setAttribute('data-TargetCities', cityList[i].Target);
                     bindListItem.setAttribute('data-Link', cityList[i].Link);
                     bindListItem.setAttribute('data-HotelSearchNames', cityList[i].HotelSearchNames);

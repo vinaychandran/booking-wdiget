@@ -1342,7 +1342,7 @@ var MystaysBookingWidget = {
             },
 
             HotelSearchError: function () {
-                return 'form-input-validation-error';
+                return 'bookingwidget-search-error';
             },
 
             //Footer section

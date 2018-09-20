@@ -102,31 +102,34 @@ body{
 	margin: 0 auto;
 }
 
-.mystays-booking-widget{
-    &.mystays-bookingwidget-visible{
+.mystays-booking-widget {
+    &.mystays-bookingwidget-visible {
         @include sm {
-            background: #39435b;        
+            background: #39435b;
         }
-        
-    }
-    padding: 15px 7px 10px;   
-    background: $cal-primary-bg;
-    @include sm {
-        padding: 35px 40px 40px;    
-        box-shadow: 0px 15px 32px -4px rgba(37, 58, 106, 0.3);
-        display: flex;
-        justify-content:space-between;
     }
 
-    .booking-box-wrap{
+    padding: 15px 7px 10px;
+    background: $cal-primary-bg;
+
+    @include sm {
+        padding: 35px 40px 40px;
+        box-shadow: 0px 15px 32px -4px rgba(37, 58, 106, 0.3);
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .booking-box-wrap {
         background-color: $cal-primary-bg;
         border: solid 2px #e4e4e7;
         height: 50px;
         position: relative;
+
         @include sm {
             height: 60px;
         }
-        input[type='text']{
+
+        input[type='text'] {
             border: 0;
             width: 100%;
             height: 46px;
@@ -135,80 +138,95 @@ body{
             color: #7b7b85;
             opacity: 0.75;
             margin: 0;
+
             @include sm {
                 height: 56px;
             }
         }
+
+        &.bookingwidget-search-error {
+            border: 1px solid red;
+        }
     }
 
-    .booking-box{
+    .booking-box {
         margin-bottom: 14px;
         padding: 0 8px;
         position: relative;
+
         @include sm {
             margin-bottom: 0;
             padding: 0;
         }
-        > p{
+
+        > p {
             text-align: center;
-           font-family: 'Lato';
+            font-family: 'Lato';
             font-size: 13px;
             font-weight: 400;
             color: #232e48;
             line-height: 1;
             margin: 0 0 10px;
-            white-space:nowrap;
+            white-space: nowrap;
         }
     }
 
-    &.mystays-bookingwidget-visible{
-        .booking-box > p{
+    &.mystays-bookingwidget-visible {
+        .booking-box > p {
             color: $cal-primary-bg;
         }
     }
-    .autocomplete{
-        input[type='text']{
+
+    .autocomplete {
+        input[type='text'] {
             position: relative;
             padding: 20px 22px;
         }
+
         @include sm {
             width: 280px;
         }
     }
 
-    .date-picker{
-        > p{
+    .date-picker {
+        > p {
             display: flex;
-            justify-content:space-between;
-            span{
+            justify-content: space-between;
+
+            span {
                 display: block;
                 width: 50%;
                 padding: 0 8px 0 0;
-                &:last-child{
+
+                &:last-child {
                     padding: 0 0 0 8px;
                 }
             }
         }
-        .booking-checkin-checkout{          
+
+        .booking-checkin-checkout {
             position: relative;
-            overflow: hidden;   
+            overflow: hidden;
+
             @include sm {
                 width: 200px;
-            }       
-            .checkin, .checkout{
+            }
+
+            .checkin, .checkout {
                 float: left;
                 width: 50%;
-                padding:0 12px;
+                padding: 0 12px;
                 position: relative;
             }
-            > i{
+
+            > i {
                 position: absolute;
                 left: 51%;
                 top: 50%;
                 transform: translate(-50%, -50%) rotate(45deg);
-
             }
-            &:after{
+
+            &:after {
                 content: "";
                 right: 1px;
                 bottom: 1px;
@@ -218,21 +236,23 @@ body{
                 border: 5px solid transparent;
                 border-top: 5px solid #ffd25d;
                 border-right: 5px solid #ffd25d;
-                    transform: rotate(90deg);
+                transform: rotate(90deg);
             }
         }
     }
 
-    .guests{
+    .guests {
         width: 50%;
         position: relative;
         float: left;
+
         @include sm {
             width: 75px;
             float: none;
         }
-        .booking-box-wrap{
-            &:after{
+
+        .booking-box-wrap {
+            &:after {
                 content: "";
                 right: 1px;
                 bottom: 1px;
@@ -242,26 +262,28 @@ body{
                 border: 5px solid transparent;
                 border-top: 5px solid #ffd25d;
                 border-right: 5px solid #ffd25d;
-                    transform: rotate(90deg);
+                transform: rotate(90deg);
             }
         }
     }
 
-    .promocode{
+    .promocode {
         width: 50%;
         position: relative;
         text-align: center;
         float: right;
+
         @include sm {
             width: 110px;
             float: none;
         }
-        input[type='text']{
+
+        input[type='text'] {
             text-align: center;
         }
     }
 
-    .input-top-wrap{
+    .input-top-wrap {
         position: absolute;
         width: 100%;
         left: 0;
@@ -271,25 +293,29 @@ body{
         font-family: 'Lato';
         cursor: pointer;
         padding: 10px 0;
-        .title{
+
+        .title {
             line-height: 1.38;
-            color: #232e48;         
+            color: #232e48;
             font-size: 20px;
             font-family: 'Lato-Black';
             cursor: pointer;
             display: inline-block;
             margin-right: 10px;
+
             @include sm {
                 display: block;
                 font-size: 16px;
                 margin-right: 0;
             }
         }
-        .desc{
+
+        .desc {
             font-size: 15px;
             opacity: 0.75;
             color: #7b7b85;
             display: inline-block;
+
             @include sm {
                 display: block;
                 font-size: 12px;
@@ -297,19 +323,21 @@ body{
         }
     }
 
-    .search-button{
+    .search-button {
         clear: both;
-        @include sm {           
+
+        @include sm {
             width: 110px;
         }
-        >p {
+
+        > p {
             color: #232e48;
             font-weight: 300;
             margin-left: -8px;
         }
     }
 
-    .btn{
+    .btn {
         display: inline-block;
         margin-bottom: 0;
         text-align: center;
@@ -330,11 +358,11 @@ body{
         text-align: center;
         width: 100%;
         overflow: hidden;
-        text-overflow: ellipsis; 
-        background:#ffd25d;
+        text-overflow: ellipsis;
+        background: #ffd25d;
         font-family: 'Lato-Black';
         height: 60px;
-    }   
+    }
 }
 
 
